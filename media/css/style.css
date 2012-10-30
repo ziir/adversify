@@ -1,0 +1,63 @@
+body
+{
+	
+	background: url("/media/img/bg-gradient-sand.png") repeat-x scroll 0px 0px, url("/media/img/bg-sand.png") repeat scroll 0px 0px, none repeat scroll 0% 0% rgb(245, 241, 232);
+    font-size: 14px;
+    line-height: 1.5;
+    font-family: 'Open Sans',sans-serif;
+    color: rgb(51, 51, 51);
+}
+
+#main
+{
+	width:980px;
+}
+
+.marginAuto
+{
+	margin: auto;
+}
+
+#showLogo
+{
+	width:677px;
+}
+
+ul, ul li
+{
+	list-style-type: none;
+}
+
+a
+{
+	color:rgb(0,150,221);
+}
+
+
+h1,h2,h3,h4
+{
+	text-shadow:0px 1px 0px rgba(255, 255, 255, 0.75);
+	color:rgb(72,72,72);
+	text-align: center;
+}
+
+h3
+{
+	font-size:28px;
+	letter-spacing: -0.5px;
+}
+
+.billboard
+{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+    box-shadow: 0px 0px 0px 1px rgb(255, 255, 255) inset;
+    background: none repeat scroll 0% 0% rgb(255, 255, 255);
+    border-bottom: 1px solid rgb(221, 221, 221);
+}
+
+#adversify-promo
+{
+	width:500px;
+}
