@@ -1,0 +1,58 @@
+     <div id="wrapper">
+        <header class="header">
+            <nav>
+                <a href="index.html" title="Ad{Versify}" id="logo"><img src='assets/images/[Adversify] Logo_Final_Extrude-176-52.png' alt='Adversify'</a>              
+                <a href="#" title="Inscription">Inscription</a>
+                <a href="#" title="Connexion">Connexion</a>
+            </nav>
+        </header>
+        <div id="main" class="marginAuto">
+            <h3>Ad {versify} est en cours de réalisation.</h3>
+            <h1>Inscription</h1>
+            <div id="signup-forms" class="textCenter">
+            	
+                <h2>Sign Up</h2>
+                <div id="publisher-advertising-form">
+                    <p>
+	                    Texte 1
+                    </p>
+                    <form action="" method="post">
+                        <input type="text" name="username" value="Username" title="Username" class="clearInput"/>
+                        <input type="email" name="email" value="Email adress" title="Email adress" class="clearInput"/>
+                        <input type="password" name="password" value="" title="adversify" class="clearInput"/>
+                        <input type="password" name="password_again" value="" title="adversify" class="clearInput"/>
+                        <select name="kind" title="adversify" class="clearInput">
+                            <option value="publisher">Publisher</option>
+                            <option value="advertiser">Advertiser</option>
+                        </select>
+
+                        <input type="submit" value="Submit Envoyer" />
+                    </form>
+                </div>
+            </div>
+        </div>
+     </div>
+
+    <!-- Libraries, order counts! -->
+    <script type="text/javascript" src="assets/js/libs/underscore-min.js"></script>
+    <script type="text/javascript" src="assets/js/libs/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="assets/js/libs/backbone-min.js"></script>
+    <script type="text/javascript" src="assets/js/libs/backbone-localstorage.js"></script>
+    <script type="text/javascript" src="assets/js/libs/knockout-2.2.0.js"></script>
+    <script type="text/javascript" src="assets/js/libs/knockback.min.js"></script>
+
+    <!-- Our Backbone.js Core : startpoint -->
+    <script type="text/javascript" src="src/CCore.js"></script>
+
+    <!-- Core modules, order does not count -->
+    <script type="text/javascript" src="src/modules/router.js"></script>
+    <script type="text/javascript" src="src/modules/views.js"></script>
+    <script type="text/javascript" src="src/modules/models.js"></script>
+
+    <!-- MISC -->
+    <script type="text/javascript" src="src/behavior.js"></script>
+    <script type="text/javascript" src="src/CPublishers.js"></script>
+    
+    <script>
+        publisherBehavior = new PublisherBehavior();
+    </script>
