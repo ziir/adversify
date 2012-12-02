@@ -1,25 +1,27 @@
 var mongoose = require('mongoose');
+var pwd = require('pwd');
 /*
  * Signup
  */
 
 exports.create = function(req, res){
-	
- 	console.log("POST lol: ");
-  	console.log(req.body);
-  	var user = new UserModel({
-	    username: req.body.username,
-	    email: req.body.email,
-	    password: req.body.password,
-	    password_again: req.body.password_again 
+    pwd.hash(req.body.password, function(err, salt, hash){
+      var user = new UserModel({
+        username: req.body.username,
+        email: req.body.email,
+        password: hash,
+        salt: salt
+      });
+      user.save(function (err) {
+        if (!err) {
+          return console.log("Successfuly created USER");
+        } else {
+          return console.log(err);
+        }
+      })
+      return res.send(user);
   });
-  user.save(function (err) {
-    if (!err) {
-      return console.log("created");
-    } else {
-      return console.log(err);
-    }
-  });
-  return res.send(user);
-	
+
+  
+  
 };
