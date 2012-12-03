@@ -1,6 +1,6 @@
 
 /**
- * Module dependencies : Test Clément
+ * Module dependencies 
  */
 
 var express = require('express')

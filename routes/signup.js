@@ -6,10 +6,8 @@ var pwd = require('pwd');
 /* Route create on POST request */
 
 exports.create = function(req, res){
-    console.log(req.body); 
     var user;
     var query;
-    var stop = false;
     if(req.body.kind === 0 || req.body.kind === 1){
       pwd.hash(req.body.password, function(err, salt, hash){
         if(req.body.kind === 0){
@@ -17,7 +15,7 @@ exports.create = function(req, res){
           query.where('username',req.body.username);
           query.exec(function (err, publishers) {
             if (err) { throw err; }
-            if(publishers.length === 0) { // Vas-y je mets mon commentaire là !
+            if(publishers.length === 0) { 
               user.save(function (err) {
                 if (!err) {
                   return console.log("Successfuly created USER");
