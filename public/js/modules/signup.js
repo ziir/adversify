@@ -1,7 +1,7 @@
 $(document).ready(function() { 
 
     window.UserSignup = Backbone.Model.extend({
-    	urlRoot : 'http://www.adversify.net/signup',
+    	urlRoot : '/signup',
 
         validate : function(attributes) {        	
         	validated = true;
@@ -88,10 +88,10 @@ $(document).ready(function() {
         	   var user, type;
         	   
         	   if (this.$('.kind').val() == 'publisher') {
-		            type = 'Publisher';
+		            type = 1;
         	   } 
                if (this.$('.kind').val() == 'advertiser') {
-		            type = 'Advertiser';
+		            type = 0;
         	   }
         	   
         	   user = new UserSignup ({
