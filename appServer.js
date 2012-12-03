@@ -17,7 +17,7 @@ var express = require('express')
 
 
   // i18n a.k.a Internationalization !
-
+  // TO-DO : better implementation
 i18n.configure({
     // setup some locales - other locales default to en silently
     locales:['en', 'fr'],
@@ -46,22 +46,31 @@ app.configure('development', function(){
   app.use(express.cookieParser('adversify4ever'));
   app.use(express.session());
   app.use(express.static(path.join(__dirname, 'public')));
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); // Shown all errors, with stackTrace please
 });
 
 // Mongoose schema to model, TO-DO, get it out of this file ?
 
 var Schema = mongoose.Schema;  
-
-var User = new Schema({  
+ // Maybe there is something better to do than repeating the schema ?
+var Publisher = new Schema({
     username: { type: String, required: true, match: /^[a-zA-Z0-9-_]+$/, unique: true },  
-    password: { type: String},
-    salt: { type: String},
-    email: { type: String, unique: true },
+    password: { type: String, required: true},
+    salt: { type: String, required: true},
+    email: { type: String, unique: true, match : /[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}/ },
     modified: { type: Date, default: Date.now }
 });
 
-UserModel = mongoose.model('User', User);
+var Advertiser = new Schema({
+    username: { type: String, required: true, match: /^[a-zA-Z0-9-_]+$/, unique: true },  
+    password: { type: String, required: true},
+    salt: { type: String, required: true},
+    email: { type: String, unique: true, match : /[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}/ },
+    modified: { type: Date, default: Date.now }
+});
+
+PublisherModel = mongoose.model('publishers', Publisher);
+AdvertiserModel = mongoose.model('advertisers', Advertiser);
 
   // Handlers , TO-DO, get it out of this file ?
 
@@ -69,8 +78,8 @@ UserModel = mongoose.model('User', User);
 app.get('/', routes.index);
 
 app.post('/signup', signup.create);
-app.get('/signup/publisher', signup.publisher);
-app.get('/signup/advertiser', signup.advertiser);
+app.get('/signup/step2', signup.publisher); // Signup step2
+app.post('/signup/step2', signup.step2);
 
 app.get('/publisher', publisher.index);
 app.get('/publisher/ads', publisher.ads.list); // List ads
