@@ -17,7 +17,7 @@ exports.create = function(req, res){
           query.where('username',req.body.username);
           query.exec(function (err, publishers) {
             if (err) { throw err; }
-            if(publishers.length === 0) {
+            if(publishers.length === 0) { // Vas-y je mets mon commentaire là !
               user.save(function (err) {
                 if (!err) {
                   return console.log("Successfuly created USER");
