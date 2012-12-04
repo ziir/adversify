@@ -18,12 +18,12 @@ exports.create = function(req, res){
               user.save(function (err) {
                 if (!err) {
                   return console.log("Successfuly created USER");
+                  res.send(200);
                 } else {
                   return console.log(err);
                   /* res.render('index.html', { title: 'SIGNUP ERROR' });*/
                   res.send(500, { error: 'Something blew up!' });
                 }
-                res.send(200);
               });
             }
             else
@@ -72,6 +72,8 @@ exports.create = function(req, res){
         }
     });
   }
+  //mongoose.connection.close(); // TO DO : make this work
+  //res.end(); / TO DO : make this work
 };
 
 exports.updateSignup = function(req,res){
