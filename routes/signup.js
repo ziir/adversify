@@ -21,13 +21,15 @@ exports.create = function(req, res){
                 } else {
                   return console.log(err);
                   /* res.render('index.html', { title: 'SIGNUP ERROR' });*/
+                  res.send(500, { error: 'Something blew up!' });
                 }
-                return res.send(user);
+                res.send(200);
               });
             }
             else
             {
               console.log('username already in use!');
+              res.send(500, { error: 'Something blew up!' });
             }
           });
           user = new AdvertiserModel({
@@ -47,16 +49,17 @@ exports.create = function(req, res){
               user.save(function (err) {
                 if (!err) {
                   return console.log("Successfuly created USER");
+                  res.send(200);
                 } else {
                   return console.log(err);
-                  /* res.render('index.html', { title: 'SIGNUP ERROR' });*/
+                  res.send(500, { error: 'Something blew up!' });
                 }
-                return res.send(user);
               });
             }
             else
             {
               console.log('username already in use!');
+              res.send(500, { error: 'Something blew up!' });
             }
           });
           user = new PublisherModel({
@@ -78,6 +81,6 @@ exports.updateSignup = function(req,res){
 
 exports.validateEmail = function(req,res){
   var user;
-  
+
 }
 
