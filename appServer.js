@@ -58,7 +58,10 @@ var Publisher = new Schema({
     password: { type: String, required: true},
     salt: { type: String, required: true},
     email: { type: String, unique: true, match : /[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}/ },
-    modified: { type: Date, default: Date.now }
+    modified: { type: Date, default: Date.now },
+    street-adress: { type: String },
+    city: { type: String },
+    country: { type: String }
 });
 
 var Advertiser = new Schema({
@@ -66,7 +69,10 @@ var Advertiser = new Schema({
     password: { type: String, required: true},
     salt: { type: String, required: true},
     email: { type: String, unique: true, match : /[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}/ },
-    modified: { type: Date, default: Date.now }
+    modified: { type: Date, default: Date.now },
+    street-adress: { type: String },
+    city: { type: String },
+    country: { type: String }
 });
 
 PublisherModel = mongoose.model('publishers', Publisher);

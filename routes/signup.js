@@ -3,7 +3,6 @@ var pwd = require('pwd');
 /*
  * Signup
  */
-/* Route create on POST request */
 
 exports.create = function(req, res){
     var user;
@@ -71,3 +70,14 @@ exports.create = function(req, res){
     });
   }
 };
+
+exports.updateSignup = function(req,res){
+  var user;
+
+}
+
+exports.validateEmail = function(req,res){
+  var user;
+  
+}
+
