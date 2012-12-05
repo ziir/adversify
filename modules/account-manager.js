@@ -12,6 +12,8 @@ module.exports = AM;
 
 AM.signup = function(newData, callback)
 {
+	console.log("------ Trying signup -------");
+
 	AdvertiserModel.findOne({username:newData.username}, function(e, o) {
 		if (o){
 			callback('username-taken');
@@ -29,11 +31,28 @@ AM.signup = function(newData, callback)
 												callback('email-taken'); // Email taken by publisher
 											} 	else {
 													pwd.hash(newData.password, function(e,salt,hash){
-														newData.password = hash;
-														newData.salt = salt;
-														// BUILD ADVERTISER OR PUBLISHER HERE PLZ													
-													// append date stamp when record was created //
-														newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
+														if(newData.kind === 0) {
+															user = new AdvertiserModel({
+												            username: newData.username,
+												            email: newData.email,
+												        	password: hash,
+												            salt: salt,
+												            joined,updated : moment().format('MMMM Do YYYY, h:mm:ss a'),
+												            /*updated : moment().format('MMMM Do YYYY, h:mm:ss a')*/}, function(e){
+												            	if(e) {
+												            		    return console.log(e);
+                 														res.send(500, { title: 'Adversify - Error',error: 'Something blew up!',body: '<h1>ERROR</h1>' });
+												            	}	else {
+												            			return console.log("Successfully saved new Publisher "+newData.username+" - "+newData.email)
+												            	}
+												            });
+														}
+														if(newData.kind === 1)
+														{
+															echo 
+												        },function(o,e){
+
+												        });
 													});
 												}
 										});

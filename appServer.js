@@ -59,6 +59,7 @@ var Publisher = new Schema({
     salt: { type: String, required: true},
     email: { type: String, unique: true, match : /[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}/ },
     modified: { type: Date, default: Date.now },
+    joined: {type: Date}
     streetadress: { type: String },
     city: { type: String },
     country: { type: String }
@@ -70,6 +71,7 @@ var Advertiser = new Schema({
     salt: { type: String, required: true},
     email: { type: String, unique: true, match : /[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}/ },
     modified: { type: Date, default: Date.now },
+    joined: {type: Date}
     streetadress: { type: String },
     city: { type: String },
     country: { type: String }
@@ -77,9 +79,6 @@ var Advertiser = new Schema({
 
 PublisherModel = mongoose.model('publishers', Publisher);
 AdvertiserModel = mongoose.model('advertisers', Advertiser);
-
-  // Handlers , TO-DO, get it out of this file ?
-
 
 app.get('/', routes.index);
 
@@ -101,7 +100,15 @@ app.get('/advertiser/ads', advertiser.ads);
 app.get('/advertiser/account', advertiser.account);
 app.get('/advertiser/statistics', advertiser.statistics);
 
+app.get('/test', function(req, res) {
+      res.render('test.html', { title : 'Test'});
+  });
+
 app.get('*', routes.pagenotfound);
+
+/* TESTs*/
+
+
 
 
   // Server up and running
