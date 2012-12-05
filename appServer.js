@@ -101,6 +101,8 @@ app.get('/advertiser/ads', advertiser.ads);
 app.get('/advertiser/account', advertiser.account);
 app.get('/advertiser/statistics', advertiser.statistics);
 
+app.get('*', routes.404);
+
 
   // Server up and running
 http.createServer(app).listen(app.get('port'), function(){
