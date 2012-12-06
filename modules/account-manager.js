@@ -1,5 +1,8 @@
 /* This module is so not ready for production!*/
+/* e -> error
+/* o -> object
 
+*/
 var mongoose = require('mongoose');
 var pwd = require('pwd');
 
@@ -10,9 +13,10 @@ var AM = {};
 
 module.exports = AM;
 
-AM.signup = function(newData, callback)
-{
+AM.signup = function(newData, callback) {
+	console.log(newData)
 	console.log("------ Trying signup -------");
+	// TO DO : .save()   =D
 
 	AdvertiserModel.findOne({username:newData.username}, function(e, o) {
 		if (o){
@@ -37,22 +41,32 @@ AM.signup = function(newData, callback)
 												            email: newData.email,
 												        	password: hash,
 												            salt: salt,
-												            joined,updated : moment().format('MMMM Do YYYY, h:mm:ss a'),
-												            /*updated : moment().format('MMMM Do YYYY, h:mm:ss a')*/}, function(e){
+												            joined : moment().format('MMMM Do YYYY, h:mm:ss a'),
+												            updated : moment().format('MMMM Do YYYY, h:mm:ss a')}, function(e){
 												            	if(e) {
 												            		    return console.log(e);
                  														res.send(500, { title: 'Adversify - Error',error: 'Something blew up!',body: '<h1>ERROR</h1>' });
 												            	}	else {
-												            			return console.log("Successfully saved new Publisher "+newData.username+" - "+newData.email)
+												            			return console.log("Successfully saved new advertiser "+newData.username+" - "+newData.email)
 												            	}
 												            });
 														}
-														if(newData.kind === 1)
-														{
-															echo 
-												        },function(o,e){
-
-												        });
+														if(newData.kind === 1){
+															user = new PublisherModel({
+												            	username: newData.username,
+													            email: newData.email,
+													        	password: hash,
+													            salt: salt,
+													            joined: moment().format('MMMM Do YYYY, h:mm:ss a'),
+													            updated : moment().format('MMMM Do YYYY, h:mm:ss a')}, function(e){
+													            	if(e) {
+													            		    return console.log(e);
+	                 														res.send(500, { title: 'Adversify - Error',error: 'Something blew up!',body: '<h1>ERROR</h1>' });
+													            	}	else {
+													            			return console.log("Successfully saved new Publisher "+newData.username+" - "+newData.email)
+													            	}
+													            });
+												        }
 													});
 												}
 										});
@@ -62,3 +76,5 @@ AM.signup = function(newData, callback)
 				});
 			}
 	});
+
+}
