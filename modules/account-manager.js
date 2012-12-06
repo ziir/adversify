@@ -13,10 +13,61 @@ var AM = {};
 
 module.exports = AM;
 
+AM.loginAdvertiser = function(username, password, callback) {
+	var user;
+	console.log("----- Login -----");
+	console.log(login+" [-] "+password);
+
+		AdvertiserModel.findOne({username:username}, function(e, o) {
+		if (o == null){
+			callback('user-not-found');
+		}	else{
+			user = o;
+			pass.hash(password, user.salt, function(err, hash){
+  				if (user.hash == hash) {
+    				console.log("User Successfully logged in to Advertiser account ("+username+")");
+    				// to do : session et tout le bordel
+  				} else {
+  					callback('invalid-password');
+  				}
+			});
+		}
+	});
+}
+
+AM.loginPublisher = function(username, password, callback) {
+	var user;
+	console.log("----- Login -----");
+	console.log(login+" [-] "+password);
+
+		PublisherModel.findOne({username:username}, function(e, o) {
+		if (o == null){
+			callback('user-not-found');
+		}	else{
+			user = o;
+			pass.hash(password, user.salt, function(err, hash){
+  				if (user.hash == hash) {
+    				console.log("User Successfully logged in to Publisher account ("+username+")");
+    				// to do : session et tout le bordel
+  				} else {
+  					callback('invalid-password');
+  				}
+			});
+		}
+	});
+}
+
+
+
+AM.signupStep2 = function(newData, callback) {
+	console.log(newData);
+	console.log("----- Signup Step 2 -----");
+
+}
+
 AM.signup = function(newData, callback) {
 	console.log(newData)
 	console.log("------ Trying signup -------");
-	// TO DO : .save()   =D
 
 	AdvertiserModel.findOne({username:newData.username}, function(e, o) {
 		if (o){
@@ -45,9 +96,13 @@ AM.signup = function(newData, callback) {
 												            updated : moment().format('MMMM Do YYYY, h:mm:ss a')}, function(e){
 												            	if(e) {
 												            		    return console.log(e);
-                 														res.send(500, { title: 'Adversify - Error',error: 'Something blew up!',body: '<h1>ERROR</h1>' });
+                 														res.send(500, { title: 'Adversify - Error',body: '<h1 class="error">Something blew up!</h1>' });
 												            	}	else {
-												            			return console.log("Successfully saved new advertiser "+newData.username+" - "+newData.email)
+												            			user.save(function() {
+																			return console.log("Successfully saved new Advertiser "+newData.username+" - "+newData.email);
+												            				res.send(200);
+												            				res.end();
+												            			});
 												            	}
 												            });
 														}
@@ -58,12 +113,16 @@ AM.signup = function(newData, callback) {
 													        	password: hash,
 													            salt: salt,
 													            joined: moment().format('MMMM Do YYYY, h:mm:ss a'),
-													            updated : moment().format('MMMM Do YYYY, h:mm:ss a')}, function(e){
+													            updated : moment().format('MMMM Do YYYY, h:mm:ss a')}, function(e,o){
 													            	if(e) {
 													            		    return console.log(e);
-	                 														res.send(500, { title: 'Adversify - Error',error: 'Something blew up!',body: '<h1>ERROR</h1>' });
+	                 														res.send(500, { title: 'Adversify - Error',body: '<h1 class="error">Something blew up!</h1>' });
 													            	}	else {
-													            			return console.log("Successfully saved new Publisher "+newData.username+" - "+newData.email)
+													            			user.save(function() {
+													            				return console.log("Successfully saved new Publisher "+newData.username+" - "+newData.email);
+													            				res.send(200);
+													            				res.end();
+													            			});
 													            	}
 													            });
 												        }
