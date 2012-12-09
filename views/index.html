@@ -5,21 +5,30 @@
             	
                 <h2>Sign Up</h2>
                 <div id="sign-container">
-                    <p>
+                
+                    <p class="showErrors">
 	                    Texte 1
                     </p>
+                    
                     <form action="" method="post" class="well">
+                    
                         <input type="text" name="username" value="Username" title="Username" class="clearInput username"/>
-                        <input type="email" name="email" value="Email adress" title="Email adress" class="clearInput email"/>
+                        	<label data-bind="value: error_username" />
+                        <input type="text" name="email" value="Email adress" title="Email adress" class="clearInput email"/>
+                        	<label data-bind="value: error_email" />
                         <input type="password" name="password" value="" title="adversify" class="clearInput password"/>
+                        	<label data-bind="value: error_password" />
                         <input type="password" name="password_again" value="" title="adversify" class="clearInput password_again"/>
+                        	<label data-bind="value: error_password_again" />
                         <select name="kind" title="adversify" class="clearInput kind">
                             <option value="">Pay or get paid?</option>
                             <option value="publisher">Publisher</option>
                             <option value="advertiser">Advertiser</option>
                         </select>
                         <button type="submit" class="btn-primary">Sign Up</button>
+                        
                     </form>
+					
                 </div>
             </div>
         </div>
