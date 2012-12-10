@@ -15,7 +15,6 @@ var express = require('express')
 
   var app = express();
 
-
   // i18n a.k.a Internationalization !
   // TO-DO : better implementation
 i18n.configure({
@@ -59,7 +58,7 @@ var Publisher = new Schema({
     salt: { type: String, required: true},
     email: { type: String, unique: true, match : /[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}/ },
     modified: { type: Date, default: Date.now },
-    joined: {type: Date}
+    joined: {type: Date},
     streetadress: { type: String },
     city: { type: String },
     country: { type: String }
@@ -71,7 +70,7 @@ var Advertiser = new Schema({
     salt: { type: String, required: true},
     email: { type: String, unique: true, match : /[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}/ },
     modified: { type: Date, default: Date.now },
-    joined: {type: Date}
+    joined: {type: Date},
     streetadress: { type: String },
     city: { type: String },
     country: { type: String }

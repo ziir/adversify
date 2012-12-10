@@ -13,18 +13,19 @@
                     <form action="" method="post" class="well">
                     
                         <input type="text" name="username" value="Username" title="Username" class="clearInput username"/>
-                        	<label data-bind="value: error_username" />
+                        	<span data-bind="text: error_username"></span>
                         <input type="text" name="email" value="Email adress" title="Email adress" class="clearInput email"/>
-                        	<label data-bind="value: error_email" />
+                        	<span data-bind="text: error_email"></span>
                         <input type="password" name="password" value="" title="adversify" class="clearInput password"/>
-                        	<label data-bind="value: error_password" />
+                        	<span data-bind="text: error_password"></span>
                         <input type="password" name="password_again" value="" title="adversify" class="clearInput password_again"/>
-                        	<label data-bind="value: error_password_again" />
+                        	<span data-bind="text: error_password_again"></span>
                         <select name="kind" title="adversify" class="clearInput kind">
                             <option value="">Pay or get paid?</option>
                             <option value="publisher">Publisher</option>
                             <option value="advertiser">Advertiser</option>
                         </select>
+                        	<span data-bind="text: error_kind"></span>
                         <button type="submit" class="btn-primary">Sign Up</button>
                         
                     </form>

@@ -51,7 +51,7 @@ $(document).ready(function() {
 			    }
 		    });
 			
-			view_model = new ContactViewModel(new Backbone.Model({error_name: err_username, error_email: err_email, 
+			view_model = new ContactViewModel(new Backbone.Model({error_username: err_username, error_email: err_email, 
 																  error_password: err_pass, error_password_again: ''}));
 			ko.applyBindings(view_model);
 			kb.release(view_model);
