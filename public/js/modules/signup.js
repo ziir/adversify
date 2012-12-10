@@ -42,17 +42,20 @@ $(document).ready(function() {
 				    kb.ViewModel.prototype.constructor.call(this, model, {internals: ['error_username', 
 				    																  'error_email', 
 				    																  'error_password',
-				    																  'error_password_again']});
+				    																  'error_password_again',
+				    																  'error_kind']});
 				    this.error_username = this._error_username;
 				    this.error_email = this._error_email;
 				    this.error_password = this._error_password;
 				    this.error_password_again = this._error_password_again;
+				    this.error_kind = this._error_kind;
 				    return this;
 			    }
 		    });
 			
 			view_model = new ContactViewModel(new Backbone.Model({error_username: err_username, error_email: err_email, 
-																  error_password: err_pass, error_password_again: ''}));
+																  error_password: err_pass, error_password_again: '',
+																  error_kind: ''}));
 			ko.applyBindings(view_model);
 			kb.release(view_model);
         	
