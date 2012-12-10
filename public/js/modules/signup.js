@@ -80,7 +80,7 @@ $(document).ready(function() {
         	   type = -1;
     	   }
 	       
-    	   user = new UserSignup ({
+    	   var user = new UserSignup ({
 	        	username : userNameVal,
 	            password : passwordVal,
 	            email    : emailVal,
@@ -104,14 +104,16 @@ $(document).ready(function() {
             	validated.err_pass_again = 'Password are not both alike';
             	validated.isOk = false;
             }
-
-    	    if (validated.isOk == false) {
+            
+    	    if (validated.isOk === false) {
 	            user = 0;
                 console.log('Problem when creating the ' + type + '\n' +
 	                	    'Please verify your data');
 	        } else {
 	            console.log('Rediriger maintenant');
 	            user.save();
+	            document.location.href="/signup/step2";
+	            
 	        }
             
             //KNOCK BACK PART

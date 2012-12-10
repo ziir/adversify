@@ -50,7 +50,7 @@ app.configure('development', function(){
 
 // Mongoose schema to model, TO-DO, get it out of this file ?
 
-var Schema = mongoose.Schema;  
+var Schema = mongoose.Schema;
  // Maybe there is something better to do than repeating the schema ?
 var Publisher = new Schema({
     username: { type: String, required: true, match: /^[a-zA-Z0-9-_]+$/, unique: true },  
@@ -82,7 +82,7 @@ AdvertiserModel = mongoose.model('advertisers', Advertiser);
 app.get('/', routes.index);
 
 app.post('/signup', signup.create);
-app.get('/signup/step2', signup.publisher); // Signup step2
+app.get('/signup/step2', signup.step2); // Signup step2
 app.post('/signup/step2', signup.step2);
 
 app.get('/publisher', publisher.index);

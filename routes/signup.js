@@ -4,9 +4,12 @@ var AM = require('../modules/account-manager.js');
 
 
 exports.create = function(req,res){
- AM.signup(req.body,console.log);
+	AM.signup(req.body,console.log);
+};
 
-}
+exports.step2 = function(req, res) {
+	res.render('signup-step2.html', {title: 'Step 2'});
+};
 
 /*
  * Signup (old)

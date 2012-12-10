@@ -9,18 +9,26 @@
                         Texte 1
                     </p>
                     <form action="" method="post" class="well">
-                                <input type="text" name="streetadress" value="Street Adress" class="streetadress clearInput" />  
-                                <input type="text" name="city" value="City" class="city clearInput" class="city clearInput" />  
-                                <input type="text" name="postalcode" value="Postal Code" class="postalcode clearInput" />  
-                                <select name="country" class="country">
-                                    <option value="">Country...</option>
-                                    <option value="FR">France</option>
-                            </select> 
+                    
+                        <input type="text" name="streetadress" value="Street Adress" class="streetadress clearInput" />
+                        	<span data-bind="text: error_streetadress"></span>
+                        <input type="text" name="city" value="City" class="city clearInput" class="city clearInput" />
+                        	<span data-bind="text: error_city"></span>
+                        <input type="text" name="postalcode" value="Postal Code" class="postalcode clearInput" />
+                        	<span data-bind="text: error_postalcode"></span>
+                        
+                        <select name="country" class="country" title="Country...">
+                            <option value="Country...">Country...</option>
+                            <option value="FR">France</option>
+                        </select>
+                        <span data-bind="text: error_country"></span>
+                        
                         <button type="submit" class="btn-primary">Continue</button>
                     </form>
                 </div>
             </div>
         </div>
      </div>
+     <script type="text/javascript" src="/js/modules/signup_step2.js"></script>
 
     
