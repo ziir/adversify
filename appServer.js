@@ -15,6 +15,7 @@ var express = require('express')
 
   var app = express();
 
+
   // i18n a.k.a Internationalization !
   // TO-DO : better implementation
 i18n.configure({
@@ -50,7 +51,7 @@ app.configure('development', function(){
 
 // Mongoose schema to model, TO-DO, get it out of this file ?
 
-var Schema = mongoose.Schema;
+var Schema = mongoose.Schema;  
  // Maybe there is something better to do than repeating the schema ?
 var Publisher = new Schema({
     username: { type: String, required: true, match: /^[a-zA-Z0-9-_]+$/, unique: true },  
@@ -83,7 +84,7 @@ app.get('/', routes.index);
 
 app.post('/signup', signup.create);
 app.get('/signup/step2', signup.step2); // Signup step2
-app.post('/signup/step2', signup.step2);
+app.post('/signup/step2', signup.step2create);
 
 app.get('/publisher', publisher.index);
 app.get('/publisher/ads', publisher.ads.list); // List ads
@@ -98,6 +99,10 @@ app.get('/advertiser', advertiser.index);
 app.get('/advertiser/ads', advertiser.ads);
 app.get('/advertiser/account', advertiser.account);
 app.get('/advertiser/statistics', advertiser.statistics);
+
+
+app.get('/socket', routes.socket);
+app.get('/socketview', routes.socketview);
 
 app.get('/test', function(req, res) {
       res.render('test.html', { title : 'Test'});

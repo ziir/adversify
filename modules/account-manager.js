@@ -20,7 +20,11 @@ AM.loginAdvertiser = function(username, password, callback) {
 
 		AdvertiserModel.findOne({username:username}, function(e, o) {
 		if (o == null){
-			callback('user-not-found');
+			PublisherModel.findOne({username:username}, function(e, o) {
+				if (o == null){
+					callback('user-not-found');
+				}
+			});
 		}	else{
 			user = o;
 			pass.hash(password, user.salt, function(err, hash){
@@ -60,14 +64,14 @@ AM.loginPublisher = function(username, password, callback) {
 
 
 AM.signupStep2 = function(newData, callback) {
-	console.log(newData);
-	console.log("----- Signup Step 2 -----");
 
+console.log("step2");
 }
 
 AM.signup = function(newData, callback) {
 	console.log(newData)
 	console.log("------ Trying signup -------");
+	var user;
 
 	AdvertiserModel.findOne({username:newData.username}, function(e, o) {
 		if (o){
@@ -85,43 +89,38 @@ AM.signup = function(newData, callback) {
 											if (o) {
 												callback('email-taken'); // Email taken by publisher
 											} 	else {
+													console.log("izi");
 													pwd.hash(newData.password, function(e,salt,hash){
 														if(newData.kind === 0) {
-															user = new AdvertiserModel({
+															console.log("Advertiser");
+														var user = new AdvertiserModel({
 												            username: newData.username,
 												            email: newData.email,
 												        	password: hash,
 												            salt: salt,
 												            joined : moment().format('MMMM Do YYYY, h:mm:ss a'),
-												            updated : moment().format('MMMM Do YYYY, h:mm:ss a')}, function(e){
-												            	if(e) {
-												            		    return console.log(e);
-                 														res.send(500, { title: 'Adversify - Error',body: '<h1 class="error">Something blew up!</h1>' });
-												            	}	else {
+												            updated : moment().format('MMMM Do YYYY, h:mm:ss a')});
 												            			user.save(function() {
-																			return console.log("Successfully saved new Advertiser "+newData.username+" - "+newData.email);
-												            				res.send(200);
-												            				res.end();
+																			console.log("Successfully saved new Advertiser "+newData.username+" - "+newData.email);
+												            				//res.send(200);
+												            				//res.end();
 												            			});
 												            	}
-												            });
-														}
+												            
+														
 														if(newData.kind === 1){
-															user = new PublisherModel({
+															console.log("Publisher");
+															var user = new PublisherModel({
 												            	username: newData.username,
-													            email: newData.email,
+													            email: "newData.email",
 													        	password: hash,
 													            salt: salt,
 													            joined: moment().format('MMMM Do YYYY, h:mm:ss a'),
-													            updated : moment().format('MMMM Do YYYY, h:mm:ss a')}, function(e,o){
-													            	if(e) {
-													            		    return console.log(e);
-	                 														res.send(500, { title: 'Adversify - Error',body: '<h1 class="error">Something blew up!</h1>' });
-													            	}	else {
+													            updated : moment().format('MMMM Do YYYY, h:mm:ss a')});
 													            			user.save(function() {
-													            				return console.log("Successfully saved new Publisher "+newData.username+" - "+newData.email);
-													            				res.send(200);
-													            				res.end();
+													            				console.log("Successfully saved new Publisher "+newData.username+" - "+newData.email);
+													            				//res.send(200);
+													            				//res.end();
 													            			});
 													            	}
 													            });
@@ -133,7 +132,41 @@ AM.signup = function(newData, callback) {
 							});
 						}
 				});
-			}
-	});
 
+}
+
+
+AM.setPassword = function(email, newPass, callback)
+{
+	AdvertiserModel.findOne({email:email}, function(e, o){
+		if(o) {
+			pwd.hash(newPass, function(e,salt,hash){
+				o.pass = hash;
+				o.salt = salt;
+				AdvertiserModel.save(o); callback(o);
+			});
+		}
+		else {
+			PublisherModel.findOne({email:email}, function(e,o){
+				if(o) {
+					pwd.hash(newPass, function(e,salt,hash){
+						o.pass = hash;
+						o.salt = salt;
+						PublisherModel.save(o); callback(o);
+					});
+				}
+			})
+		}
+	});
+}
+
+AM.validateLink = function(email, passHash, callback)
+{
+	AdvertiserModel.find({ $and: [{email:email, pass:passHash}] }, function(e, o){
+		if(!o) {
+			PublisherModel.find({ $and: [{email:email, pass:passHash}] }, function(e,o) {
+				callback(o ? 'ok' : null)
+			});
+		}
+	});
 }

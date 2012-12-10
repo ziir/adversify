@@ -4,21 +4,15 @@ var AM = require('../modules/account-manager.js');
 
 
 exports.create = function(req,res){
-	AM.signup(req.body,console.log);
-};
-
-exports.step2 = function(req, res) {
-	res.render('signup-step2.html', {title: 'Step 2'});
-};
+ AM.signup(req.body,console.log);
+}
 
 /*
- * Signup (old)
-
 
 exports.create = function(req, res){
     var userjson = req.body;
     var user;
-
+    console.log(userjson);
 
     if(userjson.kind === 0 || userjson.kind === 1){
       pwd.hash(userjson.password, function(err, salt, hash){
@@ -83,9 +77,8 @@ exports.create = function(req, res){
   //mongoose.connection.close(); // TO DO : make this work
   //res.end(); / TO DO : make this work
 };
-
-
 */
+
 
 
 exports.updateSignup = function(req,res){
@@ -96,5 +89,9 @@ exports.updateSignup = function(req,res){
 exports.validateEmail = function(req,res){
   var user;
 
+}
+
+exports.step2 = function(req,res){
+  res.render('signup-step2.html')
 }
 
