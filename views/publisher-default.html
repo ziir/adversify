@@ -1,0 +1,72 @@
+        <div id="main" class="marginAuto">
+            <h3>Ad {versify} est en cours de réalisation.</h3>
+            <h1>Publisher default panel</h1>
+            <div id="signup-forms" class="textCenter">
+                
+                <h2>Publisher</h2>
+                <div id="sign-container">
+                    <p>
+                        Texte 1
+                    </p>
+                    <div class="sites-overview">
+                        <ul>
+                            <li>Site 1 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
+                            <li>Site 2 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
+                            <li>Site 3 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
+                            <li>Site 4 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
+                            <li>Site 5 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
+                        </ul>
+                        <h2>Ajouter un site</h2>
+                        <form method="POST" action="/publisher/sites" class="well">
+                            <input type="text" class="sitename clearInput" name="sitename" title="Site Name" value="Site Name"/>
+                            <input type="text" class="siteurl clearInput" name="siteurl" title="Site URL" value="Site URL"/>
+                            <select class="sitecategory">
+                                <option value="">Site Main Category</option>
+                                <option value="1">News & Informations</option>
+                                <option value="2">Communities</option>
+                                <option value="3">Economy & Finances</option>
+                                <option value="4">Jobs & Trainning</option>
+                                <option value="5">Computer science</option>
+                                <option value="6">Games</option>
+                                <option value="7">Health</option>
+                                <option value="8">Entertainment</option>
+                                <option value="9">Technology</option>
+                                <option value="10">Shopping & Consumerism</option>
+                                <option value="11">Travel</option>
+                                <option value="12">Sports</option>
+                            </select>
+                            <label for="sitedescription">Enter a description for this website.</label>
+                            <textarea rows="4" cols="30" name="sitedescription" id="sitedescription">Desciption de votre site</textarea>
+                            <button type="submit" class="btn-primary">Add this website</button>
+                        </form>
+                    </div>
+                    <div class="ads-overview">
+                        <ul>
+                            <li>Ad 1 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
+                            <li>Ad 2 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
+                            <li>Ad 3 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
+                            <li>Ad 4 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
+                            <li>Ad 5 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
+                        </ul>
+                        <h2>Create an ad</h2>
+                        <form method="POST" action="/publisher/ads" class="well">
+                            <input type="text" class="adname clearInput" name="adname" title="Ad Name" value="Ad Name"/>
+                            <select class="adremuneration" name="adremuneration">
+                                <option value="">CPC or CPM?</option>
+                                <option value="cpc">CPC</option>
+                                <option value="cpm">CPM</option>
+                            </select>
+                            <select class="adformat" name="adformat">
+                                <option value="">Image or Textual?</option>
+                                <option value="image">Image</option>
+                                <option value="text">Textual</option>
+                            </select>
+                            <label for="addescription">Enter a description for this Ad.</label>
+                            <textarea rows="4" cols="30" name="addescription" id="addescription"></textarea>
+                            <button type="submit" class="btn-primary">Create an Ad</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
