@@ -16,21 +16,17 @@ module.exports = AM;
 AM.loginAdvertiser = function(username, password, callback) {
 	var user;
 	console.log("----- Login -----");
-	console.log(login+" [-] "+password);
+	console.log(username+" [-] "+password);
 
 		AdvertiserModel.findOne({username:username}, function(e, o) {
 		if (o == null){
-			PublisherModel.findOne({username:username}, function(e, o) {
-				if (o == null){
-					callback('user-not-found');
-				}
-			});
+			callback('user-not-found');
 		}	else{
 			user = o;
-			pass.hash(password, user.salt, function(err, hash){
-  				if (user.hash == hash) {
-    				console.log("User Successfully logged in to Advertiser account ("+username+")");
-    				// to do : session et tout le bordel
+			pwd.hash(password, user.salt, function(err, hash){
+  				if (user.password == hash) {
+  					callback(null,o);
+    				console.log("User Successfully logged in to Publisher account ("+username+")");
   				} else {
   					callback('invalid-password');
   				}
@@ -42,17 +38,17 @@ AM.loginAdvertiser = function(username, password, callback) {
 AM.loginPublisher = function(username, password, callback) {
 	var user;
 	console.log("----- Login -----");
-	console.log(login+" [-] "+password);
+	console.log(username+" [-] "+password);
 
 		PublisherModel.findOne({username:username}, function(e, o) {
 		if (o == null){
 			callback('user-not-found');
 		}	else{
 			user = o;
-			pass.hash(password, user.salt, function(err, hash){
-  				if (user.hash == hash) {
+			pwd.hash(password, user.salt, function(err, hash){
+  				if (user.password == hash) {
+  					callback(null,o);
     				console.log("User Successfully logged in to Publisher account ("+username+")");
-    				// to do : session et tout le bordel
   				} else {
   					callback('invalid-password');
   				}
@@ -64,15 +60,15 @@ AM.loginPublisher = function(username, password, callback) {
 
 
 AM.signupStep2 = function(newData, callback) {
-
-console.log("step2");
+	var user;
+	// TO DO
 }
 
-AM.signup = function(newData, callback) {
-	console.log(newData)
-	console.log("------ Trying signup -------");
-	var user;
 
+
+AM.signup = function(newData, callback) {
+	var user;
+	// TO DO : Make a better query please!
 	AdvertiserModel.findOne({username:newData.username}, function(e, o) {
 		if (o){
 			callback('username-taken');
@@ -89,43 +85,43 @@ AM.signup = function(newData, callback) {
 											if (o) {
 												callback('email-taken'); // Email taken by publisher
 											} 	else {
-													console.log("izi");
 													pwd.hash(newData.password, function(e,salt,hash){
-														if(newData.kind === 0) {
-															console.log("Advertiser");
-														var user = new AdvertiserModel({
+														if(newData.kind == 0) {
+															user = new AdvertiserModel({
 												            username: newData.username,
 												            email: newData.email,
 												        	password: hash,
 												            salt: salt,
-												            joined : moment().format('MMMM Do YYYY, h:mm:ss a'),
-												            updated : moment().format('MMMM Do YYYY, h:mm:ss a')});
-												            			user.save(function() {
-																			console.log("Successfully saved new Advertiser "+newData.username+" - "+newData.email);
-												            				//res.send(200);
-												            				//res.end();
-												            			});
-												            	}
-												            
-														
-														if(newData.kind === 1){
-															console.log("Publisher");
-															var user = new PublisherModel({
-												            	username: newData.username,
-													            email: "newData.email",
-													        	password: hash,
-													            salt: salt,
-													            joined: moment().format('MMMM Do YYYY, h:mm:ss a'),
-													            updated : moment().format('MMMM Do YYYY, h:mm:ss a')});
-													            			user.save(function() {
-													            				console.log("Successfully saved new Publisher "+newData.username+" - "+newData.email);
-													            				//res.send(200);
-													            				//res.end();
-													            			});
-													            	}
-													            });
-												        }
+												        	joined: Date.now()});
+												        user.save(function(e,o) {
+												        	if(!e) {
+																console.log("Successfully saved new Advertiser "+newData.username+" - "+newData.email);
+													            callback(null,o);
+												        	} else {
+												        		callback(e);
+												        	}
+												        });
+												        } 						
+														else if(newData.kind == 1){
+															user = new PublisherModel({
+												            username: newData.username,
+													        email: newData.email,
+													        password: hash,
+													        salt: salt,
+													        joined: Date.now()});
+													    user.save(function(e,o) {
+													        if(!e) {
+																console.log("Successfully saved new Publisher "+newData.username+" - "+newData.email);
+														        callback(null,o);
+													        } else {
+													        	callback(e);
+													        }
+													    });
+													    }
+													    else {callback('Not user kind specified');}
 													});
+												 }
+										});
 												}
 										});
 									}
