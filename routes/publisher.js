@@ -1,11 +1,36 @@
+var AM = require('../modules/account-manager.js');
 
-/*
- * GET home page.
- */
 
 exports.index = function(req, res){
-  res.render('index.html', { title: 'Express' });
+  res.render('login-publisher.html', { title: 'Sign in to your Publisher account.' });
 };
+
+exports.signin = function(req, res){
+  AM.loginPublisher(req.param('username'),req.param('password'), function(e,o) {
+      if (!o){
+        res.send(e, 400);
+      } else{
+        req.session.user = o;
+        req.session.kind = "publisher";
+        if (req.param('remember-me') == 'true'){
+          res.cookie('username', o.username, { maxAge: 900000 });
+          res.cookie('password', o.password, { maxAge: 900000 });
+        }
+        res.send(o, 200);
+      }
+  });
+}
+
+exports.default = function(req,res) {
+  if(req.session.kind != "publisher") {
+    res.redirect("/");
+  } else {
+    res.render('publisher-default.html', { title: 'Publisher'});
+  }
+}
+
+
+
 
 exports.ads = function(req, res){
   res.render('index.html', { title: 'Express' });
