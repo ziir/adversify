@@ -39,54 +39,80 @@ app.configure('development', function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'html');
   app.engine('html', require('uinexpress').__express);
+  app.use(express.cookieParser('adversify4ever'));
+  app.use(express.session({ secret : 'adversify-secret'}));
   app.use(express.favicon()); // Middleware favicon, to-do : use this ?
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
-  app.use(express.cookieParser('adversify4ever'));
-  app.use(express.session());
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); // Shown all errors, with stackTrace please
 });
 
 // Mongoose schema to model, TO-DO, get it out of this file ?
 
-var Schema = mongoose.Schema;  
+var Schema = mongoose.Schema;
+
  // Maybe there is something better to do than repeating the schema ?
 var Publisher = new Schema({
     username: { type: String, required: true, match: /^[a-zA-Z0-9-_]+$/, unique: true },  
     password: { type: String, required: true},
     salt: { type: String, required: true},
-    email: { type: String, unique: true, match : /[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}/ },
+    email: { type: String, unique: true, match : /[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}/, required: true },
     modified: { type: Date, default: Date.now },
     joined: {type: Date},
     streetadress: { type: String },
     city: { type: String },
-    country: { type: String }
+    country: { type: String },
+    sites: [Site]
 });
+
+var Site = new Schema({
+    name: { type: String }, 
+    url : { type : String, match : /((http:\/\/|https:\/\/)?(www.)?(([a-zA-Z0-9-]){2,}\.){1,4}([a-zA-Z]){2,6}(\/([a-zA-Z-_\/\.0-9#:?=&;,]*)?)?)/ },
+    description : { type : String },
+    category : { type : String },
+    validated : { type : Boolean } 
+});
+
+var Ad = new Schema({
+    name: {type: String},
+    remuneration: {type: String},
+    kind: {type: String},
+    modified: {type: Date},
+    category: {type:String},
+    validated : { type : Boolean } 
+})
 
 var Advertiser = new Schema({
     username: { type: String, required: true, match: /^[a-zA-Z0-9-_]+$/, unique: true },  
     password: { type: String, required: true},
     salt: { type: String, required: true},
-    email: { type: String, unique: true, match : /[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}/ },
+    email: { type: String, unique: true, match : /[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}/,required: true },
     modified: { type: Date, default: Date.now },
     joined: {type: Date},
     streetadress: { type: String },
     city: { type: String },
-    country: { type: String }
+    country: { type: String },
+    ads: [Ad]
 });
 
 PublisherModel = mongoose.model('publishers', Publisher);
 AdvertiserModel = mongoose.model('advertisers', Advertiser);
+SiteModel = mongoose.model('sites', Site);
+AdModel = mongoose.model('ads', Ad);
+
 
 app.get('/', routes.index);
+app.get('/logout', routes.logout);
 
 app.post('/signup', signup.create);
 app.get('/signup/step2', signup.step2); // Signup step2
 app.post('/signup/step2', signup.step2create);
 
 app.get('/publisher', publisher.index);
+app.get('/publisher/default', publisher.default);
+app.post('/publisher/signin', publisher.signin);
 app.get('/publisher/ads', publisher.ads.list); // List ads
 app.post('/publisher/ads', publisher.ads.create); // Create ad
 app.put('/publisher/ads', publisher.ads.update); // Update COLLECTION of ads
@@ -96,6 +122,8 @@ app.get('/publisher/payments,publisher.payments.index');
 app.get('/publisher/sites',publisher.sites.list);
 
 app.get('/advertiser', advertiser.index);
+app.get('/advertiser/default', advertiser.default);
+app.post('/advertiser/signin', advertiser.signin);
 app.get('/advertiser/ads', advertiser.ads);
 app.get('/advertiser/account', advertiser.account);
 app.get('/advertiser/statistics', advertiser.statistics);
