@@ -18,7 +18,7 @@ $(document).ready(function() {
         	var reg = new RegExp('^[a-z0-9_]+$');
         	if (!reg.test(attributes.username)) {
 	        	validated.isOk = false;
-                $('#sign-container .username').css('border', '2px solid red');
+                $('#sign-container .username').css('border', '1px solid red');
                 validated.err_username = 'Username is not correct';
                 // var error = new event(htmlElement)-> { border rouge, error visible } // un truc du genre
 	        }
@@ -26,13 +26,13 @@ $(document).ready(function() {
         	reg = new RegExp('^[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*@[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*[\.]{1}[a-z]{2,6}$', 'i');
         	if (!reg.test(attributes.email)) {
 	        	validated.isOk = false;
-	        	$('#sign-container .email').css('border', '2px solid red');
+	        	$('#sign-container .email').css('border', '1px solid red');
 	        	validated.err_email = 'Email is not correct';
 	        }
         	//Check if the password is correct
         	if (attributes.password.length < 8) {  //Définir une constante ?
 	        	validated.isOk = false;
-	        	$('#sign-container .password').css('border', '2px solid red');
+	        	$('#sign-container .password').css('border', '1px solid red');
 	        	
 	        	validated.err_pass = 'Password is not correct';
         	}
@@ -94,13 +94,13 @@ $(document).ready(function() {
             });                        // Non ça ne revient pas au même, l'objet ne peut pas être créé dans mon cas? quoique? 
             
             if (type == -1) {
-	            this.$('.kind').css('border', '2px solid red');
+	            this.$('.kind').css('border', '1px solid red');
 	        	validated.err_kind = 'Please Select an account type';
 	        	validated.isOk = false;
             }
             
             if (passwordVal != passwordAgainVal) {
-	            this.$('.password_again').css('border', '2px solid red');
+	            this.$('.password_again').css('border', '1px solid red');
             	validated.err_pass_again = 'Password are not both alike';
             	validated.isOk = false;
             }
