@@ -1,0 +1,82 @@
+        <div id="main" class="marginAuto">
+            <h3>Ad {versify} est en cours de réalisation.</h3>
+            <h1>Advertiser default panel</h1>
+            <div id="signup-forms" class="textCenter">
+                
+                <h2>Advertiser</h2>
+                <div id="sign-container">
+                    <p>
+                        Texte 1
+                    </p>
+                    <div class="ads-overview">
+                        <ul>
+                            <li>Ad 1 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
+                            <li>Ad 2 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
+                            <li>Ad 3 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
+                            <li>Ad 4 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
+                            <li>Ad 5 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
+                        </ul>
+
+                        <h2>Create an ad</h2>
+                        <form method="POST" action="/publisher/ads" class="well">
+                            <input type="text" class="adname clearInput" name="adname" title="Ad Name" value="Ad Name"/>
+                            <select class="adremuneration" name="adremuneration">
+                                <option value="">CPC or CPM?</option>
+                                <option value="cpc">CPC</option>
+                                <option value="cpm">CPM</option>
+                                <option value="cpm">Nevermind</option>
+                            </select>
+                            <select class="adformat" name="adformat">
+                                <option value="">Image or Textual?</option>
+                                <option value="image">Image</option>
+                                <option value="text">Textual</option>
+                            </select>
+                            <label for="addescription">Enter a description for this Ad.</label>
+                            <textarea rows="4" cols="30" name="addescription" id="addescription"></textarea>
+                            <button type="submit" class="btn-primary">Create an Ad</button>
+                        </form>
+
+
+                        <h2>Handle your budget</h2>
+                  <form id="reservation">
+    <label for="budgetrepartition">Choose a repartition for the use of your budget</label><br/>
+    <ul>
+        <li><a href="#">50% CPC | 50% CPM</a> </li>
+        <li><a href="#">100% CPC | 0% CPM</a></li>
+        <li> <a href="#">0% CPC | 100% CPM</a></li>
+    <ul>
+    <select name="budgetrepartition" id="budgetrepartition">
+        <div class="square" style="width:200px;height:200">ROUGE CPC</div>
+        <div class="square" style="width:200px;height:200">ROUGE CPM</div>
+
+<%         var cpm,cpc = 0;
+        for(var i = 0;i <= 100;i++)
+        { %>
+            <option value="<%= i %>"><%= cpc+i %>% CPC | <%=100-i%>% CPM</option>
+       <%  }
+        %>
+    </select>
+</form>
+                    </div>
+                </div>
+            </div>
+        </div>
+     <script type="text/javascript">
+        $(function() {
+        var select = $( "#budgetrepartition" );
+        var slider = $( "<div id='slider'></div>" ).insertAfter( select ).slider({
+            min: 0,
+            max: 100,
+            range: "min",
+            value: select[ 0 ].selectedIndex + 1,
+            slide: function( event, ui ) {
+                select[ 0 ].selectedIndex = ui.value - 1;
+            }
+        });
+        $( "#budgetrepartition" ).change(function() {
+            slider.slider( "value", this.selectedIndex + 1 );
+        });
+    });
+     </script>    
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>

@@ -41,7 +41,7 @@ a img
 	font-size: 14px;
 	border-left: 1px solid rgba(255, 255, 255, 0.05);
 	border-right: 1px solid rgba(0, 0, 0, 0.4);
-	color: rgb(132,116,190);
+	color: #fff;
 	text-decoration: none;
 	text-shadow: 0px -1px 0px black;
 	-webkit-transition-duration: 0.3s;
@@ -49,6 +49,10 @@ a img
 	-o-transition-duration: 0.3s;
 	transition-duration: 0.3s;
 
+}
+
+.header nav {
+  margin-left:20px;
 }
 
 .header nav a:hover
