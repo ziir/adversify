@@ -6,9 +6,6 @@
 var mongoose = require('mongoose');
 var pwd = require('pwd');
 
-// use moment.js for pretty date-stamping //
-var moment = require('moment');
-
 var AM = {};
 
 module.exports = AM;
@@ -26,7 +23,7 @@ AM.loginAdvertiser = function(username, password, callback) {
 			pwd.hash(password, user.salt, function(err, hash){
   				if (user.password == hash) {
   					callback(null,o);
-    				console.log("User Successfully logged in to Publisher account ("+username+")");
+    				console.log("User Successfully logged in to Advertiser account ("+username+")");
   				} else {
   					callback('invalid-password');
   				}
@@ -34,6 +31,32 @@ AM.loginAdvertiser = function(username, password, callback) {
 		}
 	});
 }
+
+
+AM.autoLoginAdvertiser = function(username, password, callback)
+{
+	AdvertiserModel.findOne({username:username}, function(e, o) {
+		if (o){
+			o.password == password ? callback(o) : callback(null);
+		}	else{
+			callback(null);
+		}
+	});
+}
+
+
+AM.autoLoginPublisher = function(username, password, callback)
+{
+	PublisherModel.findOne({username:username}, function(e, o) {
+		if (o){
+			o.password == password ? callback(o) : callback(null);
+		}	else{
+			callback(null);
+		}
+	});
+}
+
+
 
 AM.loginPublisher = function(username, password, callback) {
 	var user;
