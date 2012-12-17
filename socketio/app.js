@@ -26,14 +26,10 @@ io = io.listen(app);
 // Quand une peronne se connecte au serveur
 io.sockets.on('connection', function (socket) {
     // On donne la liste des messages (evenement cree du cote client)
-    socket.emit('recupererMessages', messages);
+
+    socket.emit('getValue', 10);
     // Quand on recoit un nouveau message
-    socket.on('nouveauMessage', function (mess) {
-        // On l'ajout au tableau (variable globale commune a tous les clients connectes au serveur)
-        messages.push(mess);
-        // On envoie a tout les clients connectes (sauf celui qui a appelle l'evenement) le nouveau message
-        socket.broadcast.emit('recupererNouveauMessage', mess);
-    });
+    setTimeout(function()  {socket.emit('getValue',50); },1000);
 });
 
 ///////////////////

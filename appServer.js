@@ -46,7 +46,7 @@ app.configure('development', function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.static(path.join(__dirname, 'public')));
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); // Shown all errors, with stackTrace please
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); // Shown all errors, with stackTrace
 });
 
 // Mongoose schema to model, TO-DO, get it out of this file ?
@@ -64,15 +64,17 @@ var Publisher = new Schema({
     streetadress: { type: String },
     city: { type: String },
     country: { type: String },
-    sites: [Site]
+    websites: [Website]
 });
 
-var Site = new Schema({
+var Website = new Schema({
     name: { type: String }, 
     url : { type : String, match : /((http:\/\/|https:\/\/)?(www.)?(([a-zA-Z0-9-]){2,}\.){1,4}([a-zA-Z]){2,6}(\/([a-zA-Z-_\/\.0-9#:?=&;,]*)?)?)/ },
     description : { type : String },
-    category : { type : String },
-    validated : { type : Boolean } 
+    category : { type : String }, // TO DO : add Enum
+    validated : { type : Boolean, default: false },
+    modified: { type: Date, default: Date.now },
+    created: {type: Date},
 });
 
 var Ad = new Schema({
@@ -99,35 +101,27 @@ var Advertiser = new Schema({
 
 PublisherModel = mongoose.model('publishers', Publisher);
 AdvertiserModel = mongoose.model('advertisers', Advertiser);
-SiteModel = mongoose.model('sites', Site);
 AdModel = mongoose.model('ads', Ad);
 
 
 app.get('/', routes.index);
 app.get('/logout', routes.logout);
 
-app.post('/signup', signup.create);
+app.post('/signup', signup.create); 
 app.get('/signup/step2', signup.step2); // Signup step2
 app.post('/signup/step2', signup.step2create);
 
 app.get('/publisher', publisher.index);
-app.get('/publisher/default', publisher.default);
 app.post('/publisher/signin', publisher.signin);
-app.get('/publisher/ads', publisher.ads.list); // List ads
-app.post('/publisher/ads', publisher.ads.create); // Create ad
-app.put('/publisher/ads', publisher.ads.update); // Update COLLECTION of ads
-app.get('/publisher/statistics',publisher.statistics.index);
-app.get('/publisher/account',publisher.account.index);
-app.get('/publisher/payments,publisher.payments.index');
-app.get('/publisher/sites',publisher.sites.list);
 
-app.get('/advertiser', advertiser.index);
-app.get('/advertiser/default', advertiser.default);
-app.post('/advertiser/signin', advertiser.signin);
-app.get('/advertiser/ads', advertiser.ads);
-app.get('/advertiser/account', advertiser.account);
-app.get('/advertiser/statistics', advertiser.statistics);
+app.get('/publisher/default', publisher.default);
+app.post('/publisher/websites', publisher.createWebsite);
 
+
+app.get('/advertiser', publisher.index);
+app.post('/advertiser/signin', publisher.signin);
+
+app.get('/advertiser/default', publisher.default);
 
 app.get('/socket', routes.socket);
 app.get('/socketview', routes.socketview);
@@ -139,8 +133,6 @@ app.get('/test', function(req, res) {
 app.get('*', routes.pagenotfound);
 
 /* TESTs*/
-
-
 
 
   // Server up and running
