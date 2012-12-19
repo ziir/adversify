@@ -72,6 +72,27 @@ PM.updateWebsite = function(u, w, newData, callback) { // Publisher username, we
 }
 // TO DO
 
+
+PM.getWebsite = function(u, webSite, newData, callback) { // Publisher username, website ID, callback // TO DO
+	var user;
+	PublisherModel.findOne({username : u}, function(e,o) {
+		if(o) {
+			user = o;
+			o.websites.findOne({"url" : url}, function(e,o) {
+				if(!e) {
+					webSite = o;
+					
+				} else {
+					callback(e);
+				}
+			});
+		} else {
+			callback(e);
+		}
+	})
+}
+
+
 PM.deleteWebsite = function(u,w,callback) { // to do ; w._id ???
 	PublisherModel.findOne({username:u}, function(e,o) {
 		if(o) {

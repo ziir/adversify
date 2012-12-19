@@ -72,3 +72,17 @@ exports.getWebsites = function(req,res) {
         });
   }
 }
+
+exports.getWebsite = function(req, res){
+	PM.getWebsites(req.session.username,"http://www.youporn.com",function(e,o){
+		if(!o) {
+              res.send(e, 400);
+          }
+          else {
+            res.send(o, 200);
+          }
+	
+	});
+
+
+}

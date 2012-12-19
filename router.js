@@ -17,6 +17,7 @@ module.exports = function(app) {
 
 	app.get('/publisher/default', publisher.default);
 	app.get('/publisher/websites', publisher.getWebsites);
+	app.get('/publisher/website/single', publishers.getWebsite);
 	app.post('/publisher/websites', publisher.createWebsite);
 
 
