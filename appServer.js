@@ -66,8 +66,8 @@ var Publisher = new Schema({
 });
 
 var Website = new Schema({
-    name: { type: String, required: true }, 
-    url : { type : String, match : /((http:\/\/|https:\/\/)?(www.)?(([a-zA-Z0-9-]){2,}\.){1,4}([a-zA-Z]){2,6}(\/([a-zA-Z-_\/\.0-9#:?=&;,]*)?)?)/, required: true, unique: true },
+    name: { type: String, required: true, unique: false }, 
+    url : { type : String, match : /((http:\/\/|https:\/\/)?(www.)?(([a-zA-Z0-9-]){2,}\.){1,4}([a-zA-Z]){2,6}(\/([a-zA-Z-_\/\.0-9#:?=&;,]*)?)?)/, required: true, unique: false },
     description : { type : String },
     category : { type : String }, // TO DO : add Enum
     validated : { type : Boolean, default: false },
