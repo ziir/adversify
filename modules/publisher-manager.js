@@ -11,11 +11,12 @@ var PM = {};
 module.exports = PM;
 
 PM.addWebsite = function(u,newData,callback) { // Publisher username, new websites data in json and callback
+		console.log(newData);
 		var w = new WebsiteModel({
-			"name":newData.sitename,
-			"category":newData.sitecategory,
-			"description":newData.sitedescription,
-			"url":newData.siteurl,
+			"name":newData.name,
+			"category":newData.category,
+			"description":newData.description,
+			"url":newData.url,
 			"created":Date.now()
 		});
 		w.save(function(e,o){

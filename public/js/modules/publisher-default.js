@@ -1,23 +1,25 @@
 $(document).ready(function() {
 
 	window.PublisherDefaultSite = Backbone.Model.extend({
-    	urlRoot : '/publisher/websites',
+    	//urlRoot : '/publisher/websites',
     	
     	defaults : {
             name : 'myName',
-            url : 'http://www.myURL.com'
+            url : 'http://www.myURL.com',
+            category : 'myCategory',
+            description : 'myDescription'
         },
         
         validate : function(attributes) {
         	$('#sign-container .sitename').css('border', '0px solid red');
         	$('#sign-container .siteurl').css('border', '0px solid red');
 
-        	var validated = new Backbone.Model({err_sitename: '', 
-    											err_siteurl: '',
-    											isOk: true});
-    		validated.isOk = true;
+        	var validated = new Backbone.Model({err_sitename : '', 
+    											err_siteurl  : '',
+    											isOk		 : true});
+    		validated.isOk         = true;
     		validated.err_sitename = '';
-    		validated.err_siteurl = '';
+    		validated.err_siteurl  = '';
         	
         	var reg = new RegExp('^[. - a-z A-Z 0-9 _]+$');
         	if (!reg.test(attributes.name)) {
@@ -29,7 +31,7 @@ $(document).ready(function() {
 	        reg = new RegExp('((http|https)(:\/\/))?([a-zA-Z0-9]+[.]{1}){2}[a-zA-z0-9]+(\/{1}[a-zA-Z0-9]+)*\/?', 'i');
 	        if (!reg.test(attributes.url)) {
 	        	console.log(attributes.url);
-		        validated.isOk = false; //Faire renvoyer false plus tard après avoir fait RegExp
+		        validated.isOk = true; //Faire renvoyer false plus tard après avoir fait RegExp
 		        $('#sign-container .siteurl').css('border', '1px solid red');
 		        validated.err_siteurl = 'URL is not correct';
 	        }
@@ -59,6 +61,7 @@ $(document).ready(function() {
         
         initialize : function() {
             //Nothing to do now
+            publisherDefaultSites.fetch();
         },
         
         events : {
@@ -70,19 +73,28 @@ $(document).ready(function() {
            e.preventDefault();
            
            publisherDefaultSite = new PublisherDefaultSite({
-	           name : $('#sign-container .sitename').val(),
-	           url  : $('#sign-container .siteurl').val()
+	           name 	   : $('#sign-container .sitename').val(),
+	           url  	   : $('#sign-container .siteurl').val(),
+	           category    : $('#sign-container .sitecategory').val(),
+	           description : $('#sign-container .sitedescription').val()
            });
            
+           console.log($('#sign-container .sitecategory').val());
+           console.log($('#sign-container .sitedescription').val());
+           
            siteValidated = publisherDefaultSite.validate({
-           		name : publisherDefaultSite.get('name'),
-           		url  : publisherDefaultSite.get('url')
+           		name 		: publisherDefaultSite.get('name'),
+           		url  		: publisherDefaultSite.get('url'),
+           		category    : publisherDefaultSite.get('category'),
+           		description : publisherDefaultSite.get('description')
            });
            
            if (siteValidated.isOk == true) {
 	           	publisherDefaultSite.save();
+	           	console.log('publisherDefaultSite Saved !');
            } else {
 	            publisherDefaultSite = 0;
+	            console.log('publisherDefaultSite Not Saved !');
            }
            
            //KO BINDING ERRORS
@@ -95,12 +107,13 @@ $(document).ready(function() {
 				    return this;
 			    }
 			});
-			view_model = new ErrorsViewModel(new Backbone.Model({error_webSiteName: siteValidated.err_sitename, 
-																 error_webSiteURL: siteValidated.err_siteurl}));
+			
+			errors_model = new ErrorsViewModel(new Backbone.Model({error_webSiteName: siteValidated.err_sitename, 
+																   error_webSiteURL: siteValidated.err_siteurl}));
 		    //KO APPLY ALL
-		    ko.applyBindings(view_model);
+		    ko.applyBindings(errors_model);
 		    //RELEASE ALL
-		    kb.release(view_model);
+		    kb.release(errors_model);
         },
         
         buildAd : function(e) {
@@ -116,7 +129,10 @@ $(document).ready(function() {
         
     });
     
-    //publisherDefaultSites = new PublisherDefaultSites();
+    
+    
+    publisherDefaultSites = new PublisherDefaultSites();
+    
     publisherDefaultBehavior = new PublisherDefaultBehavior();
 
 });
