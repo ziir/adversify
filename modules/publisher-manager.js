@@ -60,7 +60,6 @@ PM.updateWebsite = function(u, w, newData, callback) { // Publisher username, we
 			WebsiteModel.findOne({_id:w._id}, function(e,o) {
 				if(!e) {
 					w = o;
-					w.
 				} else {
 					callback(e);
 				}

@@ -77,7 +77,7 @@ var Website = new Schema({
 
 var Ad = new Schema({
     name: {type: String},
-    remuneration: [{ cp: {type: String /*To Do: enum cpm or cpc & better field name*/}, { repartition } }],
+    remuneration: [{ cp: {type: String},  repartition: {type: String} }],
     kind: {type: String}, // TO DO : enum Image or textual
     modified: {type: Date},
     category: {type:String},
