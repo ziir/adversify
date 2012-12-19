@@ -26,7 +26,7 @@ i18n.configure({
 
 // Database
 
-mongoose.connect('mongodb://localhost/adversify_database');
+mongoose.connect('mongodb://localhost/adversify_database'); // TO DO : connection pooling
 
 // App config
 
@@ -45,7 +45,7 @@ app.configure('development', function(){
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); // Shown all errors, with stackTrace
 });
 
-require('./router')(app);
+require('./router')(app); // Router file.
 
 // Mongoose schema to model, TO-DO, get it out of this file ?
 
@@ -66,8 +66,8 @@ var Publisher = new Schema({
 });
 
 var Website = new Schema({
-    name: { type: String }, 
-    url : { type : String, match : /((http:\/\/|https:\/\/)?(www.)?(([a-zA-Z0-9-]){2,}\.){1,4}([a-zA-Z]){2,6}(\/([a-zA-Z-_\/\.0-9#:?=&;,]*)?)?)/ },
+    name: { type: String, required: true }, 
+    url : { type : String, match : /((http:\/\/|https:\/\/)?(www.)?(([a-zA-Z0-9-]){2,}\.){1,4}([a-zA-Z]){2,6}(\/([a-zA-Z-_\/\.0-9#:?=&;,]*)?)?)/, required: true, unique: true },
     description : { type : String },
     category : { type : String }, // TO DO : add Enum
     validated : { type : Boolean, default: false },
@@ -77,12 +77,13 @@ var Website = new Schema({
 
 var Ad = new Schema({
     name: {type: String},
-    remuneration: {type: String},
-    kind: {type: String},
+    remuneration: [{ cp: {type: String /*To Do: enum cpm or cpc & better field name*/}, { repartition } }],
+    kind: {type: String}, // TO DO : enum Image or textual
     modified: {type: Date},
     category: {type:String},
-    validated : { type : Boolean } 
-})
+    validated : { type : Boolean },
+    colors : [{textColor: {type : String, default: "#333"}, borderColor: {type: String, default: "#000"}, bgColor: {type:String, default: "#fff"}, titleColor: {type:String, default:"#2672ec"}}] 
+});
 
 var Advertiser = new Schema({
     username: { type: String, required: true, match: /^[a-zA-Z0-9-_]+$/, unique: true },  
@@ -96,6 +97,7 @@ var Advertiser = new Schema({
     country: { type: String },
     ads: [Ad]
 });
+
 
 PublisherModel = mongoose.model('publishers', Publisher);
 AdvertiserModel = mongoose.model('advertisers', Advertiser);
