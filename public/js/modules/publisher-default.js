@@ -50,6 +50,7 @@ $(document).ready(function() {
     
     window.PublisherDefaultSites = Backbone.Collection.extend({
         model : PublisherDefaultSite,
+        url   : '/publisher/websites',
 
         initialize : function() {
             //console.log('PublisherDefaultSites collection Constructor');
@@ -61,7 +62,6 @@ $(document).ready(function() {
         
         initialize : function() {
             //Nothing to do now
-            publisherDefaultSite.fetch();
         },
         
         events : {
@@ -87,6 +87,7 @@ $(document).ready(function() {
            });
            
            if (siteValidated.isOk == true) {
+           		publisherDefaultSites.add(publisherDefaultSite);
 	           	publisherDefaultSite.save();
 	           	console.log('publisherDefaultSite Saved !');
            } else {
@@ -128,7 +129,8 @@ $(document).ready(function() {
     
     
     
-    publisherDefaultSite = new PublisherDefaultSite();
+    publisherDefaultSites = new PublisherDefaultSites();
+    publisherDefaultSites.fetch();
     
     publisherDefaultBehavior = new PublisherDefaultBehavior();
 
