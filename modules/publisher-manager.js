@@ -73,23 +73,14 @@ PM.updateWebsite = function(u, w, newData, callback) { // Publisher username, we
 // TO DO
 
 
-PM.getWebsite = function(u, webSite, newData, callback) { // Publisher username, website ID, callback // TO DO
-	var user;
-	PublisherModel.findOne({username : u}, function(e,o) {
+PM.getWebsite = function(webSite, callback) { // Publisher username, website ID, callback // TO DO
+	WebsiteModel.findOne({url:webSite}, function(e,o) {
 		if(o) {
-			user = o;
-			o.websites.findOne({url : webSite}, function(e,o) {
-				if(!e) {
-					webSite = o;
-					
-				} else {
-					callback(e);
-				}
-			});
+			callback(null,o);
 		} else {
 			callback(e);
 		}
-	})
+	});
 }
 
 

@@ -64,7 +64,7 @@ exports.getWebsites = function(req,res) {
   } else {
         PM.getWebsites(req.session.username,null,null,function(e,o) {
           if(!o) {
-              res.send(e, 400);
+            res.send(e, 400);
           }
           else {
             res.send(o, 200);
@@ -74,15 +74,19 @@ exports.getWebsites = function(req,res) {
 }
 
 exports.getWebsite = function(req, res){
-	PM.getWebsites(req.session.username,"http://www.youporn.com",function(e,o){
-		if(!o) {
+  if(req.session.kind != "publisher") {
+    res.redirect("/");
+  } else {
+  	PM.getWebsite(req.body.url,function(e,o){
+  		if(!o) {
               res.send(e, 400);
-          }
-          else {
-            res.send(o, 200);
-          }
-	
-	});
+            }
+            else {
+              res.send(o, 200);
+            }
+  	
+  	});
+  }
 
 
 }
