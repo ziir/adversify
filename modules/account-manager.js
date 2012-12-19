@@ -10,20 +10,15 @@ var AM = {};
 
 module.exports = AM;
 
-AM.loginAdvertiser = function(username, password, callback) {
-	var user;
-	console.log("----- Login -----");
-	console.log(username+" [-] "+password);
-
-		AdvertiserModel.findOne({username:username}, function(e, o) {
+AM.loginAdvertiser = function(u, password, callback) {
+		AdvertiserModel.findOne({username:u}, function(e, o) {
 		if (o == null){
-			callback('user-not-found');
+			callback('advertiser-not-found');
 		}	else{
-			user = o;
-			pwd.hash(password, user.salt, function(err, hash){
-  				if (user.password == hash) {
+			pwd.hash(password, o.salt, function(err, hash){
+  				if (o.password == hash) {
   					callback(null,o);
-    				console.log("User Successfully logged in to Advertiser account ("+username+")");
+    				console.log("User Successfully logged in to Advertiser account ("+u+")");
   				} else {
   					callback('invalid-password');
   				}
@@ -59,17 +54,15 @@ AM.autoLoginPublisher = function(username, password, callback)
 
 
 AM.loginPublisher = function(username, password, callback) {
-	var user;
 	console.log("----- Login -----");
 	console.log(username+" [-] "+password);
 
 		PublisherModel.findOne({username:username}, function(e, o) {
 		if (o == null){
-			callback('user-not-found');
+			callback('publisher-not-found');
 		}	else{
-			user = o;
-			pwd.hash(password, user.salt, function(err, hash){
-  				if (user.password == hash) {
+			pwd.hash(password, o.salt, function(err, hash){
+  				if (o.password == hash) {
   					callback(null,o);
     				console.log("User Successfully logged in to Publisher account ("+username+")");
   				} else {
@@ -92,6 +85,8 @@ AM.signupStep2 = function(newData, callback) {
 AM.signup = function(newData, callback) {
 	var user;
 	// TO DO : Make a better query please!
+	// Rassembler en une fonction isTaken(username,email,callback);
+	// Rassembler les query par Model
 	AdvertiserModel.findOne({username:newData.username}, function(e, o) {
 		if (o){
 			callback('username-taken');
@@ -108,8 +103,8 @@ AM.signup = function(newData, callback) {
 											if (o) {
 												callback('email-taken'); // Email taken by publisher
 											} 	else {
-													pwd.hash(newData.password, function(e,salt,hash){
-														if(newData.kind == 0) {
+													pwd.hash(newData.password, function(e,salt,hash){ // TO;DO ; voir apply sur modele commun
+														if(newData.kind == 0) { // faire un json commun 
 															user = new AdvertiserModel({
 												            username: newData.username,
 												            email: newData.email,

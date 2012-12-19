@@ -1,13 +1,12 @@
-var AM = require('../modules/account-manager.js');
-
+var PM = require('../modules/publisher-manager.js');
 
 exports.index = function(req, res){
   if(req.cookies.username == undefined || req.cookies.password == undefined){
     res.render('login-publisher.html', { title: 'Sign in to your Publisher account.' });
   } else {
-    AM.autoLoginPublisher(req.cookies.username, req.cookies.password, function(o){
+    PM.autoLogin(req.cookies.username, req.cookies.password, function(o){
       if (o != null){
-        req.session.user = o;
+        req.session.username = o.username;
         req.session.kind = "publisher";
         res.redirect('/publisher/default');
       } else{
@@ -19,11 +18,11 @@ exports.index = function(req, res){
 
 exports.signin = function(req, res){
   console.log(req.body);
-  AM.loginPublisher(req.param('username'),req.param('password'), function(e,o) {
+  PM.login(req.param('username'),req.param('password'), function(e,o) {
       if (!o){
         res.send(e, 400);
       } else{
-        req.session.user = o;
+        req.session.username = o.username;
         req.session.kind = "publisher";
         if (req.param('remember-me') == 'on'){
           res.cookie('username', o.username, { maxAge: 900000 });
@@ -42,41 +41,34 @@ exports.default = function(req,res) {
   }
 }
 
+exports.createWebsite = function(req,res) {
+  console.log("Publisher attempt to create Website :");
+  if(req.session.kind != "publisher") {
+    res.redirect("/");
+  } else {
+        PM.addWebsite(req.session.username,req.body,function(e,o) {
+      if(!o) {
+          res.send(e, 400);
+      }
+      else {
+        res.send(o, 200);
+      }
+    });
+  }
+}
 
-
-
-exports.ads = function(req, res){
-  res.render('index.html', { title: 'Express' });
-};
-
-	exports.ads.list = function(req, res){
-  		res.render('index.html', { title: 'Express' });
-	};
-
-	exports.ads.create = function(req, res){
-  		res.render('index.html', { title: 'Express' });
-	};
-
-	exports.ads.update = function(req, res){
-  		res.render('index.html', { title: 'Express' });
-	};
-
-	exports.ads.delete = function(req, res){
-  		res.render('index.html', { title: 'Express' });
-	};
-
-exports.statistics = function(req, res){
-  res.render('index.html', { title: 'Express' });
-};
-
-exports.account = function(req, res){
-  res.render('index.html', { title: 'Express' });
-};
-
-exports.payments = function(req, res){
-  res.render('index.html', { title: 'Express' });
-};
-
-exports.sites = function(req, res){
-  res.render('index.html', { title: 'Express' });
-};
+exports.getWebsites = function(req,res) {
+  console.log("Publisher attempt to get single website");
+  if(req.session.kind != "publisher") {
+    res.redirect("/");
+  } else {
+        PM.getWebsites(req.session.username,null,null,function(e,o) {
+          if(!o) {
+              res.send(e, 400);
+          }
+          else {
+            res.send(o, 200);
+          }
+        });
+  }
+}
