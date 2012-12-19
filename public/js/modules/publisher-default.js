@@ -1,12 +1,12 @@
 $(document).ready(function() {
 
 	window.PublisherDefaultSite = Backbone.Model.extend({
-    	//urlRoot : '/publisher/websites',
+    	urlRoot : '/publisher/websites',
     	
     	defaults : {
-            name : 'myName',
-            url : 'http://www.myURL.com',
-            category : 'myCategory',
+            name 		: 'myName',
+            url  : 'http://www.myURL.com',
+            category 	: 'myCategory',
             description : 'myDescription'
         },
         
@@ -61,7 +61,7 @@ $(document).ready(function() {
         
         initialize : function() {
             //Nothing to do now
-            publisherDefaultSites.fetch();
+            publisherDefaultSite.fetch();
         },
         
         events : {
@@ -74,17 +74,14 @@ $(document).ready(function() {
            
            publisherDefaultSite = new PublisherDefaultSite({
 	           name 	   : $('#sign-container .sitename').val(),
-	           url  	   : $('#sign-container .siteurl').val(),
+	           url  : $('#sign-container .siteurl').val(),
 	           category    : $('#sign-container .sitecategory').val(),
 	           description : $('#sign-container .sitedescription').val()
            });
            
-           console.log($('#sign-container .sitecategory').val());
-           console.log($('#sign-container .sitedescription').val());
-           
            siteValidated = publisherDefaultSite.validate({
            		name 		: publisherDefaultSite.get('name'),
-           		url  		: publisherDefaultSite.get('url'),
+           		url	: publisherDefaultSite.get('websiteurl'),
            		category    : publisherDefaultSite.get('category'),
            		description : publisherDefaultSite.get('description')
            });
@@ -131,7 +128,7 @@ $(document).ready(function() {
     
     
     
-    publisherDefaultSites = new PublisherDefaultSites();
+    publisherDefaultSite = new PublisherDefaultSite();
     
     publisherDefaultBehavior = new PublisherDefaultBehavior();
 
