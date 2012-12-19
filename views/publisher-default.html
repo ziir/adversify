@@ -1,3 +1,4 @@
+        <script type="text/javascript" src="/js/modules/publisher-default.js"> </script>
         <div id="main" class="marginAuto">
             <h3>Ad {versify} est en cours de réalisation.</h3>
             <h1>Publisher default panel</h1>
@@ -9,6 +10,7 @@
                         Texte 1
                     </p>
                     <div class="sites-overview">
+                        <!--
                         <ul>
                             <li>Site 1 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
                             <li>Site 2 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
@@ -16,10 +18,33 @@
                             <li>Site 4 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
                             <li>Site 5 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
                         </ul>
+                        
+                        <table>
+						    <thead>
+						        <tr>
+						        	<th>Name</th>
+						        	<th>URL</th>
+						        </tr>
+						    </thead>
+						    <tbody data-bind="foreach: website">
+						        <tr>
+						            <td data-bind="text: wbname"></td>
+						            <td data-bind="text: wburl"></td>
+						        </tr>
+						    </tbody>
+						</table>
+						-->
+						
                         <h2>Ajouter un site</h2>
+<<<<<<< HEAD
+                        <form method="POST" action="/publisher/sites" class="well" id="addWebSiteForm">
+                        		<span data-bind="text: error_webSiteName"></span>
+=======
                         <form method="POST" action="/publisher/websites" class="well">
+>>>>>>> ff630eec6e7053f016762704946007d92b7ad0c7
                             <input type="text" class="sitename clearInput" name="sitename" title="Site Name" value="Site Name"/>
-                            <input type="text" class="siteurl clearInput" name="siteurl" title="Site URL" value="Site URL"/>
+                            	<span data-bind="text: error_webSiteURL"></span>
+                            <input type="text" class="siteurl clearInput" name="siteurl" title="Site URL" value="http://www.facebook.com"/>
                             <select class="sitecategory">
                                 <option value="">Site Main Category</option>
                                 <option value="1">News & Informations</option>
@@ -36,7 +61,7 @@
                                 <option value="12">Sports</option>
                             </select>
                             <label for="sitedescription">Enter a description for this website.</label>
-                            <textarea rows="4" cols="30" name="sitedescription" id="sitedescription">Desciption de votre site</textarea>
+                            <textarea class="clearInput" rows="4" cols="30" name="sitedescription" id="sitedescription">Desciption de votre site</textarea>
                             <button type="submit" class="btn-primary">Add this website</button>
                         </form>
                     </div>
@@ -49,7 +74,7 @@
                             <li>Ad 5 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
                         </ul>
                         <h2>Create an ad</h2>
-                        <form method="POST" action="/publisher/ads" class="well">
+                        <form method="POST" action="/publisher/ads" class="well" id="addAdForm">
                             <input type="text" class="adname clearInput" name="adname" title="Ad Name" value="Ad Name"/>
                             <select class="adremuneration" name="adremuneration">
                                 <option value="">CPC or CPM?</option>
@@ -71,3 +96,4 @@
             </div>
         </div>
      </div>
+     
