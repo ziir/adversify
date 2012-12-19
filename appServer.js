@@ -5,10 +5,6 @@
 
 var express = require('express')
   , i18n = require("i18n")
-  , routes = require('./routes')
-  , signup = require('./routes/signup')
-  , publisher = require('./routes/publisher')
-  , advertiser = require('./routes/advertiser')
   , http = require('http')
   , mongoose = require('mongoose')
   , path = require('path');
@@ -48,6 +44,8 @@ app.configure('development', function(){
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); // Shown all errors, with stackTrace
 });
+
+require('./router')(app);
 
 // Mongoose schema to model, TO-DO, get it out of this file ?
 
@@ -101,36 +99,9 @@ var Advertiser = new Schema({
 
 PublisherModel = mongoose.model('publishers', Publisher);
 AdvertiserModel = mongoose.model('advertisers', Advertiser);
+WebsiteModel = mongoose.model('websites', Website);
 AdModel = mongoose.model('ads', Ad);
 
-
-app.get('/', routes.index);
-app.get('/logout', routes.logout);
-
-app.post('/signup', signup.create); 
-app.get('/signup/step2', signup.step2); // Signup step2
-app.post('/signup/step2', signup.step2create);
-
-app.get('/publisher', publisher.index);
-app.post('/publisher/signin', publisher.signin);
-
-app.get('/publisher/default', publisher.default);
-app.post('/publisher/websites', publisher.createWebsite);
-
-
-app.get('/advertiser', publisher.index);
-app.post('/advertiser/signin', publisher.signin);
-
-app.get('/advertiser/default', publisher.default);
-
-app.get('/socket', routes.socket);
-app.get('/socketview', routes.socketview);
-
-app.get('/test', function(req, res) {
-      res.render('test.html', { title : 'Test'});
-  });
-
-app.get('*', routes.pagenotfound);
 
 /* TESTs*/
 
