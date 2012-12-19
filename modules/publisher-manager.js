@@ -10,7 +10,7 @@ var PM = {};
 
 module.exports = PM;
 
-PM.addWebsite = function(u,newData,callback) {
+PM.addWebsite = function(u,newData,callback) { // Publisher username, new websites data in json and callback
 		var w = new WebsiteModel({
 			"name":newData.sitename,
 			"category":newData.sitecategory,
@@ -40,15 +40,46 @@ PM.addWebsite = function(u,newData,callback) {
 			//http://stackoverflow.com/questions/13412579/node-express-mongoose-sub-collection-document-insert?rq=1
 }
 
-PM.getWebsites = function(u,nb,sort,callback) {
+PM.getWebsites = function(u,nb,sort,callback) { // Publisher username, number of websites to display, sort criteria and callback
 	PublisherModel.findOne({username:u}, function(e,o) {
-		if(!e) {
+		if(o) {
 			console.log(o.websites);
 			callback(null,o.websites);
 		} else {
 			callback(e);
 		}
 	})
+}
+// TO DO
+
+PM.updateWebsite = function(u, w, newData, callback) { // Publisher username, website ID, callback // TO DO
+	var user;
+	PublisherModel.findOne({username:u}, function(e,o) {
+		if(o) {
+			user = o;
+			WebsiteModel.findOne({_id:w._id}, function(e,o) {
+				if(!e) {
+					w = o;
+					w.
+				} else {
+					callback(e);
+				}
+			});
+		} else {
+			callback(e);
+		}
+	})
+}
+// TO DO
+
+PM.deleteWebsite = function(u,w,callback) { // to do ; w._id ???
+	PublisherModel.findOne({username:u}, function(e,o) {
+		if(o) {
+
+		} else {
+			callback(e);
+		}
+	});
 }
 
 PM.autoLogin = AM.autoLoginPublisher;
