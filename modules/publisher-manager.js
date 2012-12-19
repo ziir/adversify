@@ -77,7 +77,7 @@ PM.getWebsite = function(u, webSite, newData, callback) { // Publisher username,
 	PublisherModel.findOne({username : u}, function(e,o) {
 		if(o) {
 			user = o;
-			o.websites.findOne({"url" : url}, function(e,o) {
+			o.websites.findOne({url : webSite}, function(e,o) {
 				if(!e) {
 					webSite = o;
 					
