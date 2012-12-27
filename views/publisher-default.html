@@ -19,6 +19,7 @@
                             <li>Site 5 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
                         </ul>
                         
+                        -->
                         <table>
 						    <thead>
 						        <tr>
@@ -26,13 +27,22 @@
 						        	<th>URL</th>
 						        </tr>
 						    </thead>
-						    <tbody data-bind="foreach: website">
+						    <tbody data-bind="foreach: websites">
 						        <tr>
 						            <td data-bind="text: wbname"></td>
 						            <td data-bind="text: wburl"></td>
 						        </tr>
 						    </tbody>
 						</table>
+						
+						
+						<!--
+						<ul data-bind="foreach: websites">
+							<li>
+								<a data-bind="text: wbname"></a>
+								<a data-bind="text: wburl"></a>
+							</li>
+						</ul>
 						-->
 						
                         <h2>Ajouter un site</h2>
@@ -63,6 +73,7 @@
                         </form>
                     </div>
                     <div class="ads-overview">
+                    	<!--
                         <ul>
                             <li>Ad 1 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
                             <li>Ad 2 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
@@ -70,22 +81,42 @@
                             <li>Ad 4 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
                             <li>Ad 5 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
                         </ul>
+                        -->
+                        
+                        <table>
+						    <thead>
+						        <tr>
+						        	<th>Name</th>
+						        </tr>
+						    </thead>
+						    <tbody data-bind="foreach: ads">
+						        <tr>
+						            <td data-bind="text: adname"></td>
+						        </tr>
+						    </tbody>
+						</table>
+                        
+                        
                         <h2>Create an ad</h2>
                         <form method="POST" action="/publisher/ads" class="well" id="addAdForm">
                             <input type="text" class="adname clearInput" name="adname" title="Ad Name" value="Ad Name"/>
+                            	<span data-bind="text: error_adName"></span>
                             <select class="adremuneration" name="adremuneration">
                                 <option value="">CPC or CPM?</option>
                                 <option value="cpc">CPC</option>
                                 <option value="cpm">CPM</option>
                                 <option value="cpm">Nevermind</option>
                             </select>
+                            	<span data-bind="text: error_adMode"></span>
                             <select class="adformat" name="adformat">
                                 <option value="">Image or Textual?</option>
                                 <option value="image">Image</option>
                                 <option value="text">Textual</option>
                             </select>
+                            	<span data-bind="text: error_adKind"></span>
                             <label for="addescription">Enter a description for this Ad.</label>
                             <textarea rows="4" cols="30" name="addescription" id="addescription"></textarea>
+                            	<span data-bind="text: error_adDescription"></span>
                             <button type="submit" class="btn-primary">Create an Ad</button>
                         </form>
                     </div>
