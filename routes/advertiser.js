@@ -47,7 +47,7 @@ exports.createAd = function(req,res) {
   if(req.session.kind != "advertiser") {
     res.redirect("/");
   } else {
-        AdM.addWebsite(req.session.username,req.body,function(e,o) {
+        AdM.addAd(req.session.username,req.body,function(e,o) {
       if(!o) {
           res.send(e, 400);
       }
