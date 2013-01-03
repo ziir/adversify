@@ -50,6 +50,36 @@ AdM.getAds = function(u,nb,sort,callback) {
   })
 }
 
+AdM.addAd = function(u,newData,callback) {
+      console.log(newData);
+    var a = new AdModel({
+      "name":newData.name,
+      "category":newData.category,
+      "description":newData.description,
+      "url":newData.url,
+      "created":Date.now()
+    });
+    a.save(function(e,o){
+      if(!e) {
+        AdvertiserModel.findOneAndUpdate(
+          { username:u },
+          { $push: { ads: o }},
+          { safe: true, upsert: true },
+          function(e, o) {
+            if(e) {
+              callback(e);
+            } else {
+              callback(null,o);
+            }
+        }); 
+      } else {
+        callback(e);
+      }
+    });
+
+
+}
+
 AdM.autoLogin = AM.autoLoginAdvertiser;
 
 AdM.login = AM.loginAdvertiser;

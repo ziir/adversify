@@ -42,7 +42,7 @@ exports.default = function(req,res) {
   }
 }
 
-exports.createWebsite = function(req,res) {
+exports.createAd = function(req,res) {
   console.log("Advertiser attempt to create Website :");
   if(req.session.kind != "advertiser") {
     res.redirect("/");
