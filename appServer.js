@@ -49,60 +49,8 @@ require('./router')(app); // Router file.
 
 // Mongoose schema to model, TO-DO, get it out of this file ?
 
-var Schema = mongoose.Schema;
-
- // Maybe there is something better to do than repeating the schema ?
-var Publisher = new Schema({
-    username: { type: String, required: true, match: /^[a-zA-Z0-9-_]+$/, unique: true },  
-    password: { type: String, required: true},
-    salt: { type: String, required: true},
-    email: { type: String, unique: true, match : /[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}/, required: true },
-    modified: { type: Date, default: Date.now },
-    joined: {type: Date},
-    streetadress: { type: String },
-    city: { type: String },
-    country: { type: String },
-    websites: [Website]
-});
-
-var Website = new Schema({
-    name: { type: String, required: true }, 
-    url : { type : String, match : /((http:\/\/|https:\/\/)?(www.)?(([a-zA-Z0-9-]){2,}\.){1,4}([a-zA-Z]){2,6}(\/([a-zA-Z-_\/\.0-9#:?=&;,]*)?)?)/, required: true, unique: true },
-    description : { type : String },
-    category : { type : String }, 
-    validated : { type : Boolean, default: false },
-    modified: { type: Date, default: Date.now },
-    created: {type: Date}
-});
-
-var Ad = new Schema({
-    name: {type: String},
-    remuneration: [{ cp: {type: String ,enum: ['cpm', 'cpc']}, repartition: [{ cpm: {type:Number}, cpc: {type:Number}}] }],
-    kind: { type : String, enum: ['image','text'] }, 
-    modified: {type: Date},
-    created: {type: Date},
-    validated : { type : Boolean },
-    colors : [{textColor: {type : String, default: "#333"}, borderColor: {type: String, default: "#000"}, bgColor: {type:String, default: "#fff"}, titleColor: {type:String, default:"#2672ec"}}] 
-});
-
-var Advertiser = new Schema({
-    username: { type: String, required: true, match: /^[a-zA-Z0-9-_]+$/, unique: true },  
-    password: { type: String, required: true},
-    salt: { type: String, required: true},
-    email: { type: String, unique: true, match : /[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}/,required: true },
-    modified: { type: Date, default: Date.now },
-    joined: {type: Date},
-    streetadress: { type: String },
-    city: { type: String },
-    country: { type: String },
-    ads: [Ad]
-});
-
-
-PublisherModel = mongoose.model('publishers', Publisher);
-AdvertiserModel = mongoose.model('advertisers', Advertiser);
-WebsiteModel = mongoose.model('websites', Website);
-AdModel = mongoose.model('ads', Ad);
+var Advertisers = require('./schemas/Advertisers.js');
+var Publishers = require('./schemas/Publishers.js');
 
 
 /* TESTs*/

@@ -19,7 +19,7 @@
                             <li>Site 5 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
                         </ul>
                         
-                        -->
+                        
                         <table>
 						    <thead>
 						        <tr>
@@ -34,7 +34,16 @@
 						        </tr>
 						    </tbody>
 						</table>
+						-->
 						
+						<ul data-bind="foreach: websites">
+							<li>
+								<a data-bind="text: wbname"></a>
+								<a data-bind="text: wburl"></a>
+								<a href="#">Modifier</a>
+								<a href="#">Supprimer</a>
+							</li>
+						</ul>
 						
 						<!--
 						<ul data-bind="foreach: websites">
@@ -81,7 +90,7 @@
                             <li>Ad 4 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
                             <li>Ad 5 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
                         </ul>
-                        -->
+                        
                         
                         <table>
 						    <thead>
@@ -95,6 +104,14 @@
 						        </tr>
 						    </tbody>
 						</table>
+						
+						-->
+						
+						<ul data-bind="foreach: ads">
+							<li>
+								<a data-bind="text: adname"></a>
+							</li>
+						</ul>
                         
                         
                         <h2>Create an ad</h2>
