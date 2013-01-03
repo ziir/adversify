@@ -49,8 +49,8 @@ require('./router')(app); // Router file.
 
 // Mongoose schema to model, TO-DO, get it out of this file ?
 
-var Advertisers = require('./schemas/Advertisers.js');
-var Publishers = require('./schemas/Publishers.js');
+require('./schemas/Advertisers.js');
+require('./schemas/Publishers.js');
 
 
 /* TESTs*/
