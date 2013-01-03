@@ -73,3 +73,26 @@ exports.getWebsites = function(req,res) {
         });
   }
 }
+
+exports.profile = function(req,res) {
+    if(req.session.kind != "advertiser") {
+    res.redirect("/");
+  } else {
+    res.render('advertiser-profile.html', { title: 'Publisher Profile'});
+  }
+}
+
+exports.updateProfile = function(req,res) {
+    if(req.session.kind != "advertiser") {
+    res.redirect("/");
+  } else 
+  console.log(req.body);
+        AdM.updateAccount(req.body,function(e,o) {
+          if(!o) {
+              res.send(e, 400);
+          }
+          else {
+            res.send(o, 200);
+          }
+        });
+  }

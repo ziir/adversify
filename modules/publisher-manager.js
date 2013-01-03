@@ -94,6 +94,8 @@ PM.deleteWebsite = function(u,w,callback) { // to do ; w._id ???
 	});
 }
 
+PM.updateAccount = AM.updatePublisher;
+
 PM.autoLogin = AM.autoLoginPublisher;
 
 PM.login = AM.loginPublisher;

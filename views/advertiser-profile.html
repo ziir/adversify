@@ -1,0 +1,41 @@
+        <script type="text/javascript" src="/js/modules/publisher-default.js"> </script>
+        <div id="main" class="marginAuto">
+            <h3>Ad {versify} est en cours de réalisation.</h3>
+            <h1>Publisher default panel</h1>
+            <div id="signup-forms" class="textCenter">
+                
+                <h2>Publisher</h2>
+                <div id="sign-container">
+            
+                        <h2>Edit profile</h2>
+                        <form method="POST" action="/publisher/sites" class="well" id="addWebSiteForm">
+                        		<span data-bind="text: error_webSiteName"></span>
+                        <form method="POST" action="/publisher/websites" class="well">
+                            <input type="text" class="sitename clearInput" name="sitename" title="Site Name" value="Site Name"/>
+                            	<span data-bind="text: error_webSiteURL"></span>
+                            <input type="text" class="siteurl clearInput" name="siteurl" title="Site URL" value="http://www.facebook.com"/>
+                            <select class="sitecategory">
+                                <option value="">Site Main Category</option>
+                                <option value="1">News & Informations</option>
+                                <option value="2">Communities</option>
+                                <option value="3">Economy & Finances</option>
+                                <option value="4">Jobs & Trainning</option>
+                                <option value="5">Computer science</option>
+                                <option value="6">Games</option>
+                                <option value="7">Health</option>
+                                <option value="8">Entertainment</option>
+                                <option value="9">Technology</option>
+                                <option value="10">Shopping & Consumerism</option>
+                                <option value="11">Travel</option>
+                                <option value="12">Sports</option>
+                            </select>
+                            <label for="sitedescription">Enter a description for this website.</label>
+                            <textarea class="clearInput sitedescription" rows="4" cols="30" name="sitedescription" id="sitedescription">Desciption de votre site</textarea>
+                            <button type="submit" class="btn-primary">Add this website</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+     

@@ -15,6 +15,9 @@ module.exports = function(app) {
 	app.get('/publisher', publisher.index);
 	app.post('/publisher/signin', publisher.signin);
 
+	app.get('/publisher/profile', publisher.profile);
+	app.post('/publisher/profile', publisher.updateProfile);
+
 	app.get('/publisher/default', publisher.default);
 	app.get('/publisher/websites', publisher.getWebsites);
 	app.get('/publisher/websites/single', publisher.getWebsite);
@@ -23,6 +26,9 @@ module.exports = function(app) {
 
 	app.get('/advertiser', advertiser.index);
 	app.post('/advertiser/signin', advertiser.signin);
+
+	app.get('/advertiser/profile', advertiser.profile);
+	app.post('/advertiser/profile', advertiser.updateProfile);
 
 	app.get('/advertiser/default', advertiser.default);
 	app.get('/advertiser/ads', advertiser.getAds);

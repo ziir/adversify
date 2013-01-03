@@ -87,6 +87,29 @@ exports.getWebsite = function(req, res){
   	
   	});
   }
+}
 
+exports.profile = function(req,res) {
+    if(req.session.kind != "publisher") {
+    res.redirect("/");
+  } else {
+    res.render('publisher-profile.html', { title: 'Publisher Profile'});
+  }
+}
 
+exports.updateProfile = function(req,res) {
+    if(req.session.kind != "publisher") {
+    res.redirect("/");
+  } else {
+      console.log(req.body);
+
+        PM.updateAccount(req.body,function(e,o) {
+          if(!o) {
+              res.send(e, 400);
+          }
+          else {
+            res.send(o, 200);
+          }
+        });
+  }
 }

@@ -80,6 +80,8 @@ AdM.addAd = function(u,newData,callback) {
 
 }
 
+AdM.updateAccount = AM.updateAdvertiser;
+
 AdM.autoLogin = AM.autoLoginAdvertiser;
 
 AdM.login = AM.loginAdvertiser;

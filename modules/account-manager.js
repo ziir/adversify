@@ -184,3 +184,48 @@ AM.validateLink = function(email, passHash, callback)
 		}
 	});
 }
+
+AM.updateAdvertiser = function(newData, callback) {
+  var a = new AdvertiserModel({
+    "email":newData.email,
+    "city":newData.city,
+    "street-adress":newData.streetadress,
+    "phone":newData.phone,
+    "country":newData.country
+  });
+  console.log(a);
+  AdvertiserModel.findOneAndUpdate(
+    { username : newData.username },
+    { $set : a },
+    { safe: true, upsert: true },
+      function(e, o) {
+            if(e) {
+              callback(e);
+            } else {
+              callback(null,o);
+            }
+        });
+}
+
+AM.updatePublisher = function(newData, callback) {
+  var a = new PublisherModel({
+    "email":newData.email,
+    "city":newData.city,
+    "street-adress":newData.streetadress,
+    "phone":newData.phone,
+    "country":newData.country
+  });
+  console.log(a);
+
+  PublisherModel.findOneAndUpdate(
+    { username : newData.username },
+    { $set : a },
+    { safe: true, upsert: true },
+      function(e, o) {
+            if(e) {
+              callback(e);
+            } else {
+              callback(null,o);
+            }
+        });
+}
