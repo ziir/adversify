@@ -8,15 +8,23 @@
             
                         <h2>Edit profile</h2>
 
-                        <form method="POST" action="/advertiser/profile" class="well">
+                        <form method="POST" action="/publisher/profile" class="well">
+                            <input type="email" class="email clearInput" name="email" title="Email" value="Email"/>
                             <input type="text" class="streetadress clearInput" name="streetadress" title="Street adress" value="Street adress"/>
                             <input type="text" class="city clearInput" name="city" title="City" value="City"/>
                             <input type="text" class="phone clearInput" name="phone" title="Phone number" value="Phone number"/>
-                            <select class="country">
+                            <select class="country" name="country">
                                 <option value="">Choose country</option>
                                 <option value="FR">France</option>
                             </select>
-                            <button type="submit" class="btn-primary">Add this website</button>
+                            <button type="submit" class="btn-primary">Update profile</button>
+                        </form>
+
+                        <form method="POST" action="/publisher/passwordChange" class="well">
+                            <input type="password" value="passwordold" name="passwordold" class="passwordold clearInput" title="passwordold">
+                            <input type="password" value="password" name="password" class="password clearInput" title="password">
+                            <input type="password" value="passwordvalid" name="passwordvalid" class="passwordvalid clearInput" title="passwordvalid">
+                            <button type="submit" class="btn-primary">Update password</button>
                         </form>
                     </div>
                 </div>

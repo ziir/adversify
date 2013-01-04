@@ -85,3 +85,5 @@ AdM.updateAccount = AM.updateAdvertiser;
 AdM.autoLogin = AM.autoLoginAdvertiser;
 
 AdM.login = AM.loginAdvertiser;
+
+AdM.get = AM.getAdvertiser;
