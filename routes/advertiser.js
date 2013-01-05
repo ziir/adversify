@@ -86,7 +86,6 @@ exports.updateProfile = function(req,res) {
     if(req.session.kind != "advertiser") {
     res.redirect("/");
   } else 
-  console.log(req.body);
         AdM.updateAccount(req.body,function(e,o) {
           if(!o) {
               res.send(e, 400);

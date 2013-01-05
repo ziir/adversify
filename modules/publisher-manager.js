@@ -103,3 +103,5 @@ PM.login = AM.loginPublisher;
 PM.get = AM.getPublisher;
 
 PM.getProfile = AM.getPublisherProfile;
+
+PM.setPassword = PM.setPassword;

@@ -149,7 +149,7 @@ AM.signup = function(newData, callback) {
 
 }
 
-
+// TO DO AM.checkPassword();
 AM.setPassword = function(u, oldPass, newPass, callback)
 {
 	AdvertiserModel.findOne({username:u}, function(e, o){
@@ -204,7 +204,7 @@ AM.updateAdvertiser = function(newData, callback) {
             } else {
               callback(null,o);
             }
-        });
+    });
 }
 
 AM.updatePublisher = function(u,newData, callback) {
@@ -259,7 +259,7 @@ AM.getPublisherProfile = function(u, callback) {
 				phone : o.phone,
 				country : o.country
 			}
-			callback(null,user)
+			callback(null,user);
 		} else {
 			callback(e);
 		}

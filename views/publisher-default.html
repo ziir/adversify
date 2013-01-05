@@ -1,40 +1,17 @@
         <script type="text/javascript" src="/js/modules/publisher-default.js"> </script>
         <div id="main" class="marginAuto">
-            <h3>Ad {versify} est en cours de réalisation.</h3>
+            <div id="settings-nav" class="menu-container floatLeft">
+                <ul class="menu">
+                    <li>Websites</li>
+                    <li>Payments History</li>
+                    <li>Ads</li>
+                    <li><a href="/profile" class="">Profile</a></li>
+                    <li>Security History</li>
+                </ul>
+            </div>
             <h1>Publisher default panel</h1>
             <div id="signup-forms" class="textCenter">
-                
-                <h2>Publisher</h2>
-                <div id="sign-container">
-                    <p>
-                        Texte 1
-                    </p>
                     <div class="sites-overview">
-                        <!--
-                        <ul>
-                            <li>Site 1 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
-                            <li>Site 2 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
-                            <li>Site 3 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
-                            <li>Site 4 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
-                            <li>Site 5 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
-                        </ul>
-                        
-                        
-                        <table>
-						    <thead>
-						        <tr>
-						        	<th>Name</th>
-						        	<th>URL</th>
-						        </tr>
-						    </thead>
-						    <tbody data-bind="foreach: websites">
-						        <tr>
-						            <td data-bind="text: wbname"></td>
-						            <td data-bind="text: wburl"></td>
-						        </tr>
-						    </tbody>
-						</table>
-						-->
 						
 						<ul data-bind="foreach: websites">
 							<li>
@@ -44,15 +21,6 @@
 								<a href="#">Supprimer</a>
 							</li>
 						</ul>
-						
-						<!--
-						<ul data-bind="foreach: websites">
-							<li>
-								<a data-bind="text: wbname"></a>
-								<a data-bind="text: wburl"></a>
-							</li>
-						</ul>
-						-->
 						
                         <h2>Ajouter un site</h2>
                         <form method="POST" action="/publisher/sites" class="well" id="addWebSiteForm">
@@ -82,31 +50,7 @@
                         </form>
                     </div>
                     <div class="ads-overview">
-                    	<!--
-                        <ul>
-                            <li>Ad 1 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
-                            <li>Ad 2 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
-                            <li>Ad 3 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
-                            <li>Ad 4 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
-                            <li>Ad 5 <a href="#">Modifier</a> <a href="">Supprimer</a></li>
-                        </ul>
-                        
-                        
-                        <table>
-						    <thead>
-						        <tr>
-						        	<th>Name</th>
-						        </tr>
-						    </thead>
-						    <tbody data-bind="foreach: ads">
-						        <tr>
-						            <td data-bind="text: adname"></td>
-						        </tr>
-						    </tbody>
-						</table>
-						
-						-->
-						
+
 						<ul data-bind="foreach: ads">
 							<li>
 								<a data-bind="text: adname"></a>
