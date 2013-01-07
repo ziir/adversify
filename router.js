@@ -1,7 +1,8 @@
   var routes = require('./routes')
   , signup = require('./routes/signup')
   , publisher = require('./routes/publisher')
-  , advertiser = require('./routes/advertiser');
+  , advertiser = require('./routes/advertiser')
+  , delivery = require('./routes/delivery');
 
 module.exports = function(app) {
 
@@ -45,6 +46,8 @@ module.exports = function(app) {
 	app.get('/test', function(req, res) {
 	      res.render('test.html', { title : 'Test'});
 	  });
+
+	app.get('/h/c/:r', delivery.createHash);
 
 	app.get('*', routes.pagenotfound);
 

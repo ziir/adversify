@@ -140,7 +140,7 @@ exports.getProfile = function(req,res) {
   }  
 }
 
-
+/*
 
 // NOT TESTED PASSWORD CHANGE
 exports.changePassword = function(req,res) {
@@ -162,4 +162,4 @@ exports.changePassword = function(req,res) {
 
     });
   }  
-}
+}*/
