@@ -149,10 +149,10 @@ AM.signup = function(newData, callback) {
 
 }
 
-
-AM.setPassword = function(email, newPass, callback)
+// TO DO AM.checkPassword();
+AM.setPassword = function(u, oldPass, newPass, callback)
 {
-	AdvertiserModel.findOne({email:email}, function(e, o){
+	AdvertiserModel.findOne({username:u}, function(e, o){
 		if(o) {
 			pwd.hash(newPass, function(e,salt,hash){
 				o.pass = hash;
@@ -161,7 +161,7 @@ AM.setPassword = function(email, newPass, callback)
 			});
 		}
 		else {
-			PublisherModel.findOne({email:email}, function(e,o){
+			PublisherModel.findOne({username:u}, function(e,o){
 				if(o) {
 					pwd.hash(newPass, function(e,salt,hash){
 						o.pass = hash;
@@ -181,6 +181,98 @@ AM.validateLink = function(email, passHash, callback)
 			PublisherModel.find({ $and: [{email:email, pass:passHash}] }, function(e,o) {
 				callback(o ? 'ok' : null)
 			});
+		}
+	});
+}
+
+AM.updateAdvertiser = function(newData, callback) {
+  var a = new AdvertiserModel({
+    "email":newData.email,
+    "city":newData.city,
+    "street-adress":newData.streetadress,
+    "phone":newData.phone,
+    "country":newData.country
+  });
+  console.log(a);
+  AdvertiserModel.findOneAndUpdate(
+    { username : newData.username },
+    { $set : a },
+    { safe: true, upsert: true },
+      function(e, o) {
+            if(e) {
+              callback(e);
+            } else {
+              callback(null,o);
+            }
+    });
+}
+
+AM.updatePublisher = function(u,newData, callback) {
+	console.log(u);
+  PublisherModel.findOneAndUpdate(
+    { username : u },
+    { $set: 
+    	{ 
+    		email : newData.email,
+            phone : newData.phone,
+            streetadress : newData.streetadress,
+            country : newData.country,
+            city : newData.city
+    	}
+ 	},
+    { safe: true, upsert: true },
+    function(e, o) {
+   	  if(e) {
+   	  			console.log("plop");
+		    	callback(e);
+		    } else {
+		    	callback(null,o);
+		}
+    });
+}
+
+
+AM.getPublisher = function(u, callback) {
+	console.log(u);
+	PublisherModel.findOne({username:u}, function(e,o) {
+		console.log(o);
+		if(!e) {
+			callback(null,o)
+		} else {
+			callback(e);
+		}
+	});
+}
+
+AM.getPublisherProfile = function(u, callback) {
+	console.log(u);
+	PublisherModel.findOne({username:u}, function(e,o) {
+		console.log(o);
+		if(!e) {
+			var user = {
+				username: o.username,
+				email: o.email,
+				joined: o.joined,
+				updated: o.updated,
+				city: o.city,
+				streetadress : o.streetadress,
+				phone : o.phone,
+				country : o.country
+			}
+			callback(null,user);
+		} else {
+			callback(e);
+		}
+	});
+}
+
+
+AM.getAdvertiser = function(u, callback) {
+	AdvertiserModel.findOne({username:u}, function(e,o) {
+		if(!e) {
+			callback(null,o)
+		} else {
+			callback(e);
 		}
 	});
 }

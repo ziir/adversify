@@ -87,6 +87,79 @@ exports.getWebsite = function(req, res){
   	
   	});
   }
-
-
 }
+
+exports.profile = function(req,res) {
+    if(req.session.kind != "publisher") {
+    res.redirect("/");
+  } else {
+    res.render('publisher-profile.html', { title: 'Publisher Profile'});
+  }
+}
+
+exports.updateProfile = function(req,res) {
+    if(req.session.kind != "publisher") {
+    res.redirect("/");
+  } else {
+        PM.updateAccount(req.session.username,req.body,function(e,o) {
+          if(!o) {
+              res.send(e, 400);
+          }
+          else {
+            res.send(o, 200);
+          }
+        });
+  }
+}
+
+exports.get = function(req,res) {
+    if(req.session.kind != "publisher") {
+    res.redirect("/");
+  } else {
+    PM.get(req.session.username, function(e,o) {
+      if(!o) {
+          res.send(e,400);
+      } else  {
+          res.send(o,200);
+      }
+    });
+  }  
+}
+
+exports.getProfile = function(req,res) {
+    if(req.session.kind != "publisher") {
+    res.redirect("/");
+  } else {
+    PM.getProfile(req.session.username, function(e,o) {
+      if(!o) {
+          res.send(e,400);
+      } else  {
+          res.send(o,200);
+      }
+    });
+  }  
+}
+
+/*
+
+// NOT TESTED PASSWORD CHANGE
+exports.changePassword = function(req,res) {
+  if(req.session.kind != "publisher") {
+    res.redirect("/");
+  } else {
+    PM.checkPassword(req.body.u,req.body.password,function(e) {
+      if(!e) { 
+        PM.setPassword(req.session.username,req.body.password function(e,o) {
+          if(!o) {
+              res.send(e,400);
+          } else  {
+              res.send(o,200);
+          }
+      });
+      } else {
+        res.send(e,400);
+      }
+
+    });
+  }  
+}*/

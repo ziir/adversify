@@ -1,7 +1,8 @@
   var routes = require('./routes')
   , signup = require('./routes/signup')
   , publisher = require('./routes/publisher')
-  , advertiser = require('./routes/advertiser');
+  , advertiser = require('./routes/advertiser')
+  , delivery = require('./routes/delivery');
 
 module.exports = function(app) {
 
@@ -13,7 +14,13 @@ module.exports = function(app) {
 	app.post('/signup/step2', signup.step2create);
 
 	app.get('/publisher', publisher.index);
+	app.get('/publisher/get', publisher.get);
+	app.post('/publisher/changePassword' ,publisher.changePassword);
+	app.get('/publisher/getProfile', publisher.getProfile);
 	app.post('/publisher/signin', publisher.signin);
+
+	app.get('/publisher/profile', publisher.profile);
+	app.post('/publisher/profile', publisher.updateProfile);
 
 	app.get('/publisher/default', publisher.default);
 	app.get('/publisher/websites', publisher.getWebsites);
@@ -22,7 +29,11 @@ module.exports = function(app) {
 
 
 	app.get('/advertiser', advertiser.index);
+	app.get('/advertiser/get', advertiser.get);
 	app.post('/advertiser/signin', advertiser.signin);
+
+	app.get('/advertiser/profile', advertiser.profile);
+	app.post('/advertiser/profile', advertiser.updateProfile);
 
 	app.get('/advertiser/default', advertiser.default);
 	app.get('/advertiser/ads', advertiser.getAds);
@@ -35,6 +46,8 @@ module.exports = function(app) {
 	app.get('/test', function(req, res) {
 	      res.render('test.html', { title : 'Test'});
 	  });
+
+	app.get('/h/c/:r', delivery.createHash);
 
 	app.get('*', routes.pagenotfound);
 

@@ -18,7 +18,7 @@
                         </ul>
 
                         <h2>Create an ad</h2>
-                        <form method="POST" action="/publisher/ads" class="well">
+                        <form method="POST" action="/advertiser/ads" class="well">
                             <input type="text" class="adname clearInput" name="adname" title="Ad Name" value="Ad Name"/>
                             <select class="adremuneration" name="adremuneration">
                                 <option value="">CPC or CPM?</option>
@@ -44,11 +44,8 @@
         <li><a href="#">50% CPC | 50% CPM</a> </li>
         <li><a href="#">100% CPC | 0% CPM</a></li>
         <li> <a href="#">0% CPC | 100% CPM</a></li>
-    <ul>
+    </ul>
     <select name="budgetrepartition" id="budgetrepartition">
-        <div class="square" style="width:200px;height:200">ROUGE CPC</div>
-        <div class="square" style="width:200px;height:200">ROUGE CPM</div>
-
 <%         var cpm,cpc = 0;
         for(var i = 0;i <= 100;i++)
         { %>

@@ -22,6 +22,8 @@ var Publisher = new Schema({
     streetadress: { type: String },
     city: { type: String },
     country: { type: String },
+    phone: { type: String},
+    clientid: { type: Number},
     websites: [Website]
 });
 
