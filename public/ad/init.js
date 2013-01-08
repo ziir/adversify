@@ -1,10 +1,10 @@
-var r = Math.floor(Math.random()*99999999999);
-var adversifyclient = 1;
+  var r = Math.floor(Math.random()*99999999999);
+  var adversifyclient = 1;
 
 
 
 
-var xmlHttp;
+  var xmlHttp;
 
   try{
     // Opera 8.0+, Firefox, Safari

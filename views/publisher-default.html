@@ -25,7 +25,7 @@
                         <h2>Ajouter un site</h2>
                         <form method="POST" action="/publisher/sites" class="well" id="addWebSiteForm">
                         		<span data-bind="text: error_webSiteName"></span>
-                        <form method="POST" action="/publisher/websites" class="well">
+                        <!--<form method="POST" action="/publisher/websites" class="well">-->
                             <input type="text" class="sitename clearInput" name="sitename" title="Site Name" value="Site Name"/>
                             	<span data-bind="text: error_webSiteURL"></span>
                             <input type="text" class="siteurl clearInput" name="siteurl" title="Site URL" value="http://www.facebook.com"/>
@@ -49,36 +49,36 @@
                             <button type="submit" class="btn-primary">Add this website</button>
                         </form>
                     </div>
-                    <div class="ads-overview">
+                    <div class="zones-overview">
 
-						<ul data-bind="foreach: ads">
+						<ul data-bind="foreach: zones">
 							<li>
-								<a data-bind="text: adname"></a>
+								<a data-bind="text: zonename"></a>
 							</li>
 						</ul>
                         
                         
-                        <h2>Create an ad</h2>
-                        <form method="POST" action="/publisher/ads" class="well" id="addAdForm">
-                            <input type="text" class="adname clearInput" name="adname" title="Ad Name" value="Ad Name"/>
-                            	<span data-bind="text: error_adName"></span>
-                            <select class="adremuneration" name="adremuneration">
+                        <h2>Create an zone</h2>
+                        <form method="POST" action="/publisher/ads" class="well" id="addZoneForm">
+                            <input type="text" class="zonename clearInput" name="zonename" title="Zone Name" value="Zone Name"/>
+                            	<span data-bind="text: error_zoneName"></span>
+                            <select class="zoneremuneration" name="zoneremuneration">
                                 <option value="">CPC or CPM?</option>
                                 <option value="cpc">CPC</option>
                                 <option value="cpm">CPM</option>
                                 <option value="cpm">Nevermind</option>
                             </select>
-                            	<span data-bind="text: error_adMode"></span>
-                            <select class="adformat" name="adformat">
+                            	<span data-bind="text: error_zoneMode"></span>
+                            <select class="adformat" name="zoneformat">
                                 <option value="">Image or Textual?</option>
                                 <option value="image">Image</option>
                                 <option value="text">Textual</option>
                             </select>
-                            	<span data-bind="text: error_adKind"></span>
-                            <label for="addescription">Enter a description for this Ad.</label>
-                            <textarea rows="4" cols="30" name="addescription" id="addescription"></textarea>
-                            	<span data-bind="text: error_adDescription"></span>
-                            <button type="submit" class="btn-primary">Create an Ad</button>
+                            	<span data-bind="text: error_zoneKind"></span>
+                            <label for="zonedescription">Enter a description for this Ad.</label>
+                            <textarea rows="4" cols="30" name="zonedescription" id="zonedescription"></textarea>
+                            	<span data-bind="text: error_zoneDescription"></span>
+                            <button type="submit" class="btn-primary">Create an zone</button>
                         </form>
                     </div>
                 </div>

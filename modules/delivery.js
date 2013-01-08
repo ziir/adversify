@@ -9,10 +9,9 @@ module.exports = DV;
 
 DV.GenerateHashFromRandom = function(r,callback) {
 	console.log(r);
-   hashids = new Hashids("this is my salt");
-
-var hash = hashids.encrypt(r);
-callback(hash);
+  var hashids = new Hashids("this is my salt");
+  var hash = hashids.encrypt(Number(r));
+  callback(hash);
 
 //INSERT DANS BDD HASH VALIDE DEUX HEURES
 // CALLBACK 
