@@ -41,6 +41,36 @@ PM.addWebsite = function(u,newData,callback) { // Publisher username, new websit
 			//http://stackoverflow.com/questions/13412579/node-express-mongoose-sub-collection-document-insert?rq=1
 }
 
+PM.addZone = function(u,newData,callback) {
+		console.log(newData);
+		var z = new ZoneModel({
+			"name":newData.name,
+			"created":Date.now()
+		});
+		z.save(function(e,o){
+			console.log("zone saved into zone collection");
+			if(!e) {
+				PublisherModel.findOneAndUpdate(
+				  { username:u, "websites.url":newData.url },
+				  { $push: { "websites.$.zones": o }},
+				  function(e,o) {
+				  	console.log("Attempt to save into publisher collection");
+				    if(e) {
+				    	callback(e);
+				    	console.log("Error due to save");
+				    } else {
+				    	callback(null,o);
+				    }
+				});	
+			} else {
+				callback(e);
+			}
+			
+		});
+
+	
+}
+
 PM.getWebsites = function(u,nb,sort,callback) { // Publisher username, number of websites to display, sort criteria and callback
 	PublisherModel.findOne({username:u}, function(e,o) {
 		if(o) {
@@ -49,7 +79,7 @@ PM.getWebsites = function(u,nb,sort,callback) { // Publisher username, number of
 		} else {
 			callback(e);
 		}
-	})
+	});
 }
 // TO DO
 

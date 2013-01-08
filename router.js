@@ -27,6 +27,8 @@ module.exports = function(app) {
 	app.get('/publisher/websites/single', publisher.getWebsite);
 	app.post('/publisher/websites', publisher.createWebsite);
 
+	app.post('/publisher/zones', publisher.createZone);
+
 
 	app.get('/advertiser', advertiser.index);
 	app.get('/advertiser/get', advertiser.get);
