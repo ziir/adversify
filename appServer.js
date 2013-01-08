@@ -11,7 +11,6 @@ var express = require('express')
 
   var app = express();
 
-
   // i18n a.k.a Internationalization !
   // TO-DO : better implementation
 i18n.configure({

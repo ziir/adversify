@@ -2,15 +2,15 @@ $(document).ready(function() {
 
 	error_webSiteName 	= '';
 	error_webSiteURL  	= '';
-	error_adName	  	= '';
-	error_adMode	  	= '';
-	error_adKind	  	= '';
-	error_adDescription = '';
+	error_zoneName	  	= '';
+	error_zoneMode	  	= '';
+	error_zoneKind	  	= '';
+	error_zoneDescription = '';
 	websites = ko.observableArray();
-	ads 	 = ko.observableArray();
+	zones 	 = ko.observableArray();
 
-	window.PublisherDefaultAd = Backbone.Model.extend({
-		urlRoot : '/advertiser/ads',
+	window.PublisherDefaultZone = Backbone.Model.extend({
+		urlRoot : '/advertiser/zones',
 		
 		defaults : {
 			name 		: 'myName',
@@ -21,19 +21,19 @@ $(document).ready(function() {
 		},
 		
 		validate : function(attributes) {
-			$('#sign-container .adname').css('border', '0px solid red');
+			$('#addZoneForm .adname').css('border', '0px solid red');
 			
-			var validated = new Backbone.Model({err_adname : '',
+			var validated = new Backbone.Model({err_zonename : '',
 												isOk	   : true});
 			
 			validated.isOk = true;
-			validated.err_adname = '';
+			validated.err_zonename = '';
 			
 			var reg = new RegExp('^[. - a-z A-Z 0-9 _]+$');
 			if (!reg.test(attributes.name)) {
 				validated.isOk = false; //Faire renvoyer FALSE
-                $('#sign-container .adname').css('border', '1px solid red');
-                validated.err_adname = 'Ad name is not correct';
+                $('#addZoneForm .zonename').css('border', '1px solid red');
+                validated.err_zonename = 'Zone name is not correct';
 			}
 			
 			return validated;
@@ -48,8 +48,8 @@ $(document).ready(function() {
 		}
 	});
 	
-	window.PublisherDefaultAds = Backbone.Collection.extend({
-        model : PublisherDefaultAd,
+	window.PublisherDefaultZones = Backbone.Collection.extend({
+        model : PublisherDefaultZone,
         url   : '/publisher/ads',
 
         initialize : function() {
@@ -123,17 +123,17 @@ $(document).ready(function() {
         
         events : {
             'submit #addWebSiteForm' : 'buildWebSite', // J'aime beaucoup ça
-            'submit #addAdForm'      : 'buildAd'
+            'submit #addZoneForm'    : 'buildAd'
         },
         
         buildWebSite : function(e) {
            e.preventDefault();
            
            publisherDefaultSite = new PublisherDefaultSite({
-	           name 	   : $('#sign-container .sitename').val(),
-	           url  	   : $('#sign-container .siteurl').val(),
-	           category    : $('#sign-container .sitecategory').val(),
-	           description : $('#sign-container .sitedescription').val()
+	           name 	   : $('#addWebSiteForm .sitename').val(),
+	           url  	   : $('#addWebSiteForm .siteurl').val(),
+	           category    : $('#addWebSiteForm .sitecategory').val(),
+	           description : $('#addWebSiteForm .sitedescription').val()
            });
            
            siteValidated = publisherDefaultSite.validate({
@@ -175,10 +175,10 @@ $(document).ready(function() {
            e.preventDefault();
            
            publisherDefaultAd = new PublisherDefaultAd({
-	           name 	   : $('#sign-container .adname').val(),
-	           mode  	   : $('#sign-container .adremuneration').val(),
-	           kind    	   : $('#sign-container .adformat').val(),
-	           description : $('#sign-container .addescription').val()
+	           name 	   : $('#addAdForm .zonename').val(),
+	           mode  	   : $('#addAdForm .zoneremuneration').val(),
+	           kind    	   : $('#addAdForm .zoneformat').val(),
+	           description : $('#addAdForm .zonedescription').val()
            });
            
            adValidated = publisherDefaultAd.validate({
@@ -200,7 +200,7 @@ $(document).ready(function() {
            //KO BINDING ERRORS
            var ErrorsViewModel = kb.ViewModel.extend({
 			    constructor: function(model) {
-				    kb.ViewModel.prototype.constructor.call(this, model, {internals: ['error_adName']});
+				    kb.ViewModel.prototype.constructor.call(this, model, {internals: ['error_zoneName']});
 				    this.error_adName = this._error_adName;
 				    return this;
 			    }
@@ -245,21 +245,21 @@ $(document).ready(function() {
     }
     
     //BINDING ADS AFTER FETCH
-    var OnSuccessAds = function() {
-	    function Ad(adname) {
+    var OnSuccessZones = function() {
+	    function Zone(zonename) {
 		    var self = this;
-		    self.adname = ko.observable(adname);
+		    self.zonename = ko.observable(zonename);
 		}
 	    
 	    function AdsViewModel() {
 		    var self = this; 
 		    
 		    // Editable data
-		    self.ads = ko.observableArray();
+		    self.zones = ko.observableArray();
 		    
-		    for (i=0; i < publisherDefaultAds.length; i++) {
-		    	var ad = publisherDefaultAds.at(i);
-			    self.websites.push(new Ad(ad.get('name')));
+		    for (i=0; i < publisherDefaultZones.length; i++) {
+		    	var ad = publisherDefaultZones.at(i);
+			    self.zones.push(new Ad(ad.get('name')));
 		    }
 		}
 	
@@ -271,9 +271,9 @@ $(document).ready(function() {
     	success : OnSuccessWebites
     });
     
-    publisherDefaultAds = new PublisherDefaultAds();
-    publisherDefaultAds.fetch({
-	    success : OnSuccessAds
+    publisherDefaultZones = new PublisherDefaultZones();
+    publisherDefaultZones.fetch({
+	    success : OnSuccessZones
     });
     
     publisherDefaultBehavior = new PublisherDefaultBehavior();
