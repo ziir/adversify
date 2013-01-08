@@ -50,7 +50,7 @@
                         </form>
                     </div>
                     <div class="zones-overview">
-
+                    
 						<ul data-bind="foreach: zones">
 							<li>
 								<a data-bind="text: zonename"></a>
@@ -69,7 +69,7 @@
                                 <option value="cpm">Nevermind</option>
                             </select>
                             	<span data-bind="text: error_zoneMode"></span>
-                            <select class="adformat" name="zoneformat">
+                            <select class="zoneformat" name="zoneformat">
                                 <option value="">Image or Textual?</option>
                                 <option value="image">Image</option>
                                 <option value="text">Textual</option>
@@ -78,6 +78,9 @@
                             <label for="zonedescription">Enter a description for this Ad.</label>
                             <textarea rows="4" cols="30" name="zonedescription" id="zonedescription"></textarea>
                             	<span data-bind="text: error_zoneDescription"></span>
+                            <select class="webSiteUrl" name="websiteurl" data-bind="foreach: websites">
+                                <option data-bind="text: wburl, value: wburl">
+                            </select>
                             <button type="submit" class="btn-primary">Create an zone</button>
                         </form>
                     </div>

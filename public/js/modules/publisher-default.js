@@ -10,7 +10,7 @@ $(document).ready(function() {
 	zones 	 = ko.observableArray();
 
 	window.PublisherDefaultZone = Backbone.Model.extend({
-		urlRoot : '/advertiser/zones',
+		urlRoot : '/publisher/zones',
 		
 		defaults : {
 			name 		: 'myName',
@@ -22,6 +22,8 @@ $(document).ready(function() {
 		
 		validate : function(attributes) {
 			$('#addZoneForm .adname').css('border', '0px solid red');
+			
+			console.log(attributes.url);
 			
 			var validated = new Backbone.Model({err_zonename : '',
 												isOk	   : true});
@@ -50,7 +52,7 @@ $(document).ready(function() {
 	
 	window.PublisherDefaultZones = Backbone.Collection.extend({
         model : PublisherDefaultZone,
-        url   : '/publisher/ads',
+        url   : '/publisher/zones',
 
         initialize : function() {
             //console.log('PublisherDefaultSites collection Constructor');
@@ -174,26 +176,28 @@ $(document).ready(function() {
         buildAd : function(e) {
            e.preventDefault();
            
-           publisherDefaultAd = new PublisherDefaultAd({
-	           name 	   : $('#addAdForm .zonename').val(),
-	           mode  	   : $('#addAdForm .zoneremuneration').val(),
-	           kind    	   : $('#addAdForm .zoneformat').val(),
-	           description : $('#addAdForm .zonedescription').val()
+           publisherDefaultZone = new PublisherDefaultZone({
+	           name 	   : $('#addZoneForm .zonename').val(),
+	           mode  	   : $('#addZoneForm .zoneremuneration').val(),
+	           kind    	   : $('#addZoneForm .zoneformat').val(),
+	           description : $('#addZoneForm .zonedescription').val(),
+	           url		   : $('#addZoneForm .webSiteUrl').val()
            });
            
-           adValidated = publisherDefaultAd.validate({
-           		name 		: publisherDefaultAd.get('name'),
-           		mode	 	: publisherDefaultAd.get('mode'),
-           		kind    	: publisherDefaultAd.get('kind'),
-           		description : publisherDefaultAd.get('description')
+           zoneValidated = publisherDefaultZone.validate({
+           		name 		: publisherDefaultZone.get('name'),
+           		mode	 	: publisherDefaultZone.get('mode'),
+           		kind    	: publisherDefaultZone.get('kind'),
+           		description : publisherDefaultZone.get('description'),
+           		url			: publisherDefaultZone.get('url')
            });
            
-           if (adValidated.isOk) {
-	           publisherDefaultAds.add(publisherDefaultAd);
-	           publisherDefaultAd.save();
+           if (zoneValidated.isOk) {
+	           publisherDefaultZones.add(publisherDefaultZone);
+	           publisherDefaultZone.save();
 	           console.log('publisherDefaultAd Saved !');
            } else {
-	            publisherDefaultAd = 0;
+	            publisherDefaultZone = 0;
 	            console.log('publisherDefaultAd Not Saved !');
            }
            
@@ -206,7 +210,7 @@ $(document).ready(function() {
 			    }
 			});
 			
-			errors_model = new ErrorsViewModel(new Backbone.Model({error_adName: adValidated.err_adname}));
+			errors_model = new ErrorsViewModel(new Backbone.Model({error_adName: zoneValidated.err_zonename}));
 		    //KO APPLY ALL
 		    ko.applyBindings(errors_model);
 		    //RELEASE ALL
