@@ -8,6 +8,12 @@ $(document).ready(function() {
 	error_zoneDescription = '';
 	websites = ko.observableArray();
 	zones 	 = ko.observableArray();
+	
+	WebSite = function(wbname, wburl) {
+	    var self = this;
+	    self.wbname = ko.observable(wbname);
+	    self.wburl = ko.observable(wburl);
+	}
 
 	window.PublisherDefaultZone = Backbone.Model.extend({
 		urlRoot : '/publisher/zones',
@@ -99,7 +105,7 @@ $(document).ready(function() {
         },
         
         initialize : function PublisherDefaultSite() {
-            console.log('Site Added');
+            console.log('Site Created');
             
             this.bind("error", function(model, error){ // Quand quelqu'un maitrise ça, il m'apelle
                 console.log(error);
@@ -121,6 +127,11 @@ $(document).ready(function() {
         
         initialize : function() {
             //Nothing to do now
+            /*publisherDefaultSites.bind('add', 
+            	function() { publisherDefaultSites.fetch({
+		    		success : OnSuccessWebites
+		    	});
+		    });*/
         },
         
         events : {
@@ -146,6 +157,8 @@ $(document).ready(function() {
            });
            
            if (siteValidated.isOk == true) {
+           		newWebSite = new WebSite(publisherDefaultSite.get('name'), publisherDefaultSite.get('url'));
+           		websites.push(newWebSite);
            		publisherDefaultSites.add(publisherDefaultSite);
 	           	publisherDefaultSite.save();
 	           	console.log('publisherDefaultSite Saved !');
@@ -155,7 +168,7 @@ $(document).ready(function() {
            }
            
            //KO BINDING ERRORS
-           var ErrorsViewModel = kb.ViewModel.extend({
+           /*var ErrorsViewModel = kb.ViewModel.extend({
 			    constructor: function(model) {
 				    kb.ViewModel.prototype.constructor.call(this, model, {internals: ['error_webSiteName', 
 				    																  'error_webSiteURL']});
@@ -168,9 +181,9 @@ $(document).ready(function() {
 			errors_model = new ErrorsViewModel(new Backbone.Model({error_webSiteName: siteValidated.err_sitename, 
 																   error_webSiteURL: siteValidated.err_siteurl}));
 		    //KO APPLY ALL
-		    ko.applyBindings(errors_model);
+		    //ko.applyBindings(errors_model);
 		    //RELEASE ALL
-		    kb.release(errors_model);
+		    //kb.release(errors_model);*/
         },
         
         buildAd : function(e) {
@@ -193,16 +206,16 @@ $(document).ready(function() {
            });
            
            if (zoneValidated.isOk) {
-	           publisherDefaultZones.add(publisherDefaultZone);
-	           publisherDefaultZone.save();
-	           console.log('publisherDefaultAd Saved !');
+           		publisherDefaultZones.add(publisherDefaultZone);
+           		publisherDefaultZone.save();
+           		console.log('publisherDefaultAd Saved !');
            } else {
 	            publisherDefaultZone = 0;
 	            console.log('publisherDefaultAd Not Saved !');
            }
            
            //KO BINDING ERRORS
-           var ErrorsViewModel = kb.ViewModel.extend({
+           /*var ErrorsViewModel = kb.ViewModel.extend({
 			    constructor: function(model) {
 				    kb.ViewModel.prototype.constructor.call(this, model, {internals: ['error_zoneName']});
 				    this.error_adName = this._error_adName;
@@ -214,8 +227,7 @@ $(document).ready(function() {
 		    //KO APPLY ALL
 		    ko.applyBindings(errors_model);
 		    //RELEASE ALL
-		    kb.release(errors_model);
-           
+		    kb.release(errors_model);*/
         },
 
         error : function(model, error) {
@@ -227,17 +239,13 @@ $(document).ready(function() {
     
     //BINDING WEBSITES AFTER FETCH
     var OnSuccessWebites = function() {
-	    function WebSite(wbname, wburl) {
-		    var self = this;
-		    self.wbname = ko.observable(wbname);
-		    self.wburl = ko.observable(wburl);
-		}
 	    
 	    function WebSitesViewModel() {
 		    var self = this; 
 		    
 		    // Editable data
-		    self.websites = ko.observableArray();
+		    //self.websites = ko.observableArray();
+		    self.websites = websites;
 		    
 		    for (i=0; i < publisherDefaultSites.length; i++) {
 		    	var wb = publisherDefaultSites.at(i);
@@ -248,7 +256,7 @@ $(document).ready(function() {
 		ko.applyBindings(new WebSitesViewModel());
     }
     
-    //BINDING ADS AFTER FETCH
+    //BINDING ZONES AFTER FETCH
     var OnSuccessZones = function() {
 	    function Zone(zonename) {
 		    var self = this;
@@ -259,18 +267,19 @@ $(document).ready(function() {
 		    var self = this; 
 		    
 		    // Editable data
-		    self.zones = ko.observableArray();
+		    //self.zones = ko.observableArray();
+		    self.zones = zones;
 		    
 		    for (i=0; i < publisherDefaultZones.length; i++) {
-		    	var ad = publisherDefaultZones.at(i);
-			    self.zones.push(new Ad(ad.get('name')));
+		    	var zone = publisherDefaultZones.at(i);
+			    self.zones.push(new Zone(zone.get('name')));
 		    }
 		}
 	
 		ko.applyBindings(new AdsViewModel());
     }
-	
-	publisherDefaultSites = new PublisherDefaultSites();
+    
+    publisherDefaultSites = new PublisherDefaultSites();
     publisherDefaultSites.fetch({
     	success : OnSuccessWebites
     });
