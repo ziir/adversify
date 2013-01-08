@@ -10,7 +10,7 @@ $(document).ready(function() {
 	zones 	 = ko.observableArray();
 
 	window.PublisherDefaultZone = Backbone.Model.extend({
-		urlRoot : '/advertiser/zones',
+		urlRoot : '/publisher/zones',
 		
 		defaults : {
 			name 		: 'myName',
@@ -174,7 +174,7 @@ $(document).ready(function() {
         buildAd : function(e) {
            e.preventDefault();
            
-           publisherDefaultZone = new PublisherDefaultAd({
+           publisherDefaultZone = new PublisherDefaultZone({
 	           name 	   : $('#addZoneForm .zonename').val(),
 	           mode  	   : $('#addZoneForm .zoneremuneration').val(),
 	           kind    	   : $('#addZoneForm .zoneformat').val(),
@@ -183,19 +183,19 @@ $(document).ready(function() {
            });
            
            zoneValidated = publisherDefaultZone.validate({
-           		name 		: publisherDefaultAd.get('name'),
-           		mode	 	: publisherDefaultAd.get('mode'),
-           		kind    	: publisherDefaultAd.get('kind'),
-           		description : publisherDefaultAd.get('description'),
-           		url			: publisherDefaultAd.get('url')
+           		name 		: publisherDefaultZone.get('name'),
+           		mode	 	: publisherDefaultZone.get('mode'),
+           		kind    	: publisherDefaultZone.get('kind'),
+           		description : publisherDefaultZone.get('description'),
+           		url			: publisherDefaultZone.get('url')
            });
            
            if (zoneValidated.isOk) {
-	           publisherDefaultAds.add(publisherDefaultAd);
-	           publisherDefaultAd.save();
+	           publisherDefaultZones.add(publisherDefaultZone);
+	           publisherDefaultZone.save();
 	           console.log('publisherDefaultAd Saved !');
            } else {
-	            publisherDefaultAd = 0;
+	            publisherDefaultZone = 0;
 	            console.log('publisherDefaultAd Not Saved !');
            }
            
@@ -208,7 +208,7 @@ $(document).ready(function() {
 			    }
 			});
 			
-			errors_model = new ErrorsViewModel(new Backbone.Model({error_adName: adValidated.err_adname}));
+			errors_model = new ErrorsViewModel(new Backbone.Model({error_adName: zoneValidated.err_zonename}));
 		    //KO APPLY ALL
 		    ko.applyBindings(errors_model);
 		    //RELEASE ALL
