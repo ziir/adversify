@@ -1,6 +1,4 @@
-<html>
-	<head>
-	<script type="text/javascript">
+<script type="text/javascript">
 
   var _adv = _adv || [];
   _adv.push(['_setAccount', '1']);
@@ -12,9 +10,3 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(av, s);
   })();
 </script>
-	</head>
-	<body>
-
-	</body>
-
-</html>

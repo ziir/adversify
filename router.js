@@ -48,6 +48,10 @@ module.exports = function(app) {
 	  });
 
 	app.get('/h/c/:r', delivery.createHash);
+	app.get('/h/:r', delivery.test);
+
+
+	app.get('/ads/go.js', delivery.showAd)
 
 	app.get('*', routes.pagenotfound);
 

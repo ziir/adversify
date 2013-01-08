@@ -9,7 +9,8 @@ var Website = new Schema({
     category : { type : String }, 
     validated : { type : Boolean, default: false },
     modified: { type: Date, default: Date.now },
-    created: {type: Date}
+    created: {type: Date},
+    zones: [Zone]
 });
 
 var Publisher = new Schema({
@@ -28,7 +29,7 @@ var Publisher = new Schema({
 });
 
 //Define Ad for Publishers (redefined in Publishers.js)
-var Ad = new Schema({
+var Zone = new Schema({
     name: {type: String},
     remuneration: [{ cp: {type: String ,enum: ['cpm', 'cpc']}, repartition: [{ cpm: {type:Number}, cpc: {type:Number}}] }],
     kind: { type : String, enum: ['image','text'] }, 
@@ -40,4 +41,4 @@ var Ad = new Schema({
 
 PublisherModel = mongoose.model('publishers', Publisher);
 WebsiteModel = mongoose.model('websites', Website);
-AdModel = mongoose.model('ads', Ad);
+ZoneModel = mongoose.model('zones', Zone);
