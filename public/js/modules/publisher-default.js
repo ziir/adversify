@@ -50,7 +50,7 @@ $(document).ready(function() {
 	
 	window.PublisherDefaultZones = Backbone.Collection.extend({
         model : PublisherDefaultZone,
-        url   : '/publisher/ads',
+        url   : '/publisher/zones',
 
         initialize : function() {
             //console.log('PublisherDefaultSites collection Constructor');
@@ -174,21 +174,23 @@ $(document).ready(function() {
         buildAd : function(e) {
            e.preventDefault();
            
-           publisherDefaultAd = new PublisherDefaultAd({
-	           name 	   : $('#addAdForm .zonename').val(),
-	           mode  	   : $('#addAdForm .zoneremuneration').val(),
-	           kind    	   : $('#addAdForm .zoneformat').val(),
-	           description : $('#addAdForm .zonedescription').val()
+           publisherDefaultZone = new PublisherDefaultAd({
+	           name 	   : $('#addZoneForm .zonename').val(),
+	           mode  	   : $('#addZoneForm .zoneremuneration').val(),
+	           kind    	   : $('#addZoneForm .zoneformat').val(),
+	           description : $('#addZoneForm .zonedescription').val(),
+	           url		   : $('#addZoneForm .siteWebUrl').val()
            });
            
-           adValidated = publisherDefaultAd.validate({
+           zoneValidated = publisherDefaultZone.validate({
            		name 		: publisherDefaultAd.get('name'),
            		mode	 	: publisherDefaultAd.get('mode'),
            		kind    	: publisherDefaultAd.get('kind'),
-           		description : publisherDefaultAd.get('description')
+           		description : publisherDefaultAd.get('description'),
+           		url			: publisherDefaultAd.get('url')
            });
            
-           if (adValidated.isOk) {
+           if (zoneValidated.isOk) {
 	           publisherDefaultAds.add(publisherDefaultAd);
 	           publisherDefaultAd.save();
 	           console.log('publisherDefaultAd Saved !');
