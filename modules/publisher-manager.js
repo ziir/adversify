@@ -83,6 +83,17 @@ PM.getWebsite = function(webSite, callback) { // Publisher username, website ID,
 	});
 }
 
+/**Autre version
+PM.getWebsite = function(webSite, callback) {
+	PublisherModel.findOne({url : webSite}, function(e,o){
+		if(o) {
+			callback(null,o);
+		} else {
+			callback(e);
+		}
+	});
+}**/
+
 
 PM.deleteWebsite = function(u,w,callback) { // to do ; w._id ???
 	PublisherModel.findOne({username:u}, function(e,o) {
