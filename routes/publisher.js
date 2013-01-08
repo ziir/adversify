@@ -57,6 +57,22 @@ exports.createWebsite = function(req,res) {
   }
 }
 
+exports.createZone = function(req,res) {
+  console.log("Publisher attempt to create Zone for website : "+req.body.url);
+  if(req.session.kind != "publisher") {
+    res.redirect("/");
+  } else {
+        PM.addZone(req.session.username,req.body,function(e,o) {
+      if(!o) {
+          res.send(e, 400);
+      }
+      else {
+        res.send(o, 200);
+      }
+    });
+  }
+}
+
 exports.getWebsites = function(req,res) {
   console.log("Publisher attempt to get single website");
   if(req.session.kind != "publisher") {

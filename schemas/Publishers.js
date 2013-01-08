@@ -31,8 +31,7 @@ var Publisher = new Schema({
 //Define Ad for Publishers (redefined in Publishers.js)
 var Zone = new Schema({
     name: {type: String},
-    remuneration: [{ cp: {type: String ,enum: ['cpm', 'cpc']}, repartition: [{ cpm: {type:Number}, cpc: {type:Number}}] }],
-    kind: { type : String, enum: ['image','text'] }, 
+    kind: { type : String, enum: ['image','text','all'] }, 
     modified: {type: Date},
     created: {type: Date},
     validated : { type : Boolean },
