@@ -23,6 +23,8 @@ $(document).ready(function() {
 		validate : function(attributes) {
 			$('#addZoneForm .adname').css('border', '0px solid red');
 			
+			console.log(attributes.url);
+			
 			var validated = new Backbone.Model({err_zonename : '',
 												isOk	   : true});
 			
@@ -179,7 +181,7 @@ $(document).ready(function() {
 	           mode  	   : $('#addZoneForm .zoneremuneration').val(),
 	           kind    	   : $('#addZoneForm .zoneformat').val(),
 	           description : $('#addZoneForm .zonedescription').val(),
-	           url		   : $('#addZoneForm .siteWebUrl').val()
+	           url		   : $('#addZoneForm .webSiteUrl').val()
            });
            
            zoneValidated = publisherDefaultZone.validate({
