@@ -53,7 +53,7 @@ module.exports = function(app) {
 	app.get('/h/:r', delivery.test);
 
 
-	app.get('/ads/go.js', delivery.showAd)
+	app.get('/ad/:account/:website/av.js', delivery.generateJS)
 
 	app.get('*', routes.pagenotfound);
 

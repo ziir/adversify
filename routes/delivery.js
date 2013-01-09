@@ -7,6 +7,11 @@ exports.createHash = function(req, res){
 
 exports.test = function(req,res) {
 	res.send(200); 
+}
+
+exports.generateJS = function(req,res) {
+	var accountId = req.params.account;
+	var websiteId = req.params.website;
 
 }
 
