@@ -64,7 +64,7 @@ PM.addZone = function(u,newData,callback) {
 				    	WebsiteModel.findOneAndUpdate(
 				    		{ url:newData.url },
 				    		{ $push : { zones : z }},
-				    		{ safe: true, upsert:true }
+				    		{ safe: true, upsert:true },
 				    		function(e,o) {
 				    			if(e) {
 				    				callback(e);

@@ -1,13 +1,4 @@
 $(document).ready(function() {
-
-	error_webSiteName 	= '';
-	error_webSiteURL  	= '';
-	error_zoneName	  	= '';
-	error_zoneMode	  	= '';
-	error_zoneKind	  	= '';
-	error_zoneDescription = '';
-	websites = ko.observableArray();
-	zones 	 = ko.observableArray();
 	
 	WebSite = function(wbname, wburl) {
 	    var self = this;
@@ -79,29 +70,24 @@ $(document).ready(function() {
         	$('#sign-container .sitename').css('border', '0px solid red');
         	$('#sign-container .siteurl').css('border', '0px solid red');
 
-        	var validated = new Backbone.Model({err_sitename : '', 
-    											err_siteurl  : '',
-    											isOk		 : true});
-    		validated.isOk         = true;
-    		validated.err_sitename = '';
-    		validated.err_siteurl  = '';
+    		var isOk = true;
         	
         	var reg = new RegExp('^[. - a-z A-Z 0-9 _]+$');
         	if (!reg.test(attributes.name)) {
-	        	validated.isOk = false; //Faire renvoyer FALSE
+	        	isOk = false; //Faire renvoyer FALSE
+	        	error_webSiteName('The name is incorrect');
                 $('#sign-container .sitename').css('border', '1px solid red');
-                validated.err_sitename = 'Site name is not correct';
 	        }
 	        
-	        reg = new RegExp('((http|https)(:\/\/))?([a-zA-Z0-9]+[.]{1}){2}[a-zA-z0-9]+(\/{1}[a-zA-Z0-9]+)*\/?', 'i');
+	        reg = new RegExp('^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}');
 	        if (!reg.test(attributes.url)) {
 	        	console.log(attributes.url);
-		        validated.isOk = true; //Faire renvoyer false plus tard après avoir fait RegExp
+		        isOk = true; //Faire renvoyer false plus tard après avoir fait RegExp
+		        error_webSiteURL('This URL is not a valid URL');
 		        $('#sign-container .siteurl').css('border', '1px solid red');
-		        validated.err_siteurl = 'URL is not correct';
 	        }
         	
-        	return validated;
+        	return isOk;
         },
         
         initialize : function PublisherDefaultSite() {
@@ -127,11 +113,6 @@ $(document).ready(function() {
         
         initialize : function() {
             //Nothing to do now
-            /*publisherDefaultSites.bind('add', 
-            	function() { publisherDefaultSites.fetch({
-		    		success : OnSuccessWebites
-		    	});
-		    });*/
         },
         
         events : {
@@ -156,7 +137,7 @@ $(document).ready(function() {
            		description : publisherDefaultSite.get('description')
            });
            
-           if (siteValidated.isOk == true) {
+           if (siteValidated == true) {
            		newWebSite = new WebSite(publisherDefaultSite.get('name'), publisherDefaultSite.get('url'));
            		websites.push(newWebSite);
            		publisherDefaultSites.add(publisherDefaultSite);
@@ -167,23 +148,6 @@ $(document).ready(function() {
 	            console.log('publisherDefaultSite Not Saved !');
            }
            
-           //KO BINDING ERRORS
-           /*var ErrorsViewModel = kb.ViewModel.extend({
-			    constructor: function(model) {
-				    kb.ViewModel.prototype.constructor.call(this, model, {internals: ['error_webSiteName', 
-				    																  'error_webSiteURL']});
-				    this.error_webSiteName = this._error_webSiteName;
-				    this.error_webSiteURL  = this._error_webSiteURL;
-				    return this;
-			    }
-			});
-			
-			errors_model = new ErrorsViewModel(new Backbone.Model({error_webSiteName: siteValidated.err_sitename, 
-																   error_webSiteURL: siteValidated.err_siteurl}));
-		    //KO APPLY ALL
-		    //ko.applyBindings(errors_model);
-		    //RELEASE ALL
-		    //kb.release(errors_model);*/
         },
         
         buildAd : function(e) {
@@ -213,21 +177,6 @@ $(document).ready(function() {
 	            publisherDefaultZone = 0;
 	            console.log('publisherDefaultAd Not Saved !');
            }
-           
-           //KO BINDING ERRORS
-           /*var ErrorsViewModel = kb.ViewModel.extend({
-			    constructor: function(model) {
-				    kb.ViewModel.prototype.constructor.call(this, model, {internals: ['error_zoneName']});
-				    this.error_adName = this._error_adName;
-				    return this;
-			    }
-			});
-			
-			errors_model = new ErrorsViewModel(new Backbone.Model({error_adName: zoneValidated.err_zonename}));
-		    //KO APPLY ALL
-		    ko.applyBindings(errors_model);
-		    //RELEASE ALL
-		    kb.release(errors_model);*/
         },
 
         error : function(model, error) {
@@ -252,8 +201,10 @@ $(document).ready(function() {
 			    self.websites.push(new WebSite(wb.get('name'), wb.get('url')));
 		    }
 		}
-	
-		ko.applyBindings(new WebSitesViewModel());
+		
+		model = new WebSitesViewModel();
+		
+		return model;
     }
     
     //BINDING ZONES AFTER FETCH
@@ -275,9 +226,50 @@ $(document).ready(function() {
 			    self.zones.push(new Zone(zone.get('name')));
 		    }
 		}
-	
-		ko.applyBindings(new AdsViewModel());
+		
+		//ko.applyBindings(new AdsViewModel());
+		
+		model = new AdsViewModel();
+		
+		return model;
     }
+    
+    //BINDING ERRORS
+	
+	error_webSiteName 	  = ko.observable('');
+	error_webSiteURL  	  = ko.observable('');
+	error_zoneName	  	  = ko.observable('');
+	error_zoneMode	  	  = ko.observable('');
+	error_zoneKind	  	  = ko.observable('');
+	error_zoneDescription = ko.observable('');
+	websites = ko.observableArray();
+	zones 	 = ko.observableArray();
+    
+    var ErrorsModel = kb.ViewModel.extend({
+	    constructor: function(model) {
+		    kb.ViewModel.prototype.constructor.call(this, model, {internals: ['error_webSiteName', 
+		    																  'error_webSiteURL', 
+		    																  'error_zoneName',
+		    																  'error_zoneMode',
+		    																  'error_zoneKind',
+		    																  'error_zoneDescription']});
+		    this.error_webSiteName = this._error_webSiteName;
+		    this.error_webSiteURL = this._error_webSiteURL;
+		    this.error_zoneName = this._error_zoneName;
+		    this.error_zoneMode = this._error_zoneMode;
+		    this.error_zoneKind = this._error_zoneKind;
+		    this.error_zoneDescription = this._error_zoneDescription;
+		    
+		    return this;
+	    }
+    });
+    
+    view_model = new ErrorsModel(new Backbone.Model({error_webSiteName	   : '', 
+													 error_webSiteURL 	   : '', 
+													 error_zoneName   	   : '', 
+													 error_zoneMode        : '',
+													 error_zoneKind   	   : '',
+													 error_zoneDescription : ''}));
     
     publisherDefaultSites = new PublisherDefaultSites();
     publisherDefaultSites.fetch({
@@ -290,5 +282,8 @@ $(document).ready(function() {
     });
     
     publisherDefaultBehavior = new PublisherDefaultBehavior();
+    
+    //KO APPLY ALL
+    ko.applyBindings([view_model]);
 
 });
