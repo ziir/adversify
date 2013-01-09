@@ -10,8 +10,7 @@ var Ad = new Schema({
     kind: { type : String, enum: ['image','text'] }, 
     modified: {type: Date},
     created: {type: Date},
-    validated : { type : Boolean },
-    colors : [{textColor: {type : String, default: "#333"}, borderColor: {type: String, default: "#000"}, bgColor: {type:String, default: "#fff"}, titleColor: {type:String, default:"#2672ec"}}] 
+    validated : { type : Boolean }
 });
 
 var Advertiser = new Schema({
