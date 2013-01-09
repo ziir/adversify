@@ -16,17 +16,24 @@
 						
 						<ul data-bind="foreach: websites">
 							<li>
-								<a data-bind="text: wbname"></a>
+								<strong data-bind="text: wbname"></strong>
 								<a data-bind="text: wburl"></a>
-								<a href="#">Modifier</a>
-								<a href="#">Supprimer</a>
+                                <a href="#" class="addZone" id="1">Add a zone</a>
+								<a href="#" class="editWebsite" id="1">Edit Website</a>
+								<a href="#" class="deleteWebsite" id="1">Delete Website</a>
+                                <ul>
+                                    <li>
+                                        <strong data-bind="text:zoneName">Zone 1</strong>
+                                        <a href="#" class="editZone">Edit Zone</a>
+                                        <a href="#" class="deleteZone">Delete Zone</a>
+                                    </li>
+                                </ul>
 							</li>
 						</ul>
 						
                         <h2>Ajouter un site</h2>
                         <form method="POST" action="/publisher/sites" class="well" id="addWebSiteForm">
                         		<span data-bind="text: error_webSiteName"></span>
-                        <!--<form method="POST" action="/publisher/websites" class="well">-->
                             <input type="text" class="sitename clearInput" name="sitename" title="Site Name" value="Site Name"/>
                             	<span data-bind="text: error_webSiteURL"></span>
                             <input type="text" class="siteurl clearInput" name="siteurl" title="Site URL" value="http://www.facebook.com"/>
@@ -62,6 +69,7 @@
                         <form method="POST" action="/publisher/ads" class="well" id="addZoneForm">
                             <input type="text" class="zonename clearInput" name="zonename" title="Zone Name" value="Zone Name"/>
                             	<span data-bind="text: error_zoneName"></span>
+                            <input type="hidden" value="http://www.citations.co/" />
                             <select class="zoneremuneration" name="zoneremuneration">
                                 <option value="">CPC or CPM?</option>
                                 <option value="cpc">CPC</option>
