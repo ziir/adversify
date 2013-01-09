@@ -1,9 +1,10 @@
 $(document).ready(function() {
 	
-	WebSite = function(wbname, wburl) {
+	WebSite = function(wbname, wburl, wbniceid) {
 	    var self = this;
 	    self.wbname = ko.observable(wbname);
-	    self.wburl = ko.observable(wburl);
+	    self.wburl  = ko.observable(wburl);
+	    self.niceID = 2;//Math.random();//wbniceid;
 	}
 
 	window.PublisherDefaultZone = Backbone.Model.extend({
@@ -130,7 +131,8 @@ $(document).ready(function() {
         
         events : {
             'submit #addWebSiteForm' : 'buildWebSite', // J'aime beaucoup ça
-            'submit #addZoneForm'    : 'buildAd'
+            'submit #addZoneForm'    : 'buildAd',
+            'click  .deleteWebsite'  : 'deleteWebSite'
         },
         
         buildWebSite : function(e) {
@@ -189,6 +191,22 @@ $(document).ready(function() {
 	            console.log('publisherDefaultAd Not Saved !');
            }
         },
+        
+        deleteWebSite : function(e) {
+        	e.preventDefault();
+        	
+        	$.get('/publishers/websites/'+e.currentTarget.value+'/delete', function(data) {
+	        	if (data == "OK") {
+		        	$('#'+e.currentTarget.id).parent().slideUp();
+	        	} else {
+		        	alert('cannot remove this fucking website');
+	        	}
+        	});
+
+        	$('#'+e.currentTarget.id).parent().slideUp();
+        	
+        	console.log("j'ai clické !");
+        },
 
         error : function(model, error) {
             console.log(model, error);
@@ -209,7 +227,7 @@ $(document).ready(function() {
 		    
 		    for (i=0; i < publisherDefaultSites.length; i++) {
 		    	var wb = publisherDefaultSites.at(i);
-			    self.websites.push(new WebSite(wb.get('name'), wb.get('url')));
+			    self.websites.push(new WebSite(wb.get('name'), wb.get('url'), wb.get('niceID')));
 		    }
 		}
 		
@@ -235,16 +253,18 @@ $(document).ready(function() {
     var ErrorsModel = kb.ViewModel.extend({
 	    constructor: function(model) {
 		    kb.ViewModel.prototype.constructor.call(this, model, {internals: ['error_webSiteName', 
-		    																  'error_webSiteURL', 
+		    																  'error_webSiteURL',
+		    																  'error_webSiteCategory',
 		    																  'error_zoneName',
 		    																  'error_zoneMode',
 		    																  'error_zoneKind',
 		    																  'error_zoneDescription']});
-		    this.error_webSiteName = this._error_webSiteName;
-		    this.error_webSiteURL = this._error_webSiteURL;
-		    this.error_zoneName = this._error_zoneName;
-		    this.error_zoneMode = this._error_zoneMode;
-		    this.error_zoneKind = this._error_zoneKind;
+		    this.error_webSiteName 	   = this._error_webSiteName;
+		    this.error_webSiteURL 	   = this._error_webSiteURL;
+		    this.error_webSiteCategory = this._error_webSiteCategory;
+		    this.error_zoneName 	   = this._error_zoneName;
+		    this.error_zoneMode 	   = this._error_zoneMode;
+		    this.error_zoneKind 	   = this._error_zoneKind;
 		    this.error_zoneDescription = this._error_zoneDescription;
 		    
 		    return this;
