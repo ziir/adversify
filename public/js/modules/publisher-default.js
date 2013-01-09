@@ -18,43 +18,47 @@ $(document).ready(function() {
 		},
 		
 		validate : function(attributes) {
-			$('#addZoneForm .adname').css('border', '0px solid red');
+			$('#addZoneForm .zonename').css('border', '0px solid red');
+			$('#addZoneForm .zoneremuneration').css('border', '0px solid red');
+			$('#addZoneForm .zoneformat').css('border', '0px solid red');
 			
-			console.log(attributes.url);
+			var isOk = true;
 			
-			var validated = new Backbone.Model({err_zonename : '',
-												isOk	   : true});
-			
-			validated.isOk = true;
-			validated.err_zonename = '';
+			error_zoneName('');
+			error_zoneMode('');
+			error_zoneKind('');
+			error_zoneDescription('');
 			
 			var reg = new RegExp('^[. - a-z A-Z 0-9 _]+$');
 			if (!reg.test(attributes.name)) {
-				validated.isOk = false; //Faire renvoyer FALSE
+				isOk = false; //Faire renvoyer FALSE
                 $('#addZoneForm .zonename').css('border', '1px solid red');
-                validated.err_zonename = 'Zone name is not correct';
+                error_zoneName('The name is incorrect');
 			}
 			
-			return validated;
+			if (attributes.mode == '') {
+				isOk = false;
+				$('#addZoneForm .zoneremuneration').css('border', '1px solid red');
+				error_zoneMode('Please select a mode');
+			}
+			
+			if (attributes.kind == '') {
+				isOk = false;
+				$('#addZoneForm .zoneformat').css('border', '1px solid red');
+				error_zoneKind('Please select a format');
+			}
+			
+			return isOk;
 		},
 		
-		initialize : function PublisherDefaultAd() {
-			console.log('');
+		initialize : function PublisherDefaultZone() {
+			console.log('Zone Added !');
 			
 			this.bind("error", function(model, error){ // Quand quelqu'un maitrise ça, il m'apelle
                 console.log(error);
             });
 		}
 	});
-	
-	window.PublisherDefaultZones = Backbone.Collection.extend({
-        model : PublisherDefaultZone,
-        url   : '/publisher/zones',
-
-        initialize : function() {
-            //console.log('PublisherDefaultSites collection Constructor');
-        }
-    });
 
 	window.PublisherDefaultSite = Backbone.Model.extend({
     	urlRoot : '/publisher/websites',
@@ -67,24 +71,33 @@ $(document).ready(function() {
         },
         
         validate : function(attributes) {
-        	$('#sign-container .sitename').css('border', '0px solid red');
-        	$('#sign-container .siteurl').css('border', '0px solid red');
+        	$('#addWebSiteForm .sitename').css('border', '0px solid red');
+        	$('#addWebSiteForm .siteurl').css('border', '0px solid red');
 
     		var isOk = true;
+    		
+    		error_webSiteName('');
+    		error_webSiteURL('');
         	
         	var reg = new RegExp('^[. - a-z A-Z 0-9 _]+$');
         	if (!reg.test(attributes.name)) {
 	        	isOk = false; //Faire renvoyer FALSE
 	        	error_webSiteName('The name is incorrect');
-                $('#sign-container .sitename').css('border', '1px solid red');
+                $('#addWebSiteForm .sitename').css('border', '1px solid red');
 	        }
 	        
-	        reg = new RegExp('^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}');
+	        reg = new RegExp('(http|ftp|https)://[a-z0-9\-_]+(\.[a-z0-9\-_]+)+([a-z0-9\-\.,@\?^=%&;:/~\+#]*[a-z0-9\-@\?^=%&;/~\+#])?', 'i');
 	        if (!reg.test(attributes.url)) {
 	        	console.log(attributes.url);
-		        isOk = true; //Faire renvoyer false plus tard après avoir fait RegExp
+		        isOk = false; //Faire renvoyer false plus tard après avoir fait RegExp
 		        error_webSiteURL('This URL is not a valid URL');
-		        $('#sign-container .siteurl').css('border', '1px solid red');
+		        $('#addWebSiteForm .siteurl').css('border', '1px solid red');
+	        }
+	        
+	        if (attributes.category == '') {
+		        isOk = false;
+		        error_webSiteCategory('Please select a category');
+		        $('#addWebSiteForm .sitecategory').css('border', '1px solid red');
 	        }
         	
         	return isOk;
@@ -132,7 +145,7 @@ $(document).ready(function() {
            
            siteValidated = publisherDefaultSite.validate({
            		name 		: publisherDefaultSite.get('name'),
-           		url	 		: publisherDefaultSite.get('websiteurl'),
+           		url	 		: publisherDefaultSite.get('url'),
            		category    : publisherDefaultSite.get('category'),
            		description : publisherDefaultSite.get('description')
            });
@@ -141,7 +154,7 @@ $(document).ready(function() {
            		newWebSite = new WebSite(publisherDefaultSite.get('name'), publisherDefaultSite.get('url'));
            		websites.push(newWebSite);
            		publisherDefaultSites.add(publisherDefaultSite);
-	           	publisherDefaultSite.save();
+	           	//publisherDefaultSite.save();
 	           	console.log('publisherDefaultSite Saved !');
            } else {
 	            publisherDefaultSite = 0;
@@ -169,10 +182,8 @@ $(document).ready(function() {
            		url			: publisherDefaultZone.get('url')
            });
            
-           if (zoneValidated.isOk) {
-           		publisherDefaultZones.add(publisherDefaultZone);
-           		publisherDefaultZone.save();
-           		console.log('publisherDefaultAd Saved !');
+           if (zoneValidated == true) {
+           		console.log('publisherDefaultZone Saved !');
            } else {
 	            publisherDefaultZone = 0;
 	            console.log('publisherDefaultAd Not Saved !');
@@ -207,41 +218,17 @@ $(document).ready(function() {
 		return model;
     }
     
-    //BINDING ZONES AFTER FETCH
-    var OnSuccessZones = function() {
-	    function Zone(zonename) {
-		    var self = this;
-		    self.zonename = ko.observable(zonename);
-		}
-	    
-	    function AdsViewModel() {
-		    var self = this; 
-		    
-		    // Editable data
-		    //self.zones = ko.observableArray();
-		    self.zones = zones;
-		    
-		    for (i=0; i < publisherDefaultZones.length; i++) {
-		    	var zone = publisherDefaultZones.at(i);
-			    self.zones.push(new Zone(zone.get('name')));
-		    }
-		}
-		
-		//ko.applyBindings(new AdsViewModel());
-		
-		model = new AdsViewModel();
-		
-		return model;
-    }
-    
     //BINDING ERRORS
 	
 	error_webSiteName 	  = ko.observable('');
 	error_webSiteURL  	  = ko.observable('');
+	error_webSiteCategory = ko.observable('');
+	
 	error_zoneName	  	  = ko.observable('');
 	error_zoneMode	  	  = ko.observable('');
 	error_zoneKind	  	  = ko.observable('');
 	error_zoneDescription = ko.observable('');
+	
 	websites = ko.observableArray();
 	zones 	 = ko.observableArray();
     
@@ -274,11 +261,6 @@ $(document).ready(function() {
     publisherDefaultSites = new PublisherDefaultSites();
     publisherDefaultSites.fetch({
     	success : OnSuccessWebites
-    });
-    
-    publisherDefaultZones = new PublisherDefaultZones();
-    publisherDefaultZones.fetch({
-	    success : OnSuccessZones
     });
     
     publisherDefaultBehavior = new PublisherDefaultBehavior();
