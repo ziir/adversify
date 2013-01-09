@@ -63,7 +63,7 @@ PM.addZone = function(u,newData,callback) {
 				    	console.log('Match for this website and user, getting the copy of the website to push');
 				    	WebsiteModel.findOneAndUpdate(
 				    		{ url:newData.url },
-				    		{ $push : { zones : o }},
+				    		{ $push : { zones : z }},
 				    		{ safe: true, upsert:true }
 				    		function(e,o) {
 				    			if(e) {
