@@ -13,6 +13,7 @@ var Website = new Schema({
     zones: [Zone]
 });
 
+
 var Publisher = new Schema({
     username: { type: String, required: true, match: /^[a-zA-Z0-9-_]+$/, unique: true },  
     password: { type: String, required: true},
@@ -27,6 +28,8 @@ var Publisher = new Schema({
     clientid: { type: Number},
     websites: [Website]
 });
+
+// TO DO : make SIMPLE website array into publisher collection
 
 //Define Ad for Publishers (redefined in Publishers.js)
 var Zone = new Schema({

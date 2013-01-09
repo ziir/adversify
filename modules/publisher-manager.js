@@ -47,19 +47,31 @@ PM.addZone = function(u,newData,callback) {
 			"name":newData.name,
 			"created":Date.now()
 		});
+
+		// WORKAROUND for positional cursor + $push, see https://jira.mongodb.org/browse/SERVER-831
+
 		z.save(function(e,o){
 			console.log("zone saved into zone collection");
 			if(!e) {
-				PublisherModel.findOneAndUpdate(
+				PublisherModel.findOne(
 				  { username:u, "websites.url":newData.url },
-				  { $push: { "websites.$.zones": o }},
 				  function(e,o) {
-				  	console.log("Attempt to save into publisher collection");
 				    if(e) {
 				    	callback(e);
 				    	console.log("Error due to save");
 				    } else {
-				    	callback(null,o);
+				    	console.log('Match for this website and user, getting the copy of the website to push');
+				    	WebsiteModel.findOneAndUpdate(
+				    		{ url:newData.url },
+				    		{ $push : { zones : o }},
+				    		{ safe: true, upsert:true }
+				    		function(e,o) {
+				    			if(e) {
+				    				callback(e);
+				    			} else {
+				    				callback(null,o);
+				    			}
+				    	});
 				    }
 				});	
 			} else {
