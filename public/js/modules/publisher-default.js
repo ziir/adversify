@@ -158,7 +158,7 @@ $(document).ready(function() {
 	           	publisherDefaultSite.save();
 	           	publisherDefaultSites.fetch({
 		           	success : function() {
-		           		var publisherDefaultSite = publisherDefaultSites.at(publisherDefaultSite.length-1);
+		           		var publisherDefaultSite = publisherDefaultSites.at(publisherDefaultSites.length-1);
 			           	newWebSite = new WebSite(publisherDefaultSite.get('name'), publisherDefaultSite.get('url'), publisherDefaultSite.get('_id'));
 			           	websites.push(newWebSite);
 		           	}
