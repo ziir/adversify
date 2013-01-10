@@ -5,6 +5,7 @@
 */
 var mongoose = require('mongoose');
   mongoose.set('debug', true);
+var ZM = require('../modules/zone-manager.js');
 
 var WM = {};
 
@@ -83,7 +84,7 @@ WM.deleteWebsite = function(u,nId,callback) { // to do ; w._id ???
 				 		if(e) {
 				 			callback(e);
 				 		} else {
-				 			WM.deleteZonesByWebsite(nId, function(e,o) {
+				 			ZM.deleteZonesByWebsite(nId, function(e,o) {
 				 				if(e) {
 				 					callback(e);
 				 				} else {
