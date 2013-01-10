@@ -4,7 +4,7 @@ $(document).ready(function() {
 	    var self = this;
 	    self.wbname = ko.observable(wbname);
 	    self.wburl  = ko.observable(wburl);
-	    self.niceID = 2;//Math.random();//wbniceid;
+	    self.niceID = wbniceid;
 	}
 
 	window.PublisherDefaultZone = Backbone.Model.extend({
@@ -142,7 +142,8 @@ $(document).ready(function() {
 	           name 	   : $('#addWebSiteForm .sitename').val(),
 	           url  	   : $('#addWebSiteForm .siteurl').val(),
 	           category    : $('#addWebSiteForm .sitecategory').val(),
-	           description : $('#addWebSiteForm .sitedescription').val()
+	           description : $('#addWebSiteForm .sitedescription').val(),
+	           _id		   : ''
            });
            
            siteValidated = publisherDefaultSite.validate({
@@ -153,11 +154,20 @@ $(document).ready(function() {
            });
            
            if (siteValidated == true) {
-           		newWebSite = new WebSite(publisherDefaultSite.get('name'), publisherDefaultSite.get('url'));
-           		websites.push(newWebSite);
-           		publisherDefaultSites.add(publisherDefaultSite);
-	           	//publisherDefaultSite.save();
-	           	console.log('publisherDefaultSite Saved !');
+           		
+	           	publisherDefaultSite.save().always(function() {
+	           		console.log('test');
+	           		publisherDefaultSite.fetch({
+		           		success : function(model, response) {
+			           		newWebSite = new WebSite(publisherDefaultSite.get('name'), publisherDefaultSite.get('url'), publisherDefaultSite.get('_id'));
+			           		websites.push(newWebSite);
+			           		publisherDefaultSites.add(publisherDefaultSite);
+				           	
+				           	console.log('publisherDefaultSite Saved !');
+		           		}
+	           		});
+	           	});
+	           	//publisherDefaultSite.fetch();
            } else {
 	            publisherDefaultSite = 0;
 	            console.log('publisherDefaultSite Not Saved !');
@@ -195,7 +205,7 @@ $(document).ready(function() {
         deleteWebSite : function(e) {
         	e.preventDefault();
         	
-        	$.get('/publishers/websites/'+e.currentTarget.value+'/delete', function(data) {
+        	$.get('/publishers/websites/'+e.currentTarget.id+'/delete', function(data) {
 	        	if (data == "OK") {
 		        	$('#'+e.currentTarget.id).parent().slideUp();
 	        	} else {
