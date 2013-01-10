@@ -154,20 +154,16 @@ $(document).ready(function() {
            });
            
            if (siteValidated == true) {
-           		
-	           	publisherDefaultSite.save().always(function() {
-	           		console.log('test');
-	           		publisherDefaultSite.fetch({
-		           		success : function(model, response) {
-			           		newWebSite = new WebSite(publisherDefaultSite.get('name'), publisherDefaultSite.get('url'), publisherDefaultSite.get('_id'));
-			           		websites.push(newWebSite);
-			           		publisherDefaultSites.add(publisherDefaultSite);
-				           	
-				           	console.log('publisherDefaultSite Saved !');
-		           		}
-	           		});
-	           	});
-	           	//publisherDefaultSite.fetch();
+	           	
+	           	publisherDefaultSite.save();
+	           	publisherDefaultSites.fetch({
+		           	success : function() {
+		           		var publisherDefaultSite = publisherDefaultSites.at(publisherDefaultSite.length-1);
+			           	newWebSite = new WebSite(publisherDefaultSite.get('name'), publisherDefaultSite.get('url'), publisherDefaultSite.get('_id'));
+			           	websites.push(newWebSite);
+		           	}
+	           	})
+
            } else {
 	            publisherDefaultSite = 0;
 	            console.log('publisherDefaultSite Not Saved !');
@@ -206,14 +202,13 @@ $(document).ready(function() {
         	e.preventDefault();
         	
         	$.get('/publishers/websites/'+e.currentTarget.id+'/delete', function(data) {
+        		console.log('GET /publishers/websites/'+e.currentTarget.id+'/delete');
 	        	if (data == "OK") {
-		        	$('#'+e.currentTarget.id).parent().slideUp();
+		        	$('#'+e.currentTarget.id).slideUp();
 	        	} else {
 		        	alert('cannot remove this fucking website');
 	        	}
         	});
-
-        	$('#'+e.currentTarget.id).parent().slideUp();
         	
         	console.log("j'ai clické !");
         },
@@ -237,7 +232,7 @@ $(document).ready(function() {
 		    
 		    for (i=0; i < publisherDefaultSites.length; i++) {
 		    	var wb = publisherDefaultSites.at(i);
-			    self.websites.push(new WebSite(wb.get('name'), wb.get('url'), wb.get('niceID')));
+			    self.websites.push(new WebSite(wb.get('name'), wb.get('url'), wb.get('_id')));
 		    }
 		}
 		
