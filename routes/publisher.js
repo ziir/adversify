@@ -1,4 +1,7 @@
 var PM = require('../modules/publisher-manager.js');
+var WM = require('../modules/website-manager.js');
+var ZM = require('../modules/zone-manager.js');
+
 
 exports.index = function(req, res){
   if(req.cookies.username == undefined || req.cookies.password == undefined){
@@ -46,7 +49,7 @@ exports.createWebsite = function(req,res) {
   if(req.session.kind != "publisher") {
     res.redirect("/");
   } else {
-        PM.addWebsite(req.session.username,req.body,function(e,o) {
+        WM.addWebsite(req.session.username,req.body,function(e,o) {
       if(!o) {
           res.send(e, 400);
       }
@@ -62,7 +65,7 @@ exports.createZone = function(req,res) {
   if(req.session.kind != "publisher") {
     res.redirect("/");
   } else {
-        PM.addZone(req.session.username,req.body,function(e,o) {
+        ZM.addZone(req.session.username,req.body,function(e,o) {
       if(!o) {
           res.send(e, 400);
       }
@@ -78,7 +81,7 @@ exports.getWebsites = function(req,res) {
   if(req.session.kind != "publisher") {
     res.redirect("/");
   } else {
-        PM.getWebsites(req.session.username,null,null,function(e,o) {
+        WM.getWebsites(req.session.username,null,null,function(e,o) {
           if(!o) {
             res.send(e, 400);
           }
@@ -94,7 +97,7 @@ exports.deleteWebsite = function(req,res) {
     res.redirect("/");
   } else {
     console.log("IZI IZI ?")
-    PM.deleteWebsite(req.session.username,req.param('id'),function(e,o){
+    WM.deleteWebsite(req.session.username,req.param('id'),function(e,o){
       if(e) {
         res.send(e, 400);
             console.log("NO NO NO?")
@@ -111,7 +114,7 @@ exports.getWebsite = function(req, res){
   if(req.session.kind != "publisher") {
     res.redirect("/");
   } else {
-  	PM.getWebsite(req.body.url,function(e,o){
+  	WM.getWebsite(req.body.url,function(e,o){
   		if(!o) {
               res.send(e, 400);
             }
