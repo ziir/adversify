@@ -74,7 +74,7 @@ exports.createZone = function(req,res) {
 }
 
 exports.getWebsites = function(req,res) {
-  console.log("Publisher attempt to get single website");
+  console.log("Publisher attempt to get all his websites");
   if(req.session.kind != "publisher") {
     res.redirect("/");
   } else {
@@ -89,6 +89,10 @@ exports.getWebsites = function(req,res) {
   }
 }
 
+exports.deleteWebsite = function(req,res) {
+  console.log("Deleting websites");
+}
+
 exports.getWebsite = function(req, res){
   if(req.session.kind != "publisher") {
     res.redirect("/");
@@ -97,7 +101,7 @@ exports.getWebsite = function(req, res){
   		if(!o) {
               res.send(e, 400);
             }
-            else {
+      else {
               res.send(o, 200);
             }
   	

@@ -84,10 +84,27 @@ PM.addZone = function(u,newData,callback) {
 }
 
 PM.getWebsites = function(u,nb,sort,callback) { // Publisher username, number of websites to display, sort criteria and callback
+	var urls = [];
+	var tempW;
+	var w;
 	PublisherModel.findOne({username:u}, function(e,o) {
 		if(o) {
-			console.log(o.websites);
-			callback(null,o.websites);
+			//console.log(o.websites);
+			tempW = o.websites;
+			for(var i=0;i < tempW.length; i++) {
+				urls.push(tempW[i].url);
+				console.log("JE TENTE LE PUSH"+tempW[i].url);
+			}
+			console.log(urls);
+			WebsiteModel.find({url:{$in: urls}}, function(e,o) {
+				if(e) {
+					callback(e);
+				} else {
+					console.log(o);
+					callback(null,o);
+				}
+			});
+
 		} else {
 			callback(e);
 		}
@@ -137,10 +154,14 @@ PM.getWebsite = function(webSite, callback) {
 }**/
 
 
-PM.deleteWebsite = function(u,w,callback) { // to do ; w._id ???
-	PublisherModel.findOne({username:u}, function(e,o) {
+PM.deleteWebsite = function(u,nId,callback) { // to do ; w._id ???
+	PublisherModel.findOneAndUpdate(
+		{username:u, "websites.niceId":nId},
+		{ $pull: {  "websites.niceId": nId }},
+		{ safe: true, upsert: true },
+		 function(e,o) {
 		if(o) {
-
+			callback(null,o);
 		} else {
 			callback(e);
 		}

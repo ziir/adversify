@@ -10,7 +10,6 @@ var Website = new Schema({
     validated : { type : Boolean, default: false },
     modified: { type: Date, default: Date.now },
     created: {type: Date},
-    niceId: {type: Number},
     zones: [Zone]
 });
 
