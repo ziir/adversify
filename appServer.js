@@ -49,6 +49,9 @@ require('./router')(app); // Router file.
 
 require('./schemas/Advertisers.js');
 require('./schemas/Publishers.js');
+require('./schemas/Zones.js');
+require('./schemas/Websites.js');
+
 
 
 /* TESTs*/
