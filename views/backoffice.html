@@ -15,18 +15,18 @@
                     <div class="sites-overview">
 						
 						<ul data-bind="foreach: websites">
-							<li class="classWebSite" data-bind="attr: {id: webSiteNiceID}">
+							<li class="classWebSite" data-bind="attr: {id: niceID}">
 								<strong data-bind="text: wbname"></strong>
 								<a data-bind="text: wburl"></a>
                                 <a href="#" class="addZone" >Add a zone</a>
 								<a href="#" class="editWebsite" >Edit Website</a>
-								<a href="#" class="deleteWebsite" data-bind="attr: {id: webSiteNiceID}">Delete Website</a>
-                                <ul data-bind="foreach: wbzones">
+								<a href="#" class="deleteWebsite" data-bind="attr: {id: niceID}">Delete Website</a>
+                                <ul data-bind="foreach: websites.zones">
                                     <li>
-                                        <!--<strong data-bind="text: zonename">Zone 1</strong>
-                                        <strong data-bind="text: zoneformat">300*250</strong>
+                                        <strong data-bind="text:zoneName">Zone 1</strong>
+                                        <strong data-bind="text:zoneFormat">300*250</strong>
                                         <a href="#" class="editZone" id="1">Edit Zone</a>
-                                        <!--<a href="#" class="deleteZone" data-bind="attr: {id: zoneNiceID}">Delete Zone</a>-->
+                                        <a href="#" class="deleteZone" id="1">Delete Zone</a>
                                     </li>
                                 </ul>
 							</li>

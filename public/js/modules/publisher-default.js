@@ -1,10 +1,20 @@
 $(document).ready(function() {
 	
-	WebSite = function(wbname, wburl, wbniceid) {
+	Zone = function(zonename, zoneformat) {
 	    var self = this;
-	    self.wbname = ko.observable(wbname);
-	    self.wburl  = ko.observable(wburl);
-	    self.niceID = wbniceid;
+	    self.zonename = zonename;
+	    self.zoneformat = zoneformat;
+    }
+	
+	WebSite = function(wbname, wburl, wbniceid, wbzones) {
+	    var self = this;
+	    self.wbname  		= ko.observable(wbname);
+	    self.wburl   		= ko.observable(wburl);
+	    self.webSiteNiceID  = wbniceid;
+	    
+	    self.wbzones		= ko.observableArray(wbzones);
+	    //self.wbzones().zonename		= 'test';
+	    //self.zoneformat		= 'test2';
 	}
 
 	window.PublisherDefaultZone = Backbone.Model.extend({
@@ -60,6 +70,19 @@ $(document).ready(function() {
             });
 		}
 	});
+	
+	window.PublisherDefaultZones = Backbone.Model.extend({
+		model   : PublisherDefaultZone,
+		urlRoot : '/publisher/websites',
+		
+		initialize : function PublisherDefaultZones() {
+			console.log('Zone Collection Added !');
+			
+			this.bind("error", function(model, error){ // Quand quelqu'un maitrise ça, il m'apelle
+                console.log(error);
+            });
+		}
+	})
 
 	window.PublisherDefaultSite = Backbone.Model.extend({
     	urlRoot : '/publisher/websites',
@@ -131,7 +154,7 @@ $(document).ready(function() {
         
         events : {
             'submit #addWebSiteForm' : 'buildWebSite', // J'aime beaucoup ça
-            'submit #addZoneForm'    : 'buildAd',
+            'submit #addZoneForm'    : 'buildZone',
             'click  .deleteWebsite'  : 'deleteWebSite'
         },
         
@@ -143,6 +166,7 @@ $(document).ready(function() {
 	           url  	   : $('#addWebSiteForm .siteurl').val(),
 	           category    : $('#addWebSiteForm .sitecategory').val(),
 	           description : $('#addWebSiteForm .sitedescription').val(),
+	           zones	   : new PublisherDefaultZones(),
 	           _id		   : ''
            });
            
@@ -159,8 +183,10 @@ $(document).ready(function() {
 	           	publisherDefaultSites.fetch({
 		           	success : function(collection, response, options) {
 		           		var publisherDefaultSite = publisherDefaultSites.at(publisherDefaultSites.length-1);
-			           	newWebSite = new WebSite(publisherDefaultSite.get('name'), publisherDefaultSite.get('url'), publisherDefaultSite.get('_id'));
-			           	websites.push(newWebSite);
+		           		if (publisherDefaultSite) {
+			           		newWebSite = new WebSite(publisherDefaultSite.get('name'), publisherDefaultSite.get('url'), publisherDefaultSite.get('_id'));
+			           		websites.push(newWebSite);
+		           		}
 			           	
 			           	for (var i=0; i < publisherDefaultSites.length; i++) {
 						    var model = publisherDefaultSites.at(i);
@@ -176,27 +202,38 @@ $(document).ready(function() {
            
         },
         
-        buildAd : function(e) {
+        buildZone : function(e) {
            e.preventDefault();
            
            publisherDefaultZone = new PublisherDefaultZone({
-	           name 	   : $('#addZoneForm .zonename').val(),
-	           mode  	   : $('#addZoneForm .zoneremuneration').val(),
-	           kind    	   : $('#addZoneForm .zoneformat').val(),
-	           description : $('#addZoneForm .zonedescription').val(),
-	           url		   : $('#addZoneForm .webSiteUrl').val()
+	           name 	    : $('#addZoneForm .zonename').val(),
+	           remuneration : $('#addZoneForm .zoneremuneration').val(),
+	           kind    	    : $('#addZoneForm .zoneformat').val(),
+	           format		: '',
+	           description  : $('#addZoneForm .zonedescription').val(),
+	           url		    : $('#addZoneForm .webSiteUrl').val(),
+	           _id			: ''
            });
            
            zoneValidated = publisherDefaultZone.validate({
-           		name 		: publisherDefaultZone.get('name'),
-           		mode	 	: publisherDefaultZone.get('mode'),
-           		kind    	: publisherDefaultZone.get('kind'),
-           		description : publisherDefaultZone.get('description'),
-           		url			: publisherDefaultZone.get('url')
+           		name 		 : publisherDefaultZone.get('name'),
+           		remuneration : publisherDefaultZone.get('mode'),
+           		kind    	 : publisherDefaultZone.get('kind'),
+           		format		 : '',
+           		description  : publisherDefaultZone.get('description'),
+           		url			 : publisherDefaultZone.get('url')
            });
            
            if (zoneValidated == true) {
            		console.log('publisherDefaultZone Saved !');
+           		publisherDefaultZone.save();
+           		publisherDefaultSites.fetch({
+	           		success : function(collection, response, options) {
+		           		//newZone = new Zone('test1', 'test2');
+		           		//wbzones.push(newZone);
+	           		}
+           		});
+           		
            } else {
 	            publisherDefaultZone = 0;
 	            console.log('publisherDefaultAd Not Saved !');
@@ -232,12 +269,12 @@ $(document).ready(function() {
 		    var self = this; 
 		    
 		    // Editable data
-		    //self.websites = ko.observableArray();
 		    self.websites = websites;
 		    
 		    for (i=0; i < publisherDefaultSites.length; i++) {
 		    	var wb = publisherDefaultSites.at(i);
-			    self.websites.push(new WebSite(wb.get('name'), wb.get('url'), wb.get('_id')));
+			    self.websites.push(new WebSite(wb.get('name'), wb.get('url'), wb.get('_id'), wb.get('zones')));
+			    
 		    }
 		}
 		
@@ -258,7 +295,6 @@ $(document).ready(function() {
 	error_zoneDescription = ko.observable('');
 	
 	websites = ko.observableArray();
-	zones 	 = ko.observableArray();
     
     var ErrorsModel = kb.ViewModel.extend({
 	    constructor: function(model) {
