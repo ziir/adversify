@@ -26,7 +26,6 @@ i18n.configure({
 // Database
 
 mongoose.connect('mongodb://localhost/adversify_database'); // TO DO : connection pooling
-
 // App config
 
 app.configure('development', function(){

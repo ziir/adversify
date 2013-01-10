@@ -2,6 +2,7 @@ var AM = require('../modules/account-manager.js');
 
 
 exports.create = function(req,res){
+  console.log("signup");
   AM.signup(req.body, function(e,o) {
     if (!o){
         res.send(e, 400); // Something went wrong

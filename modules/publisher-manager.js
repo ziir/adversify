@@ -5,6 +5,7 @@
 */
 var mongoose = require('mongoose');
 var AM = require('../modules/account-manager.js');
+  mongoose.set('debug', true);
 
 var PM = {};
 
@@ -27,6 +28,7 @@ PM.addWebsite = function(u,newData,callback) { // Publisher username, new websit
 				  { safe: true, upsert: true },
 				  function(e, o) {
 				    if(e) {
+				    	console.log(" NO NO NO 222");
 				    	callback(e);
 				    } else {
 				    	callback(null,o);
@@ -155,16 +157,23 @@ PM.getWebsite = function(webSite, callback) {
 
 
 PM.deleteWebsite = function(u,nId,callback) { // to do ; w._id ???
-	PublisherModel.findOneAndUpdate(
-		{username:u, "websites.niceId":nId},
-		{ $pull: {  "websites.niceId": nId }},
-		{ safe: true, upsert: true },
-		 function(e,o) {
-		if(o) {
-			callback(null,o);
-		} else {
-			callback(e);
-		}
+	console.log("delete website?");
+	PublisherModel.findOne({username:u, "websites._id":nId},
+		function(e,o) {
+		 	if(e) {
+		 		callback(e);
+		 	} else {
+		 		o.websites.id(nId).remove();
+		 		o.save(function (e,o) {
+					WebsiteModel.remove({_id:nId}, function(e) {
+				 		if(e) {
+				 			callback(e);
+				 		} else {
+				 			callback(null,"OK");
+				 		}
+					});
+		 		});
+		 	}
 	});
 }
 

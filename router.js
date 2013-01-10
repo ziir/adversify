@@ -25,7 +25,7 @@ module.exports = function(app) {
 	app.get('/publisher/default', publisher.default);
 	app.get('/publisher/websites', publisher.getWebsites);
 	app.get('/publisher/websites/single', publisher.getWebsite);
-	app.get('/publisher/websites/:niceId/delete', publisher.deleteWebsite);
+	app.get('/publisher/websites/:id/delete', publisher.deleteWebsite);
 	app.post('/publisher/websites', publisher.createWebsite);
 
 	app.post('/publisher/zones', publisher.createZone);

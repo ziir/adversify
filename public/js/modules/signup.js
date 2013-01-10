@@ -112,7 +112,7 @@ $(document).ready(function() {
 	        } else {
 	            console.log('Rediriger maintenant');
 	            user.save();
-	            document.location.href="/signup/step2";
+	            //document.location.href="/signup/step2";
 	            
 	        }
             

@@ -90,7 +90,21 @@ exports.getWebsites = function(req,res) {
 }
 
 exports.deleteWebsite = function(req,res) {
-  console.log("Deleting websites");
+  if(req.session.kind != "publisher") {
+    res.redirect("/");
+  } else {
+    console.log("IZI IZI ?")
+    PM.deleteWebsite(req.session.username,req.param('id'),function(e,o){
+      if(e) {
+        res.send(e, 400);
+            console.log("NO NO NO?")
+      } else if(o === "OK") {
+        res.send("OK", 200);
+            console.log("YES YES YES")
+
+      }
+    });
+  }
 }
 
 exports.getWebsite = function(req, res){
