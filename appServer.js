@@ -43,16 +43,20 @@ app.configure('development', function(){
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); // Shown all errors, with stackTrace
 });
-app.get('/socket/:id', function(req,res){
-  res.sendfile('socket.html');
-  io.of('/'+req.param('id')).on('connection', function (socket) {
-    PublisherModel.findOne({_id:req.param('id')}, function(e,o){
+
+app.get('/socket', function(req,res){
+  console.log("Attempt to connect SOCKET : "+req.session.uid);
+  io.of('/'+req.session.uid).on('connection', function (socket) {
+    PublisherModel.findOne({_id:req.session.uid}, function(e,o){
       if(o) {
         socket.emit('getValue', o.balance);
+        console.log("Connection accepted");
+        res.send("OK",200);
+      } else {
+        console.log("Connection refused");
+        res.send(e,400);
       }
     });
-      // MAJ valeur
-
   });
 });
 

@@ -1,17 +1,32 @@
-        <script type="text/javascript" src="/js/modules/publisher-default.js"> </script>
+        <script type="text/javascript" src="/js/modules/publisher-default.js"></script>
+        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+         <script type="text/javascript">
+          // On se connecte au serveur
+        $.get("/socket");
+        var socket = io.connect("/<%= locals.uid %>");
+        socket.on('getValue', function (value) {
+            var balance = value;
+            $(".balance").html(balance+'€');
+        });
+
+        </script>
         <div id="main" class="marginAuto">
             <div id="settings-nav" class="menu-container floatLeft">
                 <ul class="menu">
-                    <li><a href="/publisher/default" class="">Default</a></li>
+                    <li><a href="/publisher/default" class="selected">Default Panel</a></li>
+                    <li><a href="/publishers/profile" class="">Account settings</a></li>
                     <li><a href="/publishers/profile" class="">Websites</a></li>
+                    <li><a href="/publishers/profile" class="">Zones</a></li>
+                    <li><a href="/publishers/profile" class="">Revenue</a></li>
                     <li><a href="/publishers/profile" class="">Payments History</a></li>
-                    <li><a href="/publishers/profile" class="">Ads</a></li>
-                    <li><a href="/publishers/profile" class="">Profile</a></li>
                     <li><a href="/publishers/profile" class="">Security History</a></li>
                 </ul>
             </div>
             <h1>Publisher default panel</h1>
             <div id="signup-forms" class="textCenter">
+                <p id="revenue-overview">
+                    <span class="balance"></span>
+                </p>
                     <div class="sites-overview">
 						
 						<ul data-bind="foreach: websites">

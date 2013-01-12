@@ -65,6 +65,7 @@ AM.loginPublisher = function(username, password, callback) {
   				if (o.password == hash) {
   					callback(null,o);
     				console.log("User Successfully logged in to Publisher account ("+username+")");
+    				console.log("USER ID :"+o._id);
   				} else {
   					callback('invalid-password');
   				}

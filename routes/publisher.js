@@ -3,7 +3,6 @@ var WM = require('../modules/website-manager.js');
 var ZM = require('../modules/zone-manager.js');
 var io = require('socket.io');
 
-
 exports.index = function(req, res){
   if(req.cookies.username == undefined || req.cookies.password == undefined){
     res.render('login-publisher.html', { title: 'Sign in to your Publisher account.' });
@@ -11,6 +10,7 @@ exports.index = function(req, res){
     PM.autoLogin(req.cookies.username, req.cookies.password, function(o){
       if (o != null){
         req.session.username = o.username;
+        req.session.uid = o._id;
         req.session.kind = "publisher";
         res.redirect('/publisher/default');
       } else{
@@ -27,6 +27,7 @@ exports.signin = function(req, res){
         res.send(e, 400);
       } else{
         req.session.username = o.username;
+        req.session.uid = o._id;
         req.session.kind = "publisher";
         if (req.param('remember-me') == 'on'){
           res.cookie('username', o.username, { maxAge: 900000 });
@@ -41,7 +42,13 @@ exports.default = function(req,res) {
   if(req.session.kind != "publisher") {
     res.redirect("/");
   } else {
-    res.render('publisher-default.html', { title: 'Publisher'});
+    console.log(req.session.uid);
+    res.render('publisher-default.html', {
+      title: "Ad{versify}",
+          locals: {
+            uid: req.session.uid
+          }
+    });
   }
 }
 

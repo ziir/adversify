@@ -246,3 +246,8 @@ label {
   width:650px;
   float:right;
 }
+
+#revenue-overview {
+  color:rgb(0,150,221);
+  font-size:1.5em;
+}
