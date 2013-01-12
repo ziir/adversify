@@ -46,9 +46,7 @@ module.exports = function(app) {
 	app.get('/socket', routes.socket);
 	app.get('/socketview', routes.socketview);
 
-	app.get('/test', function(req, res) {
-	      res.render('test.html', { title : 'Test'});
-	  });
+	app.get('/test', publisher.test);
 
 	app.get('/h/c/:r', delivery.createHash);
 	app.get('/h/:r', delivery.test);

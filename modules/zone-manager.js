@@ -4,7 +4,6 @@
 
 */
 var mongoose = require('mongoose');
-  mongoose.set('debug', true);
 
 var ZM = {};
 
@@ -21,16 +20,15 @@ ZM.addZone = function(u,newData,callback) {
 		// WORKAROUND for positional cursor + $push, see https://jira.mongodb.org/browse/SERVER-831
 
 		z.save(function(e,o){
-			console.log("zone saved into zones collection");
 			if(!e) {
+				z = o;
 				PublisherModel.findOne(
 				  { username:u, "websites.url":newData.url },
 				  function(e,o) {
 				    if(e) {
 				    	callback(e);
-				    	console.log("Error with website find");
 				    } else {
-				    	console.log('Match for this website and user, getting the copy of the website to push');
+				    	console.log("Saving into Website");
 				    	WebsiteModel.findOneAndUpdate(
 				    		{ url:newData.url },
 				    		{ $push : { zones : z }},
@@ -67,14 +65,11 @@ ZM.deleteZonesByWebsite = function(u,wId,callback) { // Deletes all zones inside
 					} else {
 						for(var i=0;i < tempZones.length; i++) {
 							ids.push(tempZones[i]._id);
-							console.log("JE TENTE LE PUSH"+tempZones[i]._id);
 						}
-						console.log(ids);
 						ZoneModel.find({_id:{$in: ids}}, function(e,o) {
 							if(e) {
 								callback(e);
 							} else {
-								console.log(o);
 								callback(null,"OK");
 							}
 						});
@@ -91,7 +86,6 @@ ZM.deleteZonesByWebsite = function(u,wId,callback) { // Deletes all zones inside
 
 ZM.deleteZone = function(u,zId,callback) {
 	// TO DO : function check user owns this particual zone and website
-	var zoneIds = [];
 	WebsiteModel.findOne({"zones._id":nId},
 		function(e,o) {
 		 	if(e) {

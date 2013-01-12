@@ -50,13 +50,13 @@ exports.createWebsite = function(req,res) {
     res.redirect("/");
   } else {
         WM.addWebsite(req.session.username,req.body,function(e,o) {
-      if(!o) {
-          res.send(e, 400);
-      }
-      else {
-        res.send(o, 200);
-      }
-    });
+          if(!o) {
+              res.send(e, 400);
+          }
+          else {
+            res.send(o, 200);
+          }
+        });
   }
 }
 
@@ -175,6 +175,13 @@ exports.getProfile = function(req,res) {
       }
     });
   }  
+}
+
+
+exports.test = function(req,res) {
+  WebsiteModel.findOne(null,function(e,o) {
+    res.send(o.zones);
+  });
 }
 
 /*

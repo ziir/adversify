@@ -4,7 +4,6 @@
 
 */
 var mongoose = require('mongoose');
-  mongoose.set('debug', true);
 var ZM = require('../modules/zone-manager.js');
 
 var WM = {};
@@ -17,18 +16,15 @@ WM.getWebsites = function(u,nb,sort,callback) { // Publisher username, number of
 	var tempW;
 	PublisherModel.findOne({username:u}, function(e,o) {
 		if(o) {
-			//console.log(o.websites);
 			tempW = o.websites;
 			for(var i=0;i < tempW.length; i++) {
 				urls.push(tempW[i].url);
-				console.log("JE TENTE LE PUSH"+tempW[i].url);
 			}
 			console.log(urls);
 			WebsiteModel.find({url:{$in: urls}}, function(e,o) {
 				if(e) {
 					callback(e);
 				} else {
-					console.log(o);
 					callback(null,o);
 				}
 			});
@@ -84,10 +80,10 @@ WM.deleteWebsite = function(u,nId,callback) { // to do ; w._id ???
 				 		if(e) {
 				 			callback(e);
 				 		} else {
-				 			ZM.deleteZonesByWebsite(nId, function(e,o) {
+				 			ZM.deleteZonesByWebsite(u, nId, function(e,o) {
 				 				if(e) {
 				 					callback(e);
-				 				} else {
+				 				} else if(o == "OK"){
 						 			callback(null,"OK");
 				 				}
 				 			});
