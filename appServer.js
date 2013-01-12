@@ -3,13 +3,14 @@
  * Module dependencies 
  */
 
-var express = require('express')
+var http = require('http')
+  , express = require('express')
+  , app = express()
+  , server = http.createServer(app)
   , i18n = require("i18n")
-  , http = require('http')
   , mongoose = require('mongoose')
+  , io = require('socket.io').listen(server)
   , path = require('path');
-
-  var app = express();
 
   // i18n a.k.a Internationalization !
   // TO-DO : better implementation
@@ -42,7 +43,31 @@ app.configure('development', function(){
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); // Shown all errors, with stackTrace
 });
+app.get('/socket/:id', function(req,res){
+  res.sendfile('socket.html');
+  io.of('/'+req.param('id')).on('connection', function (socket) {
+    PublisherModel.findOne({_id:req.param('id')}, function(e,o){
+      if(o) {
+        socket.emit('getValue', o.balance);
+      }
+    });
+      // MAJ valeur
 
+  });
+});
+
+app.get('/plus1000', function(req,res) {
+  console.log("+1000");
+  PublisherModel.findOneAndUpdate({username:req.session.username},
+  {$inc: { balance: 1000 }},
+  {safe: true},
+  function(e,o) {
+    if(o) {
+      io.of('/'+o._id).emit('getValue', o.balance);
+        res.send(o);
+    }
+  });
+});
 require('./router')(app); // Router file.
 
 // Mongoose schema to model, TO-DO, get it out of this file ?
@@ -54,10 +79,12 @@ require('./schemas/Websites.js');
 
 
 
+
+
 /* TESTs*/
 
 
   // Server up and running
-http.createServer(app).listen(app.get('port'), function(){
+server.listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });

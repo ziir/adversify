@@ -32,8 +32,8 @@
   <div id="count"></div>
   <script type="text/javascript">
   // On se connecte au serveur
-  var random = 10; 
-  var socket = io.connect("/"+random);
+  var id = "50f092a8c348e2c410000006"; 
+  var socket = io.connect("/"+id);
   // On creer l'evenement recupererMessages pour recuperer direcement les messages sur serveur
   socket.on('getValue', function (value) {
   // messages est le tableau contenant tous les messages qui ont ete ecris sur le serveur
