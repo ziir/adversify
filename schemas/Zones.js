@@ -8,10 +8,13 @@ var Zone = new Schema({
     kind: { type : String, enum: ['image','text','*'] },
     dimensions: { type: String},
     remuneration: { type: String ,enum: ['cpm', 'cpc', '*'] }, 
-    modified: {type: Date},
+    modified: {type: Date, default: Date.now },
     created: {type: Date},
-    validated : { type : Boolean },
-    colors : [{textColor: {type : String, default: "#333"}, borderColor: {type: String, default: "#000"}, bgColor: {type:String, default: "#fff"}, titleColor: {type:String, default:"#2672ec"}}] 
+    validated : { type : Boolean, default: false },
+    textColor: {type : String, default: "#333"},
+    borderColor: {type: String, default: "#000"},
+    bgColor: {type:String, default: "#fff"},
+    titleColor: {type:String, default:"#2672ec"} 
 });
 
 ZoneModel = mongoose.model('zones', Zone);
