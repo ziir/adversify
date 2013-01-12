@@ -69,28 +69,33 @@ WM.getWebsite = function(webSite, callback) { // Publisher username, website ID,
 
 WM.deleteWebsite = function(u,nId,callback) { // to do ; w._id ???
 	console.log("delete website?");
-	PublisherModel.findOne({username:u, "websites._id":nId},
-		function(e,o) {
-		 	if(e) {
-		 		callback(e);
-		 	} else {
-		 		o.websites.id(nId).remove();
-		 		o.save(function (e,o) {
-					WebsiteModel.remove({_id:nId}, function(e) {
-				 		if(e) {
-				 			callback(e);
-				 		} else {
-				 			ZM.deleteZonesByWebsite(u, nId, function(e,o) {
-				 				if(e) {
-				 					callback(e);
-				 				} else if(o == "OK"){
-						 			callback(null,"OK");
-				 				}
-				 			});
-				 		}
-					});
-		 		});
-		 	}
+
+	ZM.deleteZonesByWebsite(u, nId, function(e,o) {
+		console.log("ZM.deleteZonesByWebsite"+o);
+		if(e) {
+			callback(e);
+		} else if(o == "OK"){
+			console.log("Zones successfully removed");
+			PublisherModel.findOne({username:u, "websites._id":nId},
+			function(e,o) {
+			 	if(e) {
+			 		callback(e);
+			 	} else if(o){
+			 		o.websites.id(nId).remove();
+			 		o.save(function (e,o) {
+						WebsiteModel.remove({_id:nId}, function(e) {
+					 		if(e) {
+					 			callback(e);
+					 		} else {
+					 			callback(null,"OK");
+					 		}
+						});
+			 		});
+			 	} else {
+			 		callback("Could not find website for this publisher");
+			 	}
+			});
+		}
 	});
 }
 

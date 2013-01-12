@@ -52,8 +52,8 @@ ZM.addZone = function(u,newData,callback) {
 }
 
 ZM.deleteZonesByWebsite = function(u,wId,callback) { // Deletes all zones inside a website
-	var ids = [];
-	var tempZones = [];
+	var ids = []
+	, tempZones = [];
 	PublisherModel.findOne({username:u, "websites._id":wId}, function(e,o) {
 		if(o) {
 			WebsiteModel.findOne({_id:wId}, function(e,o) {
@@ -67,6 +67,7 @@ ZM.deleteZonesByWebsite = function(u,wId,callback) { // Deletes all zones inside
 							ids.push(tempZones[i]._id);
 						}
 						ZoneModel.find({_id:{$in: ids}}, function(e,o) {
+							console.log(o);
 							if(e) {
 								callback(e);
 							} else {
