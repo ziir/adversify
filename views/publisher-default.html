@@ -6,7 +6,7 @@
         var socket = io.connect("/<%= locals.uid %>");
         socket.on('getValue', function (value) {
             var balance = value;
-            $(".balance").html(balance+'€');
+            $(".balance").html(balance/100+'€');
         });
 
         </script>
@@ -14,7 +14,7 @@
             <div id="settings-nav" class="menu-container floatLeft">
                 <ul class="menu">
                     <li><a href="/publisher/default" class="selected">Default Panel</a></li>
-                    <li><a href="/publishers/profile" class="">Account settings</a></li>
+                    <li><a href="/publisher/profile" class="">Account settings</a></li>
                     <li><a href="/publishers/profile" class="">Websites</a></li>
                     <li><a href="/publishers/profile" class="">Zones</a></li>
                     <li><a href="/publishers/profile" class="">Revenue</a></li>
