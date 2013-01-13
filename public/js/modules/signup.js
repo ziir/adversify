@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+var location;
     window.UserSignup = Backbone.Model.extend({
     	urlRoot : '/signup',
 
@@ -74,8 +74,10 @@ $(document).ready(function() {
            //Quel type de compte ?
     	   if (this.$('.kind').val() == 'publisher') {
 	            type = 1;
+                location = "/publisher";
     	   } else if (this.$('.kind').val() == 'advertiser') {
 	            type = 0;
+                location = "/advertiser";
     	   } else {
         	   type = -1;
     	   }
@@ -111,9 +113,10 @@ $(document).ready(function() {
 	                	    'Please verify your data');
 	        } else {
 	            console.log('Rediriger maintenant');
-	            user.save();
-	            //document.location.href="/signup/step2";
-	            
+                console.log(user);
+                user.save().done(function(){
+                    document.location = location;
+                });
 	        }
             
             //KNOCK BACK PART
