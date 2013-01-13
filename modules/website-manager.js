@@ -113,7 +113,16 @@ WM.addWebsite = function(u,newData,callback) { // Publisher username, new websit
 			if(!e) {
 				PublisherModel.findOneAndUpdate(
 				  { username:u },
-				  { $push: { websites: o }},
+				  { $push: { websites: 
+				  	{
+						"name":newData.name,
+						"category":newData.category,
+						"description":newData.description,
+						"url":newData.url,
+						"created":Date.now(),
+						"_id":o._id				  	
+				  	} 
+				}},
 				  { safe: true, upsert: true },
 				  function(e, o) {
 				    if(e) {
