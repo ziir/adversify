@@ -33,7 +33,7 @@ exports.signin = function(req, res){
           res.cookie('username', o.username, { maxAge: 900000 });
           res.cookie('password', o.password, { maxAge: 900000 });
         }
-        res.send(o, 200);
+        res.send("OK", 200);
       }
   });
 }
