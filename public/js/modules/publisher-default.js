@@ -159,6 +159,7 @@ $(document).ready(function() {
         },
         
         buildWebSite : function(e) {
+        	var formTarget = e.currentTarget;
            e.preventDefault();
            
            publisherDefaultSite = new PublisherDefaultSite({
@@ -186,6 +187,7 @@ $(document).ready(function() {
 		           		if (publisherDefaultSite) {
 			           		newWebSite = new WebSite(publisherDefaultSite.get('name'), publisherDefaultSite.get('url'), publisherDefaultSite.get('_id'));
 			           		websites.push(newWebSite);
+			           		formTarget.reset();
 		           		}
 			           	
 			           	for (var i=0; i < publisherDefaultSites.length; i++) {
@@ -203,6 +205,7 @@ $(document).ready(function() {
         },
         
         buildZone : function(e) {
+        var formTarget = e.currentTarget;
            e.preventDefault();
            
            publisherDefaultZone = new PublisherDefaultZone({
@@ -231,6 +234,7 @@ $(document).ready(function() {
 	           		success : function(collection, response, options) {
 		           		//newZone = new Zone('test1', 'test2');
 		           		//wbzones.push(newZone);
+		           		formTarget.reset();
 	           		}
            		});
            		
