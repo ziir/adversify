@@ -22,30 +22,32 @@
                     <li><a href="/publishers/profile" class="">Security History</a></li>
                 </ul>
             </div>
+            <div id="content">
             <h1>Publisher default panel</h1>
             <div id="signup-forms" class="textCenter">
                 <p id="revenue-overview">
                     <span class="balance"></span>
                 </p>
-                    <div class="sites-overview">
-						
-						<ul data-bind="foreach: websites">
-							<li class="classWebSite" data-bind="attr: {id: webSiteNiceID}">
-								<strong data-bind="text: wbname"></strong>
-								<a data-bind="text: wburl"></a>
-                                <a href="#" class="addZone" >Add a zone</a>
-								<a href="#" class="editWebsite" >Edit Website</a>
-								<a href="#" class="deleteWebsite" data-bind="attr: {id: webSiteNiceID}">Delete Website</a>
+                <div class="sites-overview">
+                    <ul data-bind="foreach: websites">
+                        <li class="classWebSite" data-bind="attr: {id: webSiteNiceID}">
+                            <strong data-bind="text: wbname"></strong>
+                            <a data-bind="text: wburl"></a>
+                                                            <a href="#" class="addZone" >Add a zone</a>
+                            <a href="#" class="editWebsite" >Edit Website</a>
+                            <a href="#" class="deleteWebsite" data-bind="attr: {id: webSiteNiceID}">Delete Website</a>
                                 <ul data-bind="foreach: wbzones">
                                     <li>
                                         <!--<strong data-bind="text: zonename">Zone 1</strong>
-                                        <strong data-bind="text: zoneformat">300*250</strong>
-                                        <a href="#" class="editZone" id="1">Edit Zone</a>
-                                        <!--<a href="#" class="deleteZone" data-bind="attr: {id: zoneNiceID}">Delete Zone</a>-->
+                                            <strong data-bind="text: zoneformat">300*250</strong>
+                                            <a href="#" class="editZone" id="1">Edit Zone</a>
+                                            <!--<a href="#" class="deleteZone" data-bind="attr: {id: zoneNiceID}">Delete Zone</a>-->
                                     </li>
                                 </ul>
-							</li>
-						</ul>
+                        </li>
+                    </ul>
+
+
 						
                         <h2>Ajouter un site</h2>
                         <form method="POST" action="/publisher/sites" class="well" id="addWebSiteForm">
@@ -103,6 +105,7 @@
                         </form>
                     </div>
                 </div>
+            </div>
             </div>
         <!--</div>-->
      <!--</div>-->
