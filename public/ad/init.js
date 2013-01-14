@@ -23,12 +23,12 @@
 
   xmlHttp.onreadystatechange=function()
   {
-    if (xmlHttp.readyState==4 && xmlHttp.status==200)
+    if (xmlHttp.readyState==4 && xmlHttp.status===200)
       {
-        var h=xmlHttp.responseText;
-          var url = "http://www.adversify.net/h/"+h;
-          xmlHttp.open("GET", url, true);
-          xmlHttp.send(null);
+        var h = xmlHttp.responseText;
+        var url = "http://www.adversify.net/h/"+h;
+        xmlHttp.open("GET", url, true);
+        xmlHttp.send(null);
       }
   }
   var url = "http://www.adversify.net/h/c/"+r;

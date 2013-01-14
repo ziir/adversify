@@ -1,5 +1,4 @@
 <script type="text/javascript">
-
 function getLanguage() {
   //Get back the language of the website
     if (navigator.userLanguage == "string") {
@@ -14,8 +13,8 @@ function getLanguage() {
 }
 
   var _adv = _adv || [];
-  _adv.push(['_setAccount', '1']);
-  _adv.push(['_setWebsite', '1']);
+  _adv.push(['_setAccount', '50f359e75b48db0c10000006']);
+  _adv.push(['_setWebsite', '50f35a285b48db0c10000007']);
   _adv.push(['codeName', navigator.appCodeName]);
   _adv.push(['r', Math.floor(Math.random()*99999999999)]);
   _adv.push(['appName', navigator.platform]);
@@ -29,4 +28,4 @@ function getLanguage() {
     av.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.adversify.net/ad/'+_adv[0][1]+'/'+_adv[1][1]+'/'+_adv[3][1]+'/init.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(av, s);
   })();
-</script>
+  </script>

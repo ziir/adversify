@@ -51,7 +51,7 @@ module.exports = function(app) {
 	app.get('/h/:r', delivery.test);
 
 
-	app.get('/ad/:account/:website/av.js', delivery.generateJS)
+	app.get('/ad/:account/:website/:randomNumber/init.js', delivery.generateJS);
 
 	app.get('*', routes.pagenotfound);
 
