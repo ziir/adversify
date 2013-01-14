@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Test Gaph Colonne</title>
+  
+  <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
+  <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+  
+  <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+  
+  <style type='text/css'>
+    
+  </style>
+  
+
+
+<script type='text/javascript'>
+
+$(function () {
+    $(document).ready(function() {
+        Highcharts.setOptions({
+            global: {
+                useUTC: false
+            }
+        });
+    
+        var chart;
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                type: 'spline',
+                marginRight: 10,
+                events: {
+                    load: function() {
+    
+                        // set up the updating of the chart each second
+                        var series = this.series[0];
+                        setInterval(function() {
+                            var x = (new Date()).getTime(), // current time
+                                y = Math.random(); // Recuperer la valeur des gains.
+                            series.addPoint([x, y], true, true);
+                        }, 3600000); //Temps
+                    }
+                }
+            },
+            title: {
+                text: 'Gains par heure'
+            },
+            xAxis: {
+                type: 'datetime',
+                tickPixelInterval: 100
+            },
+            yAxis: {
+                title: {
+                    text: 'Value'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                formatter: function() {
+                        return '<b>'+ this.series.name +'</b><br/>'+
+                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
+                        Highcharts.numberFormat(this.y, 2);
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            series: [{
+                name: 'Random data',
+                data: (function() {
+                    // generate an array of random data
+                    var data = [],
+                        time = (new Date()).getTime(),
+                        i;
+					
+					//Valeur initiale (on s'en fout)
+                    for (i = -19; i <= 0; i++) {
+                        data.push({
+                            x: time + i * 3600000,
+                            y: Math.random()
+                        });
+                    }
+                    return data;
+                })()
+            }]
+        });
+    });
+    
+});
+
+</script>
+
+
+</head>
+<body>
+  <script src="highcharts.js"></script>
+<script src="exporting.js"></script>
+
+<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+
+  
+</body>
+
+
+</html>
+
