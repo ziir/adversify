@@ -33,15 +33,15 @@
                         <li class="classWebSite" data-bind="attr: {id: webSiteNiceID}">
                             <strong data-bind="text: wbname"></strong>
                             <a data-bind="text: wburl"></a>
-                                                            <a href="#" class="addZone" >Add a zone</a>
+                            <a href="#" class="addZone" >Add a zone</a>
                             <a href="#" class="editWebsite" >Edit Website</a>
                             <a href="#" class="deleteWebsite" data-bind="attr: {id: webSiteNiceID}">Delete Website</a>
                                 <ul data-bind="foreach: zones">
-                                    <li>
-                                        <strong data-bind="text: zonename">Zone 1</strong>
-                                        <strong data-bind="text: zoneformat">300*250</strong>
+                                    <li class="classZone" data-bind="attr: {id: zoneNiceID}">
+                                        <strong data-bind="text: zonename">Zone Error</strong>
+                                        <strong data-bind="text: zoneformat">Format Error</strong>
                                         <a href="#" class="editZone" id="1">Edit Zone</a>
-                                            <!--<a href="#" class="deleteZone" data-bind="attr: {id: zoneNiceID}">Delete Zone</a>-->
+                                        <a href="#" class="deleteZone" data-bind="attr: {id: zoneNiceID}">Delete Zone</a>
                                     </li>
                                 </ul>
                         </li>

@@ -1,9 +1,10 @@
 $(document).ready(function() {
 	
-	Zone = function(zonename, zoneformat) {
+	Zone = function(zonename, zoneformat, zoneNideID) {
 	    var self = this;
 	    self.zonename = zonename;
 	    self.zoneformat = zoneformat;
+	    self.zoneNiceID = zoneNideID;
     }
 	
 	WebSite = function(wbname, wburl, wbniceid, wbzones, i) {
@@ -16,11 +17,14 @@ $(document).ready(function() {
 	    self.zones 			= zones;
 	    
 	    wb					= publisherDefaultSites.at(i);
-	    newzones			= wb.get('zones');
+	    
+		if (wb.get('zones').length > 0) {
+			var newzones = wb.get('zones');
+		}
 	    
 	    for (var a in newzones) {
 	    	var zn = newzones[a];
-		    self.zones.push(new Zone(zn.name, 'TODO'));
+		    self.zones.push(new Zone(zn.name, 'TODO', zn._id));
 	    }
 	}
 
@@ -162,11 +166,12 @@ $(document).ready(function() {
         events : {
             'submit #addWebSiteForm' : 'buildWebSite', // J'aime beaucoup ça
             'submit #addZoneForm'    : 'buildZone',
-            'click  .deleteWebsite'  : 'deleteWebSite'
+            'click  .deleteWebsite'  : 'deleteWebSite',
+            'click  .deleteZone'	 : 'deleteZone'
         },
         
         buildWebSite : function(e) {
-        	var formTarget = e.currentTarget;
+           var formTarget = e.currentTarget;
            e.preventDefault();
            
            publisherDefaultSite = new PublisherDefaultSite({
@@ -192,7 +197,8 @@ $(document).ready(function() {
 		           	success : function(collection, response, options) {
 		           		var publisherDefaultSite = publisherDefaultSites.at(publisherDefaultSites.length-1);
 		           		if (publisherDefaultSite) {
-			           		newWebSite = new WebSite(publisherDefaultSite.get('name'), publisherDefaultSite.get('url'), publisherDefaultSite.get('_id'));
+			           		newWebSite = new WebSite(publisherDefaultSite.get('name'), publisherDefaultSite.get('url'), publisherDefaultSite.get('_id'), 
+			           							     publisherDefaultSite.get('zones'), publisherDefaultSites.length-1);
 			           		websites.push(newWebSite);
 			           		formTarget.reset();
 		           		}
@@ -219,7 +225,7 @@ $(document).ready(function() {
 	           name 	    : $('#addZoneForm .zonename').val(),
 	           remuneration : $('#addZoneForm .zoneremuneration').val(),
 	           kind    	    : $('#addZoneForm .zoneformat').val(),
-	           format		: '',
+	           format		: $('#addZoneForm .zoneformat').val(),
 	           description  : $('#addZoneForm .zonedescription').val(),
 	           url		    : $('#addZoneForm .webSiteUrl').val(),
 	           _id			: ''
@@ -239,8 +245,6 @@ $(document).ready(function() {
            		publisherDefaultZone.save();
            		publisherDefaultSites.fetch({
 	           		success : function(collection, response, options) {
-		           		//newZone = new Zone('test1', 'test2');
-		           		//wbzones.push(newZone);
 		           		formTarget.reset();
 	           		}
            		});
@@ -256,7 +260,7 @@ $(document).ready(function() {
         	
         	$.get('/publisher/websites/'+e.currentTarget.id+'/delete', function(data) {
         		console.log('GET /publisher/websites/'+e.currentTarget.id+'/delete');
-	        	if (data == "OK") {
+	        	if (data == 'OK') {
 		        	$('#'+e.currentTarget.id).slideUp();
 	        	} else {
 		        	alert('cannot remove this fucking website');
@@ -264,6 +268,32 @@ $(document).ready(function() {
         	});
         	
         	console.log("j'ai clické !");
+        },
+        
+        deleteZone : function(e) {
+	        e.preventDefault();
+	        
+	        zoneID 	  = e.currentTarget.id;
+	        var i = 0;
+	        var a = 0;
+	        var found = false;
+	        while (i < publisherDefaultSites.length && !found) {
+		        wb = publisherDefaultSites.at(i);
+		        wbzones = wb.get('zones');
+		        while (a < wbzones.length && !found) {
+			        if (wbzones[a]._id == zoneID) {
+				        found = true;
+				        //delete wbzones[a];
+				        delete wb.get('zones').splice(a, 1);
+				        console.log('founded ' + zoneID + ' !!');
+				        console.log(wb);
+				        $('#'+e.currentTarget.id).slideUp();
+				        wb.save();
+			        }
+			        a++;
+		        }
+		        i++;
+	        }
         },
 
         error : function(model, error) {
