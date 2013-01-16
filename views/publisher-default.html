@@ -6,7 +6,7 @@
         var socket = io.connect("/<%= locals.uid %>");
         socket.on('getValue', function (value) {
             var balance = value;
-            $(".balance").html(balance/100+'€');
+            $(".balance").html(balance+'€');
         });
 
         </script>
@@ -47,8 +47,6 @@
                         </li>
                     </ul>
 
-
-						
                         <h2>Ajouter un site</h2>
                         <form method="POST" action="/publisher/sites" class="well" id="addWebSiteForm">
                         		<span data-bind="text: error_webSiteName"></span>

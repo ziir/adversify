@@ -274,16 +274,16 @@ $(document).ready(function() {
 	        e.preventDefault();
 	        
 	        zoneID 	  = e.currentTarget.id;
-	        var i = 0;
-	        var a = 0;
+	        var i 	  = 0;
+	        var a 	  = 0;
 	        var found = false;
+	        
 	        while (i < publisherDefaultSites.length && !found) {
 		        wb = publisherDefaultSites.at(i);
 		        wbzones = wb.get('zones');
 		        while (a < wbzones.length && !found) {
 			        if (wbzones[a]._id == zoneID) {
 				        found = true;
-				        //delete wbzones[a];
 				        delete wb.get('zones').splice(a, 1);
 				        console.log('founded ' + zoneID + ' !!');
 				        console.log(wb);
