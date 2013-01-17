@@ -114,9 +114,23 @@ var location;
 	        } else {
 	            console.log('Rediriger maintenant');
                 console.log(user);
-                user.save().done(function(){
-                    document.location = location;
-                });
+                user.save()
+                            .done(function(){
+                                document.location = location;
+                            })
+                            .fail(function(data){
+                                switch (data.responseText) {
+                                   case "email-taken":
+                                      $('#insertError').html("Sorry, this email adress is already taken.");
+                                      break;
+                                   case "username-taken":
+                                      $('#insertError').html("Sorry, this username is already taken.");
+                                      break;
+                                   default:
+                                      $('#insertError').html("Sorry, something unexpected happenned");
+                            }
+
+                            });
 	        }
             
             //KNOCK BACK PART

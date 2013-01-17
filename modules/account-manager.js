@@ -87,7 +87,6 @@ AM.signup = function(newData, callback) {
 	var user;
 	// TO DO : Make a better query please!
 	// Rassembler en une fonction isTaken(username,email,callback);
-	// Rassembler les query par Model
 	AdvertiserModel.findOne({username:newData.username}, function(e, o) {
 		if (o){
 			callback('username-taken');
@@ -105,39 +104,33 @@ AM.signup = function(newData, callback) {
 												callback('email-taken'); // Email taken by publisher
 											} 	else {
 													pwd.hash(newData.password, function(e,salt,hash){ // TO;DO ; voir apply sur modele commun
-														if(newData.kind == 0) { // faire un json commun 
-															user = new AdvertiserModel({
-												            username: newData.username,
+														var user = ""
+														, userJSON = {
+															username: newData.username,
 												            email: newData.email,
 												        	password: hash,
 												            salt: salt,
-												        	joined: Date.now()});
-												        user.save(function(e,o) {
-												        	if(!e) {
-																console.log("Successfully saved new Advertiser "+newData.username+" - "+newData.email);
-													            callback(null,o);
-												        	} else {
-												        		callback(e);
-												        	}
-												        });
-												        } 						
-														else if(newData.kind == 1){
-															user = new PublisherModel({
-												            username: newData.username,
-													        email: newData.email,
-													        password: hash,
-													        salt: salt,
-													        joined: Date.now()});
-													    user.save(function(e,o) {
-													        if(!e) {
-																console.log("Successfully saved new Publisher "+newData.username+" - "+newData.email);
-														        callback(null,o);
-													        } else {
-													        	callback(e);
-													        }
-													    });
-													    }
-													    else {callback('Not user kind specified');}
+												        	joined: Date.now()
+														};
+														if(newData.kind === 0) {
+															user = new AdvertiserModel(userJSON);
+														} else if(newData.kind === 1) {
+															user = new PublisherModel(userJSON);
+														} else {
+															callback("no-user-kind-specified");
+														}
+
+														if(user != 0) {
+															user.save(function(e,o) {
+																if(o) {
+																	console.log("Successfully saved new user");
+																	callback(null,o);
+																} else {
+																	console.log("User could not be saved into DB");
+																	callback(e);
+																}
+															});
+														}
 													});
 												 }
 										});

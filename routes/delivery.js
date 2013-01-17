@@ -13,11 +13,11 @@ exports.generateJS = function(req,res) {
 	var accountId = req.params.account;
 	var websiteId = req.params.website;
 	var randomString = req.params.randomNumber;
-	console.log(req);
+	//console.log(req);
 	DV.generateClientSideJS(accountId,websiteId,randomString, function(e,o) {
 		if(o) {
 			console.log("Generating client script - PublisherId : "+accountId+" - WebsiteId : "+websiteId+" - RandomClientGenerated : "+randomString);
-			res.send("console.log("+o+")",200);
+			res.send(o,200);
 		} else {
 			res.send(e,400);
 		}

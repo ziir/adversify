@@ -10,8 +10,26 @@ var PublisherWebsite = new Schema({
     validated : { type : Boolean, default: false },
     modified: { type: Date, default: Date.now },
     created: {type: Date},
-})
+});
+/*
+var TwelveMonthsBalance = new Schema({
+    balance: { type : Number},
+    months: [MonthsBalance]
+});
 
+var MonthsBalance = new Schema({
+    balance: { type : Number}//,
+    //days: [DaysBalance]
+});
+/*
+var DaysBalance = new Schema({
+    balance: { type : Number},
+    hours: [HoursBalance]
+});
+
+var HoursBalance = new Schema({
+    balance: { type : Number}
+});*/
 
 var Publisher = new Schema({
     username: { type: String, required: true, match: /^[a-zA-Z0-9-_]+$/, unique: true },  
@@ -25,7 +43,8 @@ var Publisher = new Schema({
     country: { type: String },
     phone: { type: String},
     balance: { type: Number, default:0 },
-    websites: [PublisherWebsite]
+    websites: [PublisherWebsite],
+    //twelveMonthsBalance: [TwelveMonthsBalance]
 });
 
 

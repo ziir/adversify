@@ -10,7 +10,8 @@ var http = require('http')
   , i18n = require("i18n")
   , mongoose = require('mongoose')
   , io = require('socket.io').listen(server)
-  , path = require('path');
+  , path = require('path'),
+    crontest = require('./cronjob.js');
 
   // i18n a.k.a Internationalization !
   // TO-DO : better implementation
@@ -49,7 +50,7 @@ app.get('/socket', function(req,res){
   io.of('/'+req.session.uid).on('connection', function (socket) {
     PublisherModel.findOne({_id:req.session.uid}, function(e,o){
       if(o) {
-        socket.emit('getValue', o.balance);
+        socket.emit('getValue', o.balance/1000);
         console.log("Connection accepted");
         res.send("OK",200);
       } else {
@@ -60,18 +61,61 @@ app.get('/socket', function(req,res){
   });
 });
 
+app.get('/AddRevenue', function(req,res) {
+  console.log("Adding 10€ to revenues");
+  var valueToAdd = 10;
+  var year = { balance: valueToAdd };
+  PublisherModel.findOneAndUpdate({username:req.session.username},
+      { $push: { twelveMonthsBalance : year } },
+      { safe: true, upsert: true },
+        function(e,o) {
+          if(o) {
+            var month = { balance: valueToAdd};
+            PublisherModel.findOneAndUpdate({username:req.session.username},
+              { $push: { months : month } },
+              { safe: true, upsert: true },
+              function(e,o) {
+                if(o) {
+                  res.send(o,200);
+                } else if(e){
+                  res.send(e,400);          
+                } else {
+                  res.send("Something unexpected occured");
+                }
+              });
+          } else if (e) {
+            console.log(e);
+            res.send(e,400);
+          }
+    });
+});
+
+app.get("/testAsync", function(req,res) {
+  res.send("LOLILOL",400);
+  var a = 0;
+  for(var i =0; i < 100000000000; i++) {
+    a = i;
+  }
+
+});
+
+
+
 app.get('/plus1000', function(req,res) {
   console.log("+1000");
   PublisherModel.findOneAndUpdate({username:req.session.username},
-  {$inc: { balance: 1000 }},
+  {$inc: { balance: 1 }},
   {safe: true},
   function(e,o) {
     if(o) {
-      io.of('/'+o._id).emit('getValue', o.balance);
+      io.of('/'+o._id).emit('getValue', LMao.balance/1000);
         res.send(o);
     }
   });
 });
+
+
+
 require('./router')(app); // Router file.
 
 // Mongoose schema to model, TO-DO, get it out of this file ?
