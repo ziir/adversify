@@ -20,6 +20,8 @@ $(document).ready(function() {
 	    
 		if (wb.get('zones').length > 0) {
 			var newzones = wb.get('zones');
+		} else {
+			console.log('no zones for website ' + wb.get('name'));
 		}
 	    
 	    for (var a in newzones) {
@@ -27,7 +29,7 @@ $(document).ready(function() {
 		    self.zones.push(new Zone(zn.name, 'TODO', zn._id));
 	    }
 	}
-
+	
 	window.PublisherDefaultZone = Backbone.Model.extend({
 		urlRoot : '/publisher/zones',
 		
@@ -209,7 +211,7 @@ $(document).ready(function() {
 						}
 		           	}
 	           	});
-
+	           	
            } else {
 	            publisherDefaultSite = 0;
 	            console.log('publisherDefaultSite Not Saved !');
@@ -225,9 +227,10 @@ $(document).ready(function() {
 	           name 	    : $('#addZoneForm .zonename').val(),
 	           remuneration : $('#addZoneForm .zoneremuneration').val(),
 	           kind    	    : $('#addZoneForm .zoneformat').val(),
+	           dimensions   : '',
 	           format		: $('#addZoneForm .zoneformat').val(),
 	           description  : $('#addZoneForm .zonedescription').val(),
-	           url		    : $('#addZoneForm .webSiteUrl').val(),
+	           url		    : $('#addZoneForm .webSiteUrlForZone').val(),
 	           _id			: ''
            });
            
@@ -245,6 +248,21 @@ $(document).ready(function() {
            		publisherDefaultZone.save();
            		publisherDefaultSites.fetch({
 	           		success : function(collection, response, options) {
+		           		var selectedWebSite = $(".webSiteUrlForZone").prop("selectedIndex");
+		           		var publisherDefaultSite = publisherDefaultSites.at(selectedWebSite);
+		           		if (publisherDefaultSite) {
+			           		wbzones = publisherDefaultSite.get('zones');
+			           		if (wbzones) {
+				           		var lastZone = wbzones.length;
+				           		var zn = wbzones[lastZone-1];
+				           		console.log('wbzones.length : ' + lastZone + ' ' + zn);
+				           		websites()[selectedWebSite].zones.push(new Zone(zn.name, 'TODO', zn._id));
+			           		} else {
+				           		console.log('error when getting the zones of the website ' + publisherDefaultSite.name);
+			           		}
+ 		           		} else {
+	 		           		console.log('cannot get the website at index ' + selectedWebSite);
+ 		           		}
 		           		formTarget.reset();
 	           		}
            		});
@@ -262,6 +280,7 @@ $(document).ready(function() {
         		console.log('GET /publisher/websites/'+e.currentTarget.id+'/delete');
 	        	if (data == 'OK') {
 		        	$('#'+e.currentTarget.id).slideUp();
+		        	publisherDefaultSites.fetch();
 	        	} else {
 		        	alert('cannot remove this fucking website');
 	        	}

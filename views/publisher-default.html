@@ -96,7 +96,7 @@
                             <label for="zonedescription">Enter a description for this Ad.</label>
                             <textarea rows="4" cols="30" name="zonedescription" id="zonedescription"></textarea>
                             	<span data-bind="text: error_zoneDescription"></span>
-                            <select class="webSiteUrl" name="websiteurl" data-bind="foreach: websites">
+                            <select class="webSiteUrlForZone" name="websiteurl" data-bind="foreach: websites">
                                 <option data-bind="text: wburl, value: wburl">
                             </select>
                             <button type="submit" class="btn-primary">Create an zone</button>
