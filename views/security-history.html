@@ -1,4 +1,4 @@
-        <% var websites = locals.websites; %>
+        <% var actions = locals.actions; %>
         <div id="main" class="marginAuto">
             <div id="settings-nav" class="menu-container floatLeft">
                 <ul class="menu">
@@ -12,15 +12,15 @@
                 </ul>
             </div>
             <div id="content">
-                <h1>Websites overview</h1>
+                <h1>Security History</h1>
                 <div id="signup-forms">
                 <div id="websites-overview">
                 <ul>
-<% _.each( websites, function( website ){ %>
+<% _.each( actions, function( action ){ %>
  
 <li class="website">
  <strong>
-<%- website %>
+<%- action %>
 </strong>
  
 </li>

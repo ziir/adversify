@@ -24,6 +24,8 @@ module.exports = function(app) {
 	app.get('/publisher/profile', publisher.profile);
 	app.post('/publisher/profile', publisher.updateProfile);
 
+	app.get('/publisher/security', publisher.getActions);
+
 	app.get('/publisher/default', publisher.default);
 	app.get('/publisher/websites', publisher.getWebsites);
 	app.get('/publisher/websites/default', websites.default);

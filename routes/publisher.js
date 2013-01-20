@@ -185,6 +185,24 @@ exports.getProfile = function(req,res) {
   }  
 }
 
+exports.getActions = function(req,res) {
+  if(req.session.kind != "publisher") {
+    res.redirect("/");
+  } else {
+    ActionModel.find({userId:req.session.uid},function(e,o) {
+      if(e) { res.send(e,400); }
+      if (o) {    
+        res.render('security-history.html', {
+          title: "Security History",
+            locals: {
+              actions: o
+            }
+        }); 
+      }
+    });
+  }
+}
+
 
 exports.test = function(req,res) {
   WebsiteModel.findOne(null,function(e,o) {
