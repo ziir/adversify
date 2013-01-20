@@ -102,7 +102,27 @@ WM.deleteWebsite = function(u,nId,callback) { // to do ; w._id ???
 
 WM.addWebsite = function(u,newData,callback) { // Publisher username, new websites data in json and callback
 		console.log(newData);
-		var w = new WebsiteModel({
+
+		PublisherModel.findOne({username:u,"websites.url":newData.url}, function(e,o) {
+			if(o && !e) {
+				console.log("Website ok");
+				WebsiteModel.findOne({"url":newData.url}, function(e,o) {
+					if(o) {
+						o.zones = newData.zones;
+						o.save(function(e,o) {
+							if(o) {
+								callback(null,"OK");
+							} else if(e){
+								callback(e);
+							} else allback("Unexpected event occured");
+						});
+					} else if(e) {
+						callback(e)
+					} else callback("Unexpected event occured");
+				});
+			}
+			else if(!o && !e) {
+				var w = new WebsiteModel({
 			"name":newData.name,
 			"category":newData.category,
 			"description":newData.description,
@@ -136,6 +156,13 @@ WM.addWebsite = function(u,newData,callback) { // Publisher username, new websit
 				callback(e);
 			}
 		});
+			} else if(e){
+				callback(e);
+			} else {
+				callback("Something weird happenned");
+			}
+		})
+		
 
 
 			//http://stackoverflow.com/questions/13412579/node-express-mongoose-sub-collection-document-insert?rq=1
