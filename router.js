@@ -1,6 +1,8 @@
   var routes = require('./routes')
   , signup = require('./routes/signup')
   , publisher = require('./routes/publisher')
+  , websites = require('./routes/websites')
+  , zones = require('./routes/zones')
   , advertiser = require('./routes/advertiser')
   , delivery = require('./routes/delivery');
 
@@ -24,10 +26,12 @@ module.exports = function(app) {
 
 	app.get('/publisher/default', publisher.default);
 	app.get('/publisher/websites', publisher.getWebsites);
-	app.get('/publisher/websites/single', publisher.getWebsite);
-	app.get('/publisher/websites/:id/delete', publisher.deleteWebsite);
+	app.get('/publisher/websites/default', websites.default);
+	app.get('/publisher/websites/:id', publisher.getWebsites.getWebsite);
+	app.get('/publisher/websites/:id/delete', publisher.deleteWebsite); // 
 	app.post('/publisher/websites', publisher.createWebsite);
 
+	app.get('/publisher/zones/default', zones.default);
 	app.post('/publisher/zones', publisher.createZone);
 
 

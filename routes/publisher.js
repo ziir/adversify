@@ -105,7 +105,7 @@ exports.deleteWebsite = function(req,res) {
     res.redirect("/");
   } else {
     console.log("IZI IZI ?")
-    WM.deleteWebsite(req.session.username,req.param('id'),function(e,o){
+    WM.deleteWebsite(req.session.uid,req.param('id'),function(e,o){
       if(e) {
         res.send(e, 400);
             console.log("NO NO NO?")

@@ -67,16 +67,16 @@ WM.getWebsite = function(webSite, callback) { // Publisher username, website ID,
 }
 
 
-WM.deleteWebsite = function(u,nId,callback) { // to do ; w._id ???
+WM.deleteWebsite = function(uId,nId,callback) { // to do ; w._id ???
 	console.log("delete website?");
 
-	ZM.deleteZonesByWebsite(u, nId, function(e,o) {
+	ZM.deleteZonesByWebsite(uId, nId, function(e,o) {
 		console.log("ZM.deleteZonesByWebsite"+o);
 		if(e) {
 			callback(e);
 		} else if(o == "OK"){
 			console.log("Zones successfully removed");
-			PublisherModel.findOne({username:u, "websites._id":nId},
+			PublisherModel.findOne({_id:uId, "websites._id":nId},
 			function(e,o) {
 			 	if(e) {
 			 		callback(e);
@@ -88,6 +88,12 @@ WM.deleteWebsite = function(u,nId,callback) { // to do ; w._id ???
 					 			callback(e);
 					 		} else {
 					 			callback(null,"OK");
+					 			var action = new ActionModel({
+					 				name:"add-website",
+					 				userId:uId,
+					 				itemId: nId
+					 			});
+					 			action.save();
 					 		}
 						});
 			 		});

@@ -15,7 +15,7 @@
                 <ul class="menu">
                     <li><a href="/publisher/default" class="selected">Default Panel</a></li>
                     <li><a href="/publisher/profile" class="">Account settings</a></li>
-                    <li><a href="/publishers/profile" class="">Websites</a></li>
+                    <li><a href="/publisher/websites/default" class="">Websites</a></li>
                     <li><a href="/publishers/profile" class="">Zones</a></li>
                     <li><a href="/publishers/profile" class="">Revenue</a></li>
                     <li><a href="/publishers/profile" class="">Payments History</a></li>
@@ -32,7 +32,7 @@
                     <ul data-bind="foreach: websites">
                         <li class="classWebSite" data-bind="attr: {id: webSiteNiceID}">
                             <strong data-bind="text: wbname"></strong>
-                            <a data-bind="text: wburl"></a>
+                            <em data-bind="text: wburl"></em>
                             <a href="#" class="addZone" >Add a zone</a>
                             <a href="#" class="editWebsite" >Edit Website</a>
                             <a href="#" class="deleteWebsite" data-bind="attr: {id: webSiteNiceID}">Delete Website</a>
@@ -50,9 +50,9 @@
                         <h2>Ajouter un site</h2>
                         <form method="POST" action="/publisher/sites" class="well" id="addWebSiteForm">
                         		<span data-bind="text: error_webSiteName"></span>
-                            <input type="text" class="sitename clearInput" name="sitename" title="Site Name" value="Site Name"/>
+                            <input type="text" class="sitename clearInput" name="sitename" title="Site Name" value="Site Name"/><br/>
                             	<span data-bind="text: error_webSiteURL"></span>
-                            <input type="text" class="siteurl clearInput" name="siteurl" title="Site URL" value="http://www.facebook.com"/>
+                            <input type="text" class="siteurl clearInput" name="siteurl" title="Site URL" value="http://www.facebook.com"/><br/>
                             <select class="sitecategory">
                                 <option value="">Site Main Category</option>
                                 <option value="1">News & Informations</option>
@@ -70,36 +70,49 @@
                             </select>
                             	<span data-bind="text: error_webSiteCategory"></span>
                             <label for="sitedescription">Enter a description for this website.</label>
-                            <textarea class="clearInput sitedescription" rows="4" cols="30" name="sitedescription" id="sitedescription">Desciption de votre site</textarea>
+                            <textarea class="clearInput sitedescription" rows="4" cols="30" name="sitedescription" id="sitedescription">Desciption de votre site</textarea><br/>
                             <button type="submit" class="btn-primary">Add this website</button>
                         </form>
                     </div>
-                    <div class="zones-overview">
-                        <h2>Create an zone</h2>
+                    <div class="zones-overview" style="display:none">
+                        <h2>Create a zone</h2>
                         <form method="POST" action="/publisher/ads" class="well" id="addZoneForm">
                             <input type="text" class="zonename clearInput" name="zonename" title="Zone Name" value="Zone Name"/>
+
                             	<span data-bind="text: error_zoneName"></span>
+                                <br/>
                             <input type="hidden" value="http://www.citations.co/" />
                             <select class="zoneremuneration" name="zoneremuneration">
                                 <option value="">CPC or CPM?</option>
                                 <option value="cpc">CPC</option>
                                 <option value="cpm">CPM</option>
-                                <option value="cpm">Nevermind</option>
+                                <option value="*">Nevermind</option>
                             </select>
-                            	<span data-bind="text: error_zoneMode"></span>
+                            	<span data-bind="text: error_zoneMode"></span><br/>
                             <select class="zoneformat" name="zoneformat">
                                 <option value="">Image or Textual?</option>
                                 <option value="image">Image</option>
                                 <option value="text">Textual</option>
+                            </select><br/>
+                            <select class="zonedimensions" name="zonedimensions">
+                                <option value="">How big?</option>
+                                <option value="300x233">300x233</option>
+                                <option value="234x60">234x60</option>
+                                <option value="125x125">125x125</option>
+                                <option value="180x150">180x150</option>
+                                <option value="120x130">120x230</option>
+                                <option value="200x200">200x200</option>
+                                <option value="233x233">233x233</option>
                             </select>
-                            	<span data-bind="text: error_zoneKind"></span>
-                            <label for="zonedescription">Enter a description for this Ad.</label>
-                            <textarea rows="4" cols="30" name="zonedescription" id="zonedescription"></textarea>
+                            	<span data-bind="text: error_zoneKind"></span><br/>
+                            <label for="zonedescription">Enter a description for this Ad.</label><br/>
+                            <textarea rows="4" cols="30" name="zonedescription" id="zonedescription"></textarea><br/>
                             	<span data-bind="text: error_zoneDescription"></span>
                             <select class="webSiteUrlForZone" name="websiteurl" data-bind="foreach: websites">
                                 <option data-bind="text: wburl, value: wburl">
-                            </select>
-                            <button type="submit" class="btn-primary">Create an zone</button>
+                            </select><br/>
+
+                            <button type="submit" class="btn-primary">Create this zone</button>
                         </form>
                     </div>
                 </div>
@@ -108,3 +121,9 @@
         <!--</div>-->
      <!--</div>-->
      
+     <script type="text/javascript">
+
+        $(".addZone").click(function(){
+            console.log("izi");
+        });
+     </script>
