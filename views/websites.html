@@ -16,17 +16,38 @@
                 <div id="signup-forms">
                 <div id="websites-overview">
                 <ul>
-<% _.each( websites, function( website ){ %>
- 
-<li class="website">
- <strong>
-<%- website %>
-</strong>
- 
-</li>
- 
-<% }); %>
-</ul>
+					<% _.each( websites, function( website ){ %>
+					 
+						<li class="website">
+							<strong> <%- website.name %> </strong>
+							<a> <%- website.url %> </a>
+							<label> <%- website.description %> </label>
+							<label> Created :  <a> <%- website.created %> </a> </label>
+							<label> Modified :  <a> <%- website.modified %> </a> </label>
+							<label> Validated :  <a> <%- website.validated %> </a> </label>
+						</li>
+						
+						
+						
+						<% _.each( website.zones, function( zone ){ %>
+						 
+							<li class="zones">
+								<strong> <%- zone.name %> </strong>
+								<label> Description :  <a> <%- zone.description %> </a> </label>
+								<label> Impression Count :  <a> <%- zone.impressionCount %> </a> </label>
+								<label> Created :  <a> <%- zone.created %> </a> </label>
+								<label> Modified :  <a> <%- zone.modified %> </a> </label>
+								<label> Validated :  <a> <%- zone.validated %> </a> </label>
+								
+								<!--<strong> <%- zone %> </strong>-->
+							</li>
+						
+						<% }); %>
+						
+						<!--<strong> <%- website %> </strong>-->
+					
+					<% }); %>
+				</ul>
                 </div>
                 </div>
             </div>
