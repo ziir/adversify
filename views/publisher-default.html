@@ -16,7 +16,7 @@
                     <li><a href="/publisher/default" class="selected">Default Panel</a></li>
                     <li><a href="/publisher/profile" class="">Account settings</a></li>
                     <li><a href="/publisher/websites/default" class="">Websites</a></li>
-                    <li><a href="/publishers/profile" class="">Zones</a></li>
+                    <li><a href="/publisher/zones/default" class="">Zones</a></li>
                     <li><a href="/publishers/profile" class="">Revenue</a></li>
                     <li><a href="/publishers/profile" class="">Payments History</a></li>
                     <li><a href="/publisher/security" class="">Security History</a></li>
@@ -33,7 +33,7 @@
                         <li class="classWebSite" data-bind="attr: {id: webSiteNiceID}">
                             <strong data-bind="text: wbname"></strong>
                             <em data-bind="text: wburl"></em>
-                            <a href="#" class="addZone" >Add a zone</a>
+                            <a href="#" class="addZone" data-bind="attr: {id : webSiteNiceID}" >Add a zone</a>
                             <a href="#" class="editWebsite" >Edit Website</a>
                             <a href="#" class="deleteWebsite" data-bind="attr: {id: webSiteNiceID}">Delete Website</a>
                                 <ul data-bind="foreach: zones">
@@ -74,7 +74,7 @@
                             <button type="submit" class="btn-primary">Add this website</button>
                         </form>
                     </div>
-                    <div class="zones-overview" style="display:yes">
+                    <div class="zones-overview" style="display:none">
                         <h2>Create a zone</h2>
                         <form method="POST" action="/publisher/ads" class="well" id="addZoneForm">
                             <input type="text" class="zonename clearInput" name="zonename" title="Zone Name" value="Zone Name"/>

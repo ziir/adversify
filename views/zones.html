@@ -13,19 +13,22 @@
             </div>
             <div id="content">
                 <div id="zones">
-                <ul>
-<% _.each( zones, function( website ){ %>
- 
-<li class="zone">
- <strong>
-<%- zone %>
-</strong>
-
- 
-</li>
- 
-<% }); %>
-</ul>
+	                <ul>
+						<% _.each( zones, function( website ){ %>
+						 
+							<li class="zone">
+							
+							<strong> <%- zone.name %> </strong>
+							<label> Description :  <a> <%- zone.description %> </a> </label>
+							<label> Impression Count :  <a> <%- zone.impressionCount %> </a> </label>
+							<label> Created :  <a> <%- zone.created %> </a> </label>
+							<label> Modified :  <a> <%- zone.modified %> </a> </label>
+							<label> Validated :  <a> <%- zone.validated %> </a> </label>
+							 
+							</li>
+						 
+						<% }); %>
+					</ul>
                 </div>
             </div>
         <!--</div>-->

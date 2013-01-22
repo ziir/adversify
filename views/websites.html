@@ -5,7 +5,7 @@
                     <li><a href="/publisher/default" class="selected">Default Panel</a></li>
                     <li><a href="/publisher/profile" class="">Account settings</a></li>
                     <li><a href="/publisher/websites/default" class="">Websites</a></li>
-                    <li><a href="/publishers/zones/default" class="">Zones</a></li>
+                    <li><a href="/publisher/zones/default" class="">Zones</a></li>
                     <li><a href="/publishers/profile" class="">Revenue</a></li>
                     <li><a href="/publishers/profile" class="">Payments History</a></li>
                     <li><a href="/publisher/security" class="">Security History</a></li>
@@ -21,23 +21,24 @@
 						<li class="website">
 							<strong> <%- website.name %> </strong>
 							<a> <%- website.url %> </a>
-							<label> <%- website.description %> </label>
-							<label> Created :  <a> <%- website.created %> </a> </label>
-							<label> Modified :  <a> <%- website.modified %> </a> </label>
-							<label> Validated :  <a> <%- website.validated %> </a> </label>
+							<label> Description : <text> <%- website.description %> </text> </label>
+							<label> Created :  <text> <%- website.created %> </text> </label>
+							<label> Modified :  <text> <%- website.modified %> </text> </label>
+							<label> Validated :  <strong> <%- website.validated %> </strong> </label>
 						</li>
 						
-						
+						<strong> Zones : </strong>
 						
 						<% _.each( website.zones, function( zone ){ %>
 						 
 							<li class="zones">
+								<strong> - </strong>
 								<strong> <%- zone.name %> </strong>
-								<label> Description :  <a> <%- zone.description %> </a> </label>
-								<label> Impression Count :  <a> <%- zone.impressionCount %> </a> </label>
-								<label> Created :  <a> <%- zone.created %> </a> </label>
-								<label> Modified :  <a> <%- zone.modified %> </a> </label>
-								<label> Validated :  <a> <%- zone.validated %> </a> </label>
+								<label> Description :  <text> <%- zone.description %> </text> </label>
+								<label> Impression Count :  <text> <%- zone.impressionCount %> </text> </label>
+								<label> Created :  <text> <%- zone.created %> </text> </label>
+								<label> Modified :  <text> <%- zone.modified %> </text> </label>
+								<label> Validated :  <strong> <%- zone.validated %> </strong> </label>
 								
 								<!--<strong> <%- zone %> </strong>-->
 							</li>

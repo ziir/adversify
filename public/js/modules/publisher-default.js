@@ -169,7 +169,8 @@ $(document).ready(function() {
             'submit #addWebSiteForm' : 'buildWebSite', // J'aime beaucoup ça
             'submit #addZoneForm'    : 'buildZone',
             'click  .deleteWebsite'  : 'deleteWebSite',
-            'click  .deleteZone'	 : 'deleteZone'
+            'click  .deleteZone'	 : 'deleteZone',
+            'click  .addZone'		 : 'viewZoneBlock'
         },
         
         buildWebSite : function(e) {
@@ -248,7 +249,7 @@ $(document).ready(function() {
            		publisherDefaultZone.save();
            		publisherDefaultSites.fetch({
 	           		success : function(collection, response, options) {
-		           		var selectedWebSite = $(".webSiteUrlForZone").prop("selectedIndex");
+		           		//var selectedWebSite = $(".webSiteUrlForZone").prop("selectedIndex");
 		           		var publisherDefaultSite = publisherDefaultSites.at(selectedWebSite);
 		           		if (publisherDefaultSite) {
 			           		wbzones = publisherDefaultSite.get('zones');
@@ -313,6 +314,13 @@ $(document).ready(function() {
 		        }
 		        i++;
 	        }
+        },
+        
+        viewZoneBlock : function(e) {
+	        
+	        $('.zones-overview').attr({ style: 'display=block'});
+	        selectedWebSite = $('.addZone').id;
+	        
         },
 
         error : function(model, error) {
