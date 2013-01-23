@@ -4,10 +4,10 @@
 
 */
 var mongoose = require('mongoose');
-
 var ZM = {};
 
 module.exports = ZM;
+var WM = require('../modules/website-manager.js');
 
 
 ZM.addZone = function(u,newData,callback) {
@@ -101,5 +101,33 @@ ZM.deleteZone = function(u,zId,callback) {
 				 		}
 		 		});
 		 	}
+	});
+}
+
+ZM.getZones = function(uId,callback) {
+	var w;
+	var zoneIds = [];
+
+	PublisherModel.find({_id:uId},function(e,o) {
+		if(o) {
+			w = o.websites;
+			for(var i=0;i < w.length; i++) {
+				for(var y=0; y < w[i].zones.length; y++) {
+					zoneIds.push(w[i].zones._id);
+				}
+				ZoneModel.find({_id:{$in: zoneIds}}, function(e,o) {
+					if(e) {
+						callback(e);
+					} else {
+						callback(null,o);
+					}
+				});
+			}
+
+		} else if(e) {
+			callback(e);
+		} else {
+			callback("Unexpected behavior occured");
+		}
 	});
 }
