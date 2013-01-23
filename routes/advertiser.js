@@ -3,7 +3,7 @@ var AdM = require('../modules/advertiser-manager.js');
 
 exports.index = function(req, res){
   if(req.cookies.username == undefined || req.cookies.password == undefined){
-    res.render('login-advertiser.html', { title: 'Sign in to your Advertiser account.' });
+    res.render('login-advertiser.html', { title: 'Login to your Advertiser account.' });
   } else {
     AdM.autoLogin(req.cookies.username, req.cookies.password, function(o){
       if (o != null){
@@ -11,7 +11,7 @@ exports.index = function(req, res){
         req.session.kind = "advertiser";
         res.redirect('/advertiser/default');
       } else{
-        res.render('login-advertiser.html', { title: 'Sign in to your Advertiser account.' });
+        res.render('login-advertiser.html', { title: 'Login to your Advertiser account.' });
       }
     });
   }
@@ -22,6 +22,7 @@ exports.signin = function(req, res){
   AdM.login(req.param('username'),req.param('password'), function(e,o) {
       if (!o){
         res.send(e, 400);
+        res.render('login-error.html', { title : 'Login error!'});
       } else{
         req.session.username = o.username;
         req.session.kind = "advertiser";
@@ -29,7 +30,7 @@ exports.signin = function(req, res){
           res.cookie('username', o.username, { maxAge: 900000 });
           res.cookie('password', o.password, { maxAge: 900000 });
         }
-        res.send(o, 200);
+        res.redirect('/advertiser');
       }
   });
 }

@@ -2,9 +2,9 @@
         <div id="main" class="marginAuto">
             <div id="settings-nav" class="menu-container floatLeft">
                 <ul class="menu">
-                    <li><a href="/publisher/default" class="selected">Default Panel</a></li>
+                    <li><a href="/publisher/default">Default Panel</a></li>
                     <li><a href="/publisher/profile" class="">Account settings</a></li>
-                    <li><a href="/publisher/websites/default" class="">Websites</a></li>
+                    <li><a href="/publisher/websites/default" class="selected">Websites</a></li>
                     <li><a href="/publisher/zones/default" class="">Zones</a></li>
                     <li><a href="/publishers/profile" class="">Revenue</a></li>
                     <li><a href="/publishers/profile" class="">Payments History</a></li>
@@ -15,6 +15,7 @@
                 <h1>Websites overview</h1>
                 <div id="signup-forms">
                 <div id="websites-overview">
+                <% if(websites.length != 0) { %>
                 <ul>
 					<% _.each( websites, function( website ){ %>
 					 
@@ -48,7 +49,9 @@
 						<!--<strong> <%- website %> </strong>-->
 					
 					<% }); %>
-				</ul>
+				</ul> <% } else { %>
+				<p class="error">You do not have any websites yet.</p>
+			<% } %>
                 </div>
                 </div>
             </div>

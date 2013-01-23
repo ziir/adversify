@@ -2,10 +2,10 @@
         <div id="main" class="marginAuto">
             <div id="settings-nav" class="menu-container floatLeft">
                 <ul class="menu">
-                    <li><a href="/publisher/default" class="selected">Default Panel</a></li>
+                    <li><a href="/publisher/default">Default Panel</a></li>
                     <li><a href="/publisher/profile" class="">Account settings</a></li>
                     <li><a href="/publisher/websites/default" class="">Websites</a></li>
-                    <li><a href="/publishers/zones/default" class="">Zones</a></li>
+                    <li><a href="/publishers/zones/default" class="selected">Zones</a></li>
                     <li><a href="/publishers/profile" class="">Revenue</a></li>
                     <li><a href="/publishers/profile" class="">Payments History</a></li>
                     <li><a href="/publishers/profile" class="">Security History</a></li>
@@ -13,6 +13,7 @@
             </div>
             <div id="content">
                 <div id="zones">
+                    <% if(zones.length != 0) { %>
 	                <ul>
 						<% _.each( zones, function( website ){ %>
 						 
@@ -29,8 +30,9 @@
 						 
 						<% }); %>
 					</ul>
+                    <% } else { %>
+                    <p class="error">Yo do not have any zones yet.</p>
+                    <% } %>
                 </div>
             </div>
-        <!--</div>-->
-     <!--</div>-->
      

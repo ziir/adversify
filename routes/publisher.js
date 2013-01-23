@@ -5,7 +5,7 @@ var io = require('socket.io');
 
 exports.index = function(req, res){
   if(req.cookies.username == undefined || req.cookies.password == undefined){
-    res.render('login-publisher.html', { title: 'Sign in to your Publisher account.' });
+    res.render('login-publisher.html', { title: 'Login to your Publisher account.' });
   } else {
     PM.autoLogin(req.cookies.username, req.cookies.password, function(o){
       if (o != null){
@@ -14,7 +14,7 @@ exports.index = function(req, res){
         req.session.kind = "publisher";
         res.redirect('/publisher/default');
       } else{
-        res.render('login-publisher.html', { title: 'Sign in to your Publisher account.' });
+        res.render('login-publisher.html', { title: 'Login to your Publisher account.' });
       }
     });
   }
@@ -33,7 +33,7 @@ exports.signin = function(req, res){
           res.cookie('username', o.username, { maxAge: 900000 });
           res.cookie('password', o.password, { maxAge: 900000 });
         }
-        res.send("OK", 200);
+        res.redirect("/publisher");
       }
   });
 }

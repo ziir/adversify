@@ -1,17 +1,20 @@
         <div id="main" class="marginAuto">
             <div id="settings-nav" class="menu-container floatLeft">
                 <ul class="menu">
-                    <li></li>
+                    <li><a href="/publisher/default">Default Panel</a></li>
+                    <li><a href="/publisher/profile" class="selected">Account settings</a></li>
+                    <li><a href="/publisher/websites/default" class="">Websites</a></li>
+                    <li><a href="/publisher/zones/default" class="">Zones</a></li>
+                    <li><a href="/publishers/profile" class="">Revenue</a></li>
+                    <li><a href="/publishers/profile" class="">Payments History</a></li>
+                    <li><a href="/publisher/security" class="">Security History</a></li>
                 </ul>
             </div>
-            <h3>Ad {versify} est en cours de réalisation.</h3>
-            <h1>Publisher default panel</h1>
+            <h3>Account settings</h3>
             <div id="signup-forms" class="textCenter">
-                
-                <h2>Publisher</h2>
                 <div id="sign-container">
             
-                        <h2>Edit profile</h2>
+                        <h3>Edit basic informations.</h3>
 
                         <form method="POST" action="/publisher/profile" class="well">
                             <input type="email" class="email clearInput" name="email" title="Email" value="Email"/>
@@ -25,9 +28,14 @@
                             <button type="submit" class="btn-primary">Update profile</button>
                         </form>
 
+                        <h3>Change your password.</h3>
+
                         <form method="POST" action="/publisher/passwordChange" class="well">
+                            <label for="passwordold">Old password</label><br/>
                             <input type="password" value="passwordold" name="passwordold" class="passwordold clearInput" title="passwordold">
+                            <label for="password">New password</label><br/>
                             <input type="password" value="password" name="password" class="password clearInput" title="password">
+                            <label for="passwordvalid">New password (again)</label><br/>
                             <input type="password" value="passwordvalid" name="passwordvalid" class="passwordvalid clearInput" title="passwordvalid">
                             <button type="submit" class="btn-primary">Update password</button>
                         </form>
