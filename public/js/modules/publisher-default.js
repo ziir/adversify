@@ -26,7 +26,7 @@ $(document).ready(function() {
 	    
 	    for (var a in newzones) {
 	    	var zn = newzones[a];
-		    self.zones.push(new Zone(zn.name, 'TODO', zn._id));
+		    self.zones.push(new Zone(zn.name, zn.dimensions, zn._id));
 	    }
 	}
 	
@@ -38,7 +38,6 @@ $(document).ready(function() {
 			mode 		: 'myMode',
 			kind 		: 'myKind',
 			description : 'myDescription'
-			
 		},
 		
 		validate : function(attributes) {
@@ -228,18 +227,20 @@ $(document).ready(function() {
 	           name 	    : $('#addZoneForm .zonename').val(),
 	           remuneration : $('#addZoneForm .zoneremuneration').val(),
 	           kind    	    : $('#addZoneForm .zoneformat').val(),
-	           dimensions   : '',
+	           dimensions   : $('#addZoneForm .zonedimensions').val(),
 	           format		: $('#addZoneForm .zoneformat').val(),
 	           description  : $('#addZoneForm .zonedescription').val(),
 	           url		    : $('#addZoneForm .webSiteUrlForZone').val(),
 	           _id			: ''
            });
            
+           console.log('dimensions : ' + $('#addZoneForm .zonedimensions').val());
+           
            zoneValidated = publisherDefaultZone.validate({
            		name 		 : publisherDefaultZone.get('name'),
            		remuneration : publisherDefaultZone.get('mode'),
            		kind    	 : publisherDefaultZone.get('kind'),
-           		format		 : '',
+           		dimensions	 : '',
            		description  : publisherDefaultZone.get('description'),
            		url			 : publisherDefaultZone.get('url')
            });
@@ -249,7 +250,6 @@ $(document).ready(function() {
            		publisherDefaultZone.save();
            		publisherDefaultSites.fetch({
 	           		success : function(collection, response, options) {
-		           		//var selectedWebSite = $(".webSiteUrlForZone").prop("selectedIndex");
 		           		var publisherDefaultSite = publisherDefaultSites.at(selectedWebSite);
 		           		if (publisherDefaultSite) {
 			           		wbzones = publisherDefaultSite.get('zones');
@@ -319,7 +319,21 @@ $(document).ready(function() {
         viewZoneBlock : function(e) {
 	        
 	        $('.zones-overview').attr({ style: 'display=block'});
-	        selectedWebSite = $('.addZone').id;
+	        var selectedWebSiteNiceID = e.currentTarget.id
+	        selectedWebSite = undefined;
+	        
+	        var i=0;
+	        while (i < publisherDefaultSites.length) {
+		        wb = publisherDefaultSites.at(i);
+		        if (wb.get('_id') == selectedWebSiteNiceID) {
+		        	selectedWebSite = i;
+			        i = publisherDefaultSites.length;
+		        }
+		        i++;
+	        }
+	        
+        	console.log('webSiteNiceID      	  : ' + selectedWebSiteNiceID);
+        	console.log('Founded ID in Collection : ' + selectedWebSite);
 	        
         },
 
