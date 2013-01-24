@@ -33,12 +33,6 @@ $(document).ready(function() {
 	window.PublisherDefaultZone = Backbone.Model.extend({
 		urlRoot : '/publisher/zones',
 		
-		defaults : {
-			name 		: 'myName',
-			dimensions 	: 'myKind',
-			description : 'myDescription'
-		},
-		
 		validate : function(attributes) {
 			$('#addZoneForm .zonename').css('border', '0px solid red');
 			$('#addZoneForm .zoneremuneration').css('border', '0px solid red');
@@ -232,8 +226,6 @@ $(document).ready(function() {
 	           _id			: ''
            });
            
-           console.log('dimensions : ' + $('#addZoneForm .zonedimensions').val());
-           
            zoneValidated = publisherDefaultZone.validate({
            		name 		 : publisherDefaultZone.get('name'),
            		remuneration : publisherDefaultZone.get('mode'),
@@ -253,9 +245,14 @@ $(document).ready(function() {
 			           		wbzones = publisherDefaultSite.get('zones');
 			           		if (wbzones) {
 				           		var lastZone = wbzones.length;
-				           		var zn = wbzones[lastZone-1];
+				           		var zn;
+				           		if (lastZone > 0) {
+					           		zn = wbzones[lastZone-1];
+				           		} else {
+				           			zn = wbzones[lastZone];
+				           		}
 				           		console.log('wbzones.length : ' + lastZone + ' ' + zn);
-				           		websites()[selectedWebSite].zones.push(new Zone(zn.name, 'TODO', zn._id));
+				           		websites()[selectedWebSite].zones.push(new Zone(zn.name, zn.dimensions, zn._id));
 			           		} else {
 				           		console.log('error when getting the zones of the website ' + publisherDefaultSite.name);
 			           		}
@@ -325,12 +322,12 @@ $(document).ready(function() {
 		        wb = publisherDefaultSites.at(i);
 		        if (wb.get('_id') == selectedWebSiteNiceID) {
 		        	selectedWebSite = i;
+		        	console.log('webSiteNiceID      	  : ' + selectedWebSiteNiceID + ' at position ' + i);
 			        i = publisherDefaultSites.length;
 		        }
 		        i++;
 	        }
 	        
-        	console.log('webSiteNiceID      	  : ' + selectedWebSiteNiceID);
         	console.log('Founded ID in Collection : ' + selectedWebSite);
 	        
         },
