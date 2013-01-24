@@ -104,30 +104,37 @@ ZM.deleteZone = function(u,zId,callback) {
 	});
 }
 
-ZM.getZones = function(uId,callback) {
-	var w;
-	var zoneIds = [];
-
-	PublisherModel.find({_id:uId},function(e,o) {
+ZM.getZones = function(uId,callback) { // Having to write so much code for such a simple thing is driving me insane
+	var w = [],z = [],zoneIds = [], websiteIds = [];
+	PublisherModel.findOne({_id:uId},function(e,o) {
 		if(o) {
 			w = o.websites;
 			for(var i=0;i < w.length; i++) {
-				for(var y=0; y < w[i].zones.length; y++) {
-					zoneIds.push(w[i].zones._id);
-				}
-				ZoneModel.find({_id:{$in: zoneIds}}, function(e,o) {
-					if(e) {
+				websiteIds.push(w[i]._id);
+			}
+			console.log(websiteIds);
+				WebsiteModel.find({_id:{$in: websiteIds}}, function(e,o) {
+					if(e) {	
 						callback(e);
+					} else if(o) {
+						for(var y=0;y < o.length; y++) { // BHOUUU DOUBLE BOUCLE
+							for(var x=0; x < o[y].zones.length; x++) {
+								zoneIds.push(o[y].zones._id);
+							}
+						}
+						ZoneModel.find({_id:{$in:zoneIds}}, function(e,o) {
+							if(e) {
+								callback(e);
+							} else if(o) {
+								callback(null,o);
+							} else {
+								callback("no-zones-found-"+zoneIds);
+							}
+						});
 					} else {
-						callback(null,o);
+						callback("no-websites-found-"+websiteIds);
 					}
 				});
 			}
-
-		} else if(e) {
-			callback(e);
-		} else {
-			callback("Unexpected behavior occured");
-		}
-	});
-}
+		});
+	}

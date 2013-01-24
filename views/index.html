@@ -20,7 +20,14 @@
                         	<span data-bind="text: error_kind"></span>
                         <button type="submit" class="btn-primary">Sign Up</button>
                     </form>
-                    <p class="error" id="insertError"></p>
+                    <p class="error" id="insertError">
+                    </p>
                 </div>
             </div>
+            <!--script>
+                $("#sign-container form").submit(function(event) {
+                    event.preventDefault();
+                    alert("event prevented");
+                });
+            </script-->
      <script type="text/javascript" src="/js/modules/signup.js"></script>

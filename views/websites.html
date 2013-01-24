@@ -1,4 +1,4 @@
-        <% var websites = locals.websites; %>
+        <% var websites = locals.websites;  %>
         <div id="main" class="marginAuto">
             <div id="settings-nav" class="menu-container floatLeft">
                 <ul class="menu">
@@ -22,30 +22,15 @@
 						<li class="website">
 							<strong> <%- website.name %> </strong>
 							<a> <%- website.url %> </a>
-							<label> Description : <text> <%- website.description %> </text> </label>
-							<label> Created :  <text> <%- website.created %> </text> </label>
-							<label> Modified :  <text> <%- website.modified %> </text> </label>
-							<label> Validated :  <strong> <%- website.validated %> </strong> </label>
-						</li>
-						
-						<strong> Zones : </strong>
-						
-						<% _.each( website.zones, function( zone ){ %>
-						 
-							<li class="zones">
-								<strong> - </strong>
-								<strong> <%- zone.name %> </strong>
-								<label> Description :  <text> <%- zone.description %> </text> </label>
-								<label> Impression Count :  <text> <%- zone.impressionCount %> </text> </label>
-								<label> Created :  <text> <%- zone.created %> </text> </label>
-								<label> Modified :  <text> <%- zone.modified %> </text> </label>
-								<label> Validated :  <strong> <%- zone.validated %> </strong> </label>
-								
-								<!--<strong> <%- zone %> </strong>-->
-							</li>
-						
-						<% }); %>
-						
+							<label> Description :   <%- website.description %>  </span></label>
+							<label> Created :   <span class="date"> <%- website.created %> </span>  </label>
+							<label> Modified :  <span class="date"> <%- website.modified %> </span> </label>
+							<% if(website.validated) {  %>
+								<span class="success">This website has been validated on <span class="date"> <%- website.validatedOn %> </span>.</span>
+							<% } else { %>
+								<span class="error">This website has not been validated yet.</span>
+							<% } %>
+						</li>		
 						<!--<strong> <%- website %> </strong>-->
 					
 					<% }); %>
@@ -55,6 +40,16 @@
                 </div>
                 </div>
             </div>
+            <script type="text/javascript" src="/js/libs/moment.min.js"></script>
+            <script type="text/javascript">
+            var momentDate;
+            	$(".date").each(function() {
+            		momentDate = moment($(this).text()).format("dddd, MMMM Do YYYY, h:mm:ss a");
+            		$(this).fadeIn('fast', function() {
+            			$(this).html(momentDate);
+            		});
+            	});
+            </script>
         <!--</div>-->
      <!--</div>-->
      

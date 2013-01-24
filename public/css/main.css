@@ -251,3 +251,15 @@ label {
   color:rgb(0,150,221);
   font-size:1.5em;
 }
+
+.error {
+  color:red;
+}
+
+.success {
+  color:green;
+}
+
+.date {
+  display:none;
+}

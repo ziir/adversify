@@ -8,6 +8,7 @@ var Zone = new Schema({
     dimensions: { type: String},
     modified: {type: Date, default: Date.now },
     created: {type: Date},
+    validatedOn: {type: Date},
 });
 
 //Define Ad for Publishers (redefined in Publishers.js)
@@ -19,6 +20,7 @@ var Website = new Schema({
     validated : { type : Boolean, default: false },
     modified: { type: Date, default: Date.now },
     created: {type: Date},
+    validatedOn: {type: Date},
     zones: [Zone]
 });
 

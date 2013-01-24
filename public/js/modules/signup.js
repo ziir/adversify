@@ -50,17 +50,20 @@ var location;
     });
     
     window.UserSignupBehavior = Backbone.View.extend({
-        el : $('#signup-forms'), // Changer l'element quand il y aura plus que 1 form
+        el : $("#sign-container"), 
         
         initialize : function() {
             //Nothing to do now
+            console.log("UserSignupBehavior initiated");
+
         },
-        events : {
-            'submit form' : 'buildUserSignup' // J'aime beaucoup ça
+        events : {  
+            'submit form' : 'buildUserSignup' // If the form is submitted, call buildUserSignup function
         },
         
-        buildUserSignup : function(e) {
-           e.preventDefault();
+        buildUserSignup : function(event) {
+           event.preventDefault();
+           alert("form submit event prevented");
            
            this.$('.password_again').css('border', '0px solid red');
 	       this.$('.kind').css('border', '0px solid red');
@@ -89,11 +92,11 @@ var location;
 	            kind 	 : type
 	        });
             
-            validated = user.validate({    // JE PENSAIS QUE LE .validate était enclenché lors de la création de l'objet 
-            	username : userNameVal,   // mais en fait non, en gros, le validate n'est AUTOMATIQUEMENT appelé que au moment
-            	password : passwordVal,  // d'un publisher.set({username : 'Ziir'})  -- Possible que je me trompe 
-            	email    : emailVal 	//Julien : Ceci dit ça revient au même niveau calculs pour l'ordinateur et le "validated" est plutôt intéressant au niveau des tests
-            });                        // Non ça ne revient pas au même, l'objet ne peut pas être créé dans mon cas? quoique? 
+            validated = user.validate({  
+            	username : userNameVal,   
+            	password : passwordVal,  
+            	email    : emailVal 	
+            });                        
             
             if (type == -1) {
 	            this.$('.kind').css('border', '1px solid red');

@@ -90,16 +90,6 @@ app.get('/AddRevenue', function(req,res) {
     });
 });
 
-app.get("/testAsync", function(req,res) {
-  res.send("LOLILOL",400);
-  var a = 0;
-  for(var i =0; i < 100000000000; i++) {
-    a = i;
-  }
-
-});
-
-
 
 app.get('/plus1000', function(req,res) {
   console.log("+1000");

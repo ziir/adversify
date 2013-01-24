@@ -1,9 +1,9 @@
 var PM = require('../modules/publisher-manager.js');
 var WM = require('../modules/website-manager.js');
 var ZM = require('../modules/zone-manager.js');
+var moment = require('moment');
 
 exports.default = function(req, res){
-  console.log("izi");
    if(req.session.kind != "publisher") {
     res.redirect("/");
   } else {
