@@ -14,7 +14,8 @@ var Zone = new Schema({
     bgColor: {type:String, default: "#fff"},
     titleColor: {type:String, default:"#2672ec"},
     impressionCount :  {type:Number, default: 0},
-    dimensions : { type: String , enum: ['300x233','234x60','125x125','180x150','120x230','200x200','233x233'] }
+    validatedOn: {type: Date},
+    dimensions : { type: String , enum: ['300x233','234x60','125x125','180x150','120x230','200x200','233x233'], default: "300x233" }
 });
 
 ZoneModel = mongoose.model('zones', Zone);

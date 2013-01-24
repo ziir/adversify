@@ -111,7 +111,7 @@ WM.addWebsite = function(u,newData,callback) { // Publisher username, new websit
 
 		PublisherModel.findOne({username:u,"websites.url":newData.url}, function(e,o) {
 			if(o && !e) {
-				console.log("Website ok");
+				console.log("update-zones");
 				WebsiteModel.findOne({"url":newData.url}, function(e,o) {
 					if(o) {
 						o.zones = newData.zones;
