@@ -14,7 +14,11 @@ ZM.addZone = function(u,newData,callback) {
 		console.log(newData);
 		var z = new ZoneModel({
 			"name":newData.name,
-			"created":Date.now()
+			"created":Date.now(),
+			"dimensions":newData.dimensions,
+			"format":newData.format,
+			"remuneration":newData.remuneration,
+			"kind":newData.kind
 		});
 
 		// WORKAROUND for positional cursor + $push, see https://jira.mongodb.org/browse/SERVER-831
