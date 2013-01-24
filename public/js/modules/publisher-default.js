@@ -35,8 +35,7 @@ $(document).ready(function() {
 		
 		defaults : {
 			name 		: 'myName',
-			mode 		: 'myMode',
-			kind 		: 'myKind',
+			dimensions 	: 'myKind',
 			description : 'myDescription'
 		},
 		
@@ -228,7 +227,6 @@ $(document).ready(function() {
 	           remuneration : $('#addZoneForm .zoneremuneration').val(),
 	           kind    	    : $('#addZoneForm .zoneformat').val(),
 	           dimensions   : $('#addZoneForm .zonedimensions').val(),
-	           format		: $('#addZoneForm .zoneformat').val(),
 	           description  : $('#addZoneForm .zonedescription').val(),
 	           url		    : $('#addZoneForm .webSiteUrlForZone').val(),
 	           _id			: ''
