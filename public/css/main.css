@@ -249,7 +249,7 @@ label {
 
 #revenue-overview {
   color:rgb(0,150,221);
-  font-size:1.5em;
+  font-size:3em;
 }
 
 .error {
@@ -262,4 +262,29 @@ label {
 
 .date {
   display:none;
+}
+
+ul, ul li {
+  text-align:left;
+}
+
+
+
+
+.sites-overview ul.websites-shortlist li:hover {
+  border-right:5px solid rgb(0,150,221);
+}
+
+
+.sites-overview ul.zones-shortlist li:hover {
+  border-right:3px solid black;
+}
+
+.shortlist-actions {
+  float: right;
+  margin-right:10px;
+}
+.sites-overview ul.websites-shortlist li {
+  padding-top:16px;
+  padding-bottom:16px;
 }

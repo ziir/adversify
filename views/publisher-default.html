@@ -13,7 +13,7 @@
         <div id="main" class="marginAuto">
             <div id="settings-nav" class="menu-container floatLeft">
                 <ul class="menu">
-                    <li><a href="/publisher/default" class="selected">Default Panel</a></li>
+                    <li><a href="/publisher/default" class="selected">Home</a></li>
                     <li><a href="/publisher/profile" class="">Account settings</a></li>
                     <li><a href="/publisher/websites/default" class="">Websites</a></li>
                     <li><a href="/publisher/zones/default" class="">Zones</a></li>
@@ -23,31 +23,34 @@
                 </ul>
             </div>
             <div id="content">
-            <h1>Publisher default panel</h1>
             <div id="signup-forms" class="textCenter">
                 <p id="revenue-overview">
                     <span class="balance"></span>
                 </p>
                 <div class="sites-overview">
-                    <ul data-bind="foreach: websites">
+                    <ul class="websites-shortlist" data-bind="foreach: websites">
                         <li class="classWebSite" data-bind="attr: {id: webSiteNiceID}">
                             <strong data-bind="text: wbname"></strong>
                             <em data-bind="text: wburl"></em>
-                            <a href="#" class="addZone" data-bind="attr: {id : webSiteNiceID}" >Add a zone</a>
-                            <a href="#" class="editWebsite" >Edit Website</a>
-                            <a href="#" class="deleteWebsite" data-bind="attr: {id: webSiteNiceID}">Delete Website</a>
-                                <ul data-bind="foreach: zones">
+                            <span class="shortlist-actions">
+                                <a href="#" class="addZone" data-bind="attr: {id : webSiteNiceID}" >Add a zone</a>
+                                <a href="#" class="editWebsite" >Edit Website</a>
+                                <a href="#" class="deleteWebsite" data-bind="attr: {id: webSiteNiceID}">Delete Website</a>
+                            </span>
+                                <ul class="zones-shortlist" data-bind="foreach: zones">
                                     <li class="classZone" data-bind="attr: {id: zoneNiceID}">
                                         <strong data-bind="text: zonename">Zone Error</strong>
-                                        <strong data-bind="text: zoneformat">Format Error</strong>
-                                        <a href="#" class="editZone" id="1">Edit Zone</a>
-                                        <a href="#" class="deleteZone" data-bind="attr: {id: zoneNiceID}">Delete Zone</a>
+                                        <em data-bind="text: zoneformat">Format Error</em>
+                                        <span class="shortlist-actions">
+                                            <a href="#" class="editZone" id="1">Edit Zone</a>
+                                            <a href="#" class="deleteZone" data-bind="attr: {id: zoneNiceID}">Delete Zone</a>
+                                        </span>
                                     </li>
                                 </ul>
                         </li>
                     </ul>
 
-                        <h2>Ajouter un site</h2>
+                        <h2>Add a website</h2>
                         <form method="POST" action="/publisher/sites" class="well" id="addWebSiteForm">
                         		<span data-bind="text: error_webSiteName"></span>
                             <input type="text" class="sitename clearInput" name="sitename" title="Site Name" value="Site Name"/><br/>
@@ -124,10 +127,4 @@
             </div>
         <!--</div>-->
      <!--</div>-->
-     
-     <script type="text/javascript">
 
-        $(".addZone").click(function(){
-            console.log("izi");
-        });
-     </script>

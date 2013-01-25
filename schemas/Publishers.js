@@ -9,7 +9,7 @@ var PublisherWebsite = new Schema({
     category : { type : String }, 
     validated : { type : Boolean, default: false },
     modified: { type: Date, default: Date.now },
-    created: {type: Date},
+    joined: {type: Date, default: Date.now},
 });
 /*
 var TwelveMonthsBalance = new Schema({

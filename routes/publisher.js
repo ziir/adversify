@@ -38,16 +38,17 @@ exports.signin = function(req, res){
 }
 
 exports.default = function(req,res) {
+  var since;
   if(req.session.kind != "publisher") {
     res.redirect("/");
   } else {
     console.log(req.session.uid);
-    res.render('publisher-default.html', {
-      title: "Ad{versify}",
-          locals: {
-            uid: req.session.uid
-          }
-    });
+          res.render('publisher-default.html', {
+            title: "Ad{versify}",
+                locals: {
+                  uid: req.session.uid
+                }
+          });
   }
 }
 
