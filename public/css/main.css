@@ -273,11 +273,14 @@ ul, ul li {
 
 .sites-overview ul.websites-shortlist li:hover {
   border-right:5px solid rgb(0,150,221);
+  border-bottom:3px solid rgb(0,150,221);
 }
 
 
 .sites-overview ul.zones-shortlist li:hover {
   border-right:3px solid black;
+    border-bottom:1px solid black;
+
 }
 
 .shortlist-actions {
@@ -287,4 +290,8 @@ ul, ul li {
 .sites-overview ul.websites-shortlist li {
   padding-top:16px;
   padding-bottom:16px;
+}
+
+.zones-overview {
+  text-align: center;
 }
