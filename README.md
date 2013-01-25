@@ -1,5 +1,4 @@
-adversify
+Ad{versify}
 =========
 
-Let's try and put online advertising into verse
-
+Ad{versify} is an advertising network wich implements acceptable ads as defined by AdBlock Plus.
