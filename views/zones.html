@@ -12,28 +12,30 @@
                 </ul>
             </div>
             <div id="content">
-                <div id="zones">
-                    <% console.log(zones);
-                    if(zones.length != 0) { %>
-	                <ul>
-						<% _.each( zones, function( website ){ %>
-						 
-							<li class="zone">
-							
-							<strong> <%- zone.name %> </strong>
-							<label> Description :  <a> <%- zone.description %> </a> </label>
-							<label> Impression Count :  <a> <%- zone.impressionCount %> </a> </label>
-							<label> Created :  <a> <%- zone.created %> </a> </label>
-							<label> Modified :  <a> <%- zone.modified %> </a> </label>
-							<label> Validated :  <a> <%- zone.validated %> </a> </label>
-							 
-							</li>
-						 
-						<% }); %>
-					</ul>
-                    <% } else { %>
-                    <p class="error">Yo do not have any zones yet.</p>
-                    <% } %>
+                <div id="signup-forms">
+                    <div id="zones">
+                        <% console.log(zones);
+                        if(zones.length != 0) { %>
+    	                <ul >
+    						<% _.each( zones, function( zone ){ %>
+    						 
+    							<li class="zone">
+    							
+    							<strong> <%- zone.name %> </strong>
+    							<label> Description :  <a> <%- zone.description %> </a> </label>
+    							<label> Impression Count :  <a> <%- zone.impressionCount %> </a> </label>
+    							<label> Created :  <a> <%- zone.created %> </a> </label>
+    							<label> Modified :  <a> <%- zone.modified %> </a> </label>
+    							<label> Validated :  <a> <%- zone.validated %> </a> </label>
+    							 
+    							</li>
+    						 
+    						<% }); %>
+    					</ul>
+                        <% } else { %>
+                        <p class="error">Yo do not have any zones yet.</p>
+                        <% } %>
+                    </div>
                 </div>
             </div>
      
