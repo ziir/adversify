@@ -88,7 +88,6 @@
 
                             	<span data-bind="text: error_zoneName"></span>
                                 <br/>
-                            <input type="hidden" value="http://www.citations.co/" />
                             <select class="zoneremuneration" name="zoneremuneration">
                                 <option value="">CPC or CPM?</option>
                                 <option value="cpc">CPC</option>
@@ -115,9 +114,7 @@
                             <label for="zonedescription">Enter a description for this Ad.</label><br/>
                             <textarea rows="4" cols="30" name="zonedescription" id="zonedescription"></textarea><br/>
                             	<span data-bind="text: error_zoneDescription"></span>
-                            <select class="webSiteUrlForZone" name="websiteurl" data-bind="foreach: websites">
-                                <option data-bind="text: wburl, value: wburl">
-                            </select><br/>
+                            <input type="hidden" class="webSiteUrlForZone" name="websiteurl"><br/>
 
                             <button type="submit" class="btn-primary">Create this zone</button>
                         </form>

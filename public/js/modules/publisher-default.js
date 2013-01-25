@@ -230,7 +230,7 @@ $(document).ready(function() {
            		name 		 : publisherDefaultZone.get('name'),
            		remuneration : publisherDefaultZone.get('mode'),
            		kind    	 : publisherDefaultZone.get('kind'),
-           		dimensions	 : '',
+           		dimensions	 : publisherDefaultZone.get('dimensions'),
            		description  : publisherDefaultZone.get('description'),
            		url			 : publisherDefaultZone.get('url')
            });
@@ -246,6 +246,7 @@ $(document).ready(function() {
 			           		if (wbzones) {
 				           		var lastZone = wbzones.length;
 				           		var zn;
+				           		console.log(wbzones+"---");
 				           		if (lastZone > 0) {
 					           		zn = wbzones[lastZone-1];
 				           		} else {
@@ -312,24 +313,27 @@ $(document).ready(function() {
         },
         
         viewZoneBlock : function(e) {
-	        
-	        $('.zones-overview').attr({ style: 'display=block'});
+	        e.preventDefault();
 	        var selectedWebSiteNiceID = e.currentTarget.id
 	        selectedWebSite = undefined;
-	        
+	        var selectedWebSiteUrl;
 	        var i=0;
 	        while (i < publisherDefaultSites.length) {
 		        wb = publisherDefaultSites.at(i);
+		        console.log(wb)
 		        if (wb.get('_id') == selectedWebSiteNiceID) {
 		        	selectedWebSite = i;
-		        	console.log('webSiteNiceID      	  : ' + selectedWebSiteNiceID + ' at position ' + i);
+		        	console.log('webSiteNiceID      	  : ' + selectedWebSiteNiceID + ' at position ' + i + ' with url : '+wb.get('url'));
 			        i = publisherDefaultSites.length;
+			        selectedWebSiteUrl = wb.get('url');
 		        }
 		        i++;
 	        }
 	        
         	console.log('Founded ID in Collection : ' + selectedWebSite);
-	        
+	       	$('.zones-overview').insertAfter("#"+selectedWebSiteNiceID).fadeIn("slow");
+	       	$('.zones-overview .webSiteUrlForZone').val(selectedWebSiteUrl);
+
         },
 
         error : function(model, error) {
