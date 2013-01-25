@@ -116,29 +116,28 @@ ZM.getZones = function(uId,callback) { // Having to write so much code for such 
 			for(var i=0;i < w.length; i++) {
 				websiteIds.push(w[i]._id);
 			}
-			console.log(websiteIds);
-				WebsiteModel.find({_id:{$in: websiteIds}}, function(e,o) {
-					if(e) {	
-						callback(e);
-					} else if(o) {
-						for(var y=0;y < o.length; y++) { // BHOUUU DOUBLE BOUCLE
-							for(var x=0; x < o[y].zones.length; x++) {
-								zoneIds.push(o[y].zones._id);
-							}
+			WebsiteModel.find({_id:{$in: websiteIds}}, function(e,o) {
+				if(e) {	
+					callback(e);
+				} else if(o) {
+					for(var y=0;y < o.length; y++) { // BHOUUU DOUBLE BOUCLE
+						for(var x=0; x < o[y].zones.length; x++) {
+							zoneIds.push(o[y].zones[x]._id);
 						}
-						ZoneModel.find({_id:{$in:zoneIds}}, function(e,o) {
-							if(e) {
-								callback(e);
-							} else if(o) {
-								callback(null,o);
-							} else {
-								callback("no-zones-found-"+zoneIds);
-							}
-						});
-					} else {
-						callback("no-websites-found-"+websiteIds);
 					}
-				});
+					ZoneModel.find({_id:{$in:zoneIds}}, function(e,o) {
+						if(e) {
+							callback(e);
+						} else if(o) {
+							callback(null,o);
+						} else {
+							callback("no-zones-found-"+zoneIds);
+						}
+					});
+				} else {
+					callback("no-websites-found-"+websiteIds);
+				}
+			});
 			}
 		});
 	}
